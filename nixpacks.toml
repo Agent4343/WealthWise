@@ -5,4 +5,4 @@ nixPkgs = ["nodejs_20"]
 cmds = ["npm install --prefix website"]
 
 [start]
-cmd = "npm start --prefix website"
+cmd = "node website/server.js"

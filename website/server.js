@@ -20,6 +20,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.listen(PORT, () => {
-  console.log(`WealthWise website running on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`WealthWise website running on 0.0.0.0:${PORT}`);
 });
