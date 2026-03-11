@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canadian Contribution Limits 2025/2026 — WealthWise</title>
+  <meta name="description" content="Complete reference for Canadian TFSA, RRSP, RESP, FHSA, and CPP contribution limits for 2025 and 2026. Updated with CRA numbers.">
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <style>
+    .limits-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 32px; }
+    .limits-table th, .limits-table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+    .limits-table th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); font-weight: 600; }
+    .limits-table td { font-size: 0.95rem; }
+    .limits-table tr:last-child td { border-bottom: none; }
+    .limits-table .amount { font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+    .limits-table .account-name { font-weight: 600; }
+    .limits-table .new-badge { display: inline-block; background: rgba(52,211,153,0.12); color: var(--primary); font-size: 0.65rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+
+    .account-section { margin-bottom: 48px; }
+    .account-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 20px;
+    }
+    .account-card h2 { font-size: 1.4rem; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
+    .account-card .account-icon { font-size: 1.6rem; }
+    .account-subtitle { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+
+    .limit-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .limit-row:last-child { border-bottom: none; }
+    .limit-label { color: var(--text-muted); font-size: 0.9rem; }
+    .limit-value { font-weight: 700; font-size: 1.1rem; color: var(--primary); }
+
+    .yearly-room { margin-top: 24px; }
+    .yearly-room h3 { font-size: 1rem; margin-bottom: 16px; color: var(--text-muted); }
+    .room-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .room-table th, .room-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .room-table th { color: var(--text-dim); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+    .room-table td:last-child { text-align: right; font-weight: 600; color: var(--text); }
+    .room-table tr:last-child td { border-bottom: none; font-weight: 700; color: var(--primary); }
+
+    .key-date { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .key-date:last-child { border-bottom: none; }
+    .key-date-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(129,140,248,0.12); color: #818cf8; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; }
+    .key-date-text { flex: 1; }
+    .key-date-text strong { display: block; font-size: 0.9rem; }
+    .key-date-text span { font-size: 0.8rem; color: var(--text-muted); }
+
+    .tax-bracket-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .tax-bracket-table th, .tax-bracket-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+    .tax-bracket-table th { color: var(--text-dim); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+    .tax-bracket-table .rate { font-weight: 700; color: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/limits.html">Limits</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container" style="max-width:900px">
+      <div class="app-header">
+        <h1><span class="gradient-text">Contribution Limits</span></h1>
+        <p>Every Canadian registered account limit for 2025 &amp; 2026 — updated from the CRA.</p>
+      </div>
+
+      <!-- Quick Reference -->
+      <div class="account-card">
+        <h2>Quick Reference — 2026</h2>
+        <table class="limits-table">
+          <thead>
+            <tr>
+              <th>Account</th>
+              <th>2025 Limit</th>
+              <th>2026 Limit</th>
+              <th>Lifetime / Cumulative</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="account-name">TFSA</td>
+              <td>$7,000</td>
+              <td class="amount">$7,000</td>
+              <td>$102,000 <span class="new-badge">2025</span></td>
+            </tr>
+            <tr>
+              <td class="account-name">RRSP</td>
+              <td>$32,490</td>
+              <td class="amount">$33,810 <span class="new-badge">NEW</span></td>
+              <td>18% of income (+ carryforward)</td>
+            </tr>
+            <tr>
+              <td class="account-name">FHSA</td>
+              <td>$8,000</td>
+              <td class="amount">$8,000</td>
+              <td>$40,000</td>
+            </tr>
+            <tr>
+              <td class="account-name">RESP</td>
+              <td>No annual cap</td>
+              <td class="amount">No annual cap</td>
+              <td>$50,000 per child</td>
+            </tr>
+            <tr>
+              <td class="account-name">CESG (RESP Grant)</td>
+              <td>$500/yr</td>
+              <td class="amount">$500/yr</td>
+              <td>$7,200 per child</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- TFSA -->
+      <div class="account-card" id="tfsa">
+        <h2><span class="account-icon">🏦</span> TFSA — Tax-Free Savings Account</h2>
+        <p class="account-subtitle">Contributions are not tax-deductible, but all growth and withdrawals are completely tax-free. Forever.</p>
+
+        <div class="limit-row">
+          <span class="limit-label">2026 Annual Limit</span>
+          <span class="limit-value">$7,000</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Cumulative Room (since 2009, age 18+)</span>
+          <span class="limit-value">$102,000</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Over-Contribution Penalty</span>
+          <span class="limit-value" style="color:#f87171">1%/month</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Withdrawal Room</span>
+          <span class="limit-value">Restored Jan 1 next year</span>
+        </div>
+
+        <div class="yearly-room">
+          <h3>TFSA Annual Limits by Year</h3>
+          <table class="room-table">
+            <thead><tr><th>Year</th><th>Annual Limit</th></tr></thead>
+            <tbody>
+              <tr><td>2009–2012</td><td>$5,000</td></tr>
+              <tr><td>2013–2014</td><td>$5,500</td></tr>
+              <tr><td>2015</td><td>$10,000</td></tr>
+              <tr><td>2016–2018</td><td>$5,500</td></tr>
+              <tr><td>2019–2022</td><td>$6,000</td></tr>
+              <tr><td>2023</td><td>$6,500</td></tr>
+              <tr><td>2024–2026</td><td>$7,000</td></tr>
+              <tr><td><strong>Total (2009–2026)</strong></td><td><strong>$102,000</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="info-box" style="margin-top:20px">
+          <strong>Key Insight:</strong> 57% of Canadian TFSAs are held entirely in cash or GICs. A TFSA is not a savings account — it's a tax-free investment container. Fill it with low-cost index ETFs.
+          <br><br><a href="/calc/tfsa.html" style="color:var(--primary);font-weight:600">Calculate your TFSA growth &rarr;</a>
+        </div>
+      </div>
+
+      <!-- RRSP -->
+      <div class="account-card" id="rrsp">
+        <h2><span class="account-icon">📊</span> RRSP — Registered Retirement Savings Plan</h2>
+        <p class="account-subtitle">Contributions are tax-deductible. Growth is tax-deferred. Withdrawals are taxed as income in retirement.</p>
+
+        <div class="limit-row">
+          <span class="limit-label">2026 Maximum Contribution</span>
+          <span class="limit-value">$33,810</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">2025 Maximum Contribution</span>
+          <span class="limit-value">$32,490</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Contribution Formula</span>
+          <span class="limit-value">18% of prior year income</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Unused Room</span>
+          <span class="limit-value">Carries forward indefinitely</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Over-Contribution Buffer</span>
+          <span class="limit-value">$2,000 (no penalty)</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">2025 Tax Year Deadline</span>
+          <span class="limit-value">March 2, 2026</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Home Buyers' Plan (HBP)</span>
+          <span class="limit-value">$60,000 max withdrawal</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Lifelong Learning Plan (LLP)</span>
+          <span class="limit-value">$20,000 max withdrawal</span>
+        </div>
+
+        <h3 style="margin-top:24px;font-size:1rem;color:var(--text-muted);margin-bottom:12px">Federal Tax Brackets (2025)</h3>
+        <table class="tax-bracket-table">
+          <thead><tr><th>Taxable Income</th><th>Federal Rate</th></tr></thead>
+          <tbody>
+            <tr><td>$0 – $57,375</td><td class="rate">15%</td></tr>
+            <tr><td>$57,375 – $114,750</td><td class="rate">20.5%</td></tr>
+            <tr><td>$114,750 – $158,468</td><td class="rate">26%</td></tr>
+            <tr><td>$158,468 – $220,000</td><td class="rate">29%</td></tr>
+            <tr><td>Over $220,000</td><td class="rate">33%</td></tr>
+          </tbody>
+        </table>
+
+        <div class="info-box" style="margin-top:20px">
+          <strong>Over 80% of RRSP room goes unused every year.</strong> Check your CRA My Account to see your available room. Use the 1-2 Punch: contribute to RRSP, get the refund, invest the refund in your TFSA.
+          <br><br><a href="/calc/rrsp.html" style="color:var(--primary);font-weight:600">Calculate your RRSP tax refund &rarr;</a>
+        </div>
+      </div>
+
+      <!-- FHSA -->
+      <div class="account-card" id="fhsa">
+        <h2><span class="account-icon">🏠</span> FHSA — First Home Savings Account</h2>
+        <p class="account-subtitle">The best of both worlds: tax-deductible contributions (like RRSP) + tax-free withdrawals for a first home (like TFSA).</p>
+
+        <div class="limit-row">
+          <span class="limit-label">2026 Annual Limit</span>
+          <span class="limit-value">$8,000</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Lifetime Limit</span>
+          <span class="limit-value">$40,000</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Carry-Forward (unused room)</span>
+          <span class="limit-value">Up to $8,000/year</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Maximum Annual Contribution</span>
+          <span class="limit-value">$16,000 (with carry-forward)</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Account Lifespan</span>
+          <span class="limit-value">15 years (or age 71)</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Eligibility</span>
+          <span class="limit-value">Canadian resident, 18+, first-time buyer</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Tax Treatment</span>
+          <span class="limit-value" style="color:#34d399">Deductible in + Tax-free out</span>
+        </div>
+
+        <div class="info-box" style="margin-top:20px">
+          <strong>The FHSA is the most tax-efficient account in Canada</strong> for first-time home buyers. You get the RRSP-style deduction when you contribute, and TFSA-style tax-free growth and withdrawal when you buy your first home. If you don't buy, funds can transfer to your RRSP tax-free.
+        </div>
+      </div>
+
+      <!-- RESP -->
+      <div class="account-card" id="resp">
+        <h2><span class="account-icon">🎓</span> RESP — Registered Education Savings Plan</h2>
+        <p class="account-subtitle">Save for a child's post-secondary education. The government matches 20% of your contributions through the CESG.</p>
+
+        <div class="limit-row">
+          <span class="limit-label">Annual Contribution Limit</span>
+          <span class="limit-value">No annual cap</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Lifetime Limit (per child)</span>
+          <span class="limit-value">$50,000</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">CESG Match Rate</span>
+          <span class="limit-value" style="color:#34d399">20% on first $2,500/year</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">CESG Annual Maximum</span>
+          <span class="limit-value">$500/year</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">CESG Lifetime Maximum</span>
+          <span class="limit-value">$7,200 per child</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">CESG Carry-Forward</span>
+          <span class="limit-value">Up to $1,000/year (if missed)</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Additional CESG (low income)</span>
+          <span class="limit-value">Extra 10-20% on first $500</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">CLB (Canada Learning Bond)</span>
+          <span class="limit-value">Up to $2,000 (low income)</span>
+        </div>
+
+        <div class="info-box" style="margin-top:20px">
+          <strong>To maximize the CESG, contribute $2,500/year per child.</strong> The government adds $500 (20% match) — that's an instant 20% return before any investment growth. Over 18 years, the CESG alone adds $7,200 per child.
+        </div>
+      </div>
+
+      <!-- CPP -->
+      <div class="account-card" id="cpp">
+        <h2><span class="account-icon">🍁</span> CPP — Canada Pension Plan</h2>
+        <p class="account-subtitle">Mandatory contributions from employment income. Both you and your employer contribute.</p>
+
+        <div class="limit-row">
+          <span class="limit-label">2025 Maximum Pensionable Earnings (YMPE)</span>
+          <span class="limit-value">$71,300</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">2025 Second Ceiling (YAMPE — CPP2)</span>
+          <span class="limit-value">$81,200</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Basic Exemption</span>
+          <span class="limit-value">$3,500</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">CPP1 Employee Rate</span>
+          <span class="limit-value">5.95%</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">CPP2 Employee Rate</span>
+          <span class="limit-value">4%</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Max CPP1 Employee Contribution</span>
+          <span class="limit-value">$4,034.10</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Max Monthly CPP Retirement (age 65)</span>
+          <span class="limit-value">~$1,364/month</span>
+        </div>
+        <div class="limit-row">
+          <span class="limit-label">Average Monthly CPP Payment</span>
+          <span class="limit-value">~$815/month</span>
+        </div>
+
+        <div class="info-box warning" style="margin-top:20px">
+          <strong>CPP alone won't fund your retirement.</strong> The maximum monthly CPP payment at age 65 is ~$1,364 — and most Canadians receive far less. You need your own RRSP, TFSA, and investment portfolio to bridge the gap.
+          <br><br><a href="/calc/retirement.html" style="color:#fbbf24;font-weight:600">Calculate your retirement income &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Key Dates -->
+      <div class="account-card" id="dates">
+        <h2><span class="account-icon">📅</span> Key Dates for 2026</h2>
+
+        <div class="key-date">
+          <div class="key-date-icon">J1</div>
+          <div class="key-date-text">
+            <strong>January 1, 2026</strong>
+            <span>New TFSA room ($7,000) added. TFSA withdrawal room from 2025 restored.</span>
+          </div>
+        </div>
+        <div class="key-date">
+          <div class="key-date-icon">M2</div>
+          <div class="key-date-text">
+            <strong>March 2, 2026</strong>
+            <span>RRSP contribution deadline for 2025 tax year deductions.</span>
+          </div>
+        </div>
+        <div class="key-date">
+          <div class="key-date-icon">A</div>
+          <div class="key-date-text">
+            <strong>April 2026</strong>
+            <span>CRA processes 2025 TFSA records. Check your room in CRA My Account.</span>
+          </div>
+        </div>
+        <div class="key-date">
+          <div class="key-date-icon">A30</div>
+          <div class="key-date-text">
+            <strong>April 30, 2026</strong>
+            <span>Tax filing deadline for 2025. RRSP deductions claimed here.</span>
+          </div>
+        </div>
+        <div class="key-date">
+          <div class="key-date-icon">D31</div>
+          <div class="key-date-text">
+            <strong>December 31, 2026</strong>
+            <span>Last day to contribute to FHSA and RESP for 2026 CESG grant. Last day to convert RRSP to RRIF (if turning 71).</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="app-cta-banner">
+        <p class="app-cta-text">Track all your accounts and limits in the WealthWise iOS app.</p>
+        <div class="app-cta-actions">
+          <a href="https://apps.apple.com" class="btn btn-primary btn-lg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download for iOS
+          </a>
+        </div>
+        <p class="app-cta-sub">Free download. No credit card required.</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
