@@ -1,0 +1,21 @@
+{
+  "name": "wealthwise-backend",
+  "version": "1.0.0",
+  "description": "WealthWise API Server — Railway deployment",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "node-cron": "^3.0.3",
+    "resend": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
