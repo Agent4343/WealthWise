@@ -40,6 +40,10 @@ final class SubscriptionViewModel: ObservableObject {
         products.first { $0.id == StoreKitProductID.premiumAnnual.rawValue }
     }
 
+    var lifetime: Product? {
+        products.first { $0.id == StoreKitProductID.lifetime.rawValue }
+    }
+
     func loadProducts() async {
         do {
             products = try await Product.products(for: StoreKitProductID.allProductIDs)

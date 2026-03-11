@@ -29,14 +29,17 @@ struct PaywallView: View {
                     Picker("Plan", selection: $selectedTab) {
                         Text("Basic").tag(0)
                         Text("Premium").tag(1)
+                        Text("Lifetime").tag(2)
                     }
                     .pickerStyle(.segmented)
                     .padding(.horizontal)
 
                     if selectedTab == 0 {
                         basicPlan
-                    } else {
+                    } else if selectedTab == 1 {
                         premiumPlan
+                    } else {
+                        lifetimePlan
                     }
 
                     // Restore
@@ -141,6 +144,39 @@ struct PaywallView: View {
                     price: "\(product.displayPrice)/year"
                 )
             }
+        }
+    }
+
+    private var lifetimePlan: some View {
+        VStack(spacing: 16) {
+            // Badge
+            Text("BEST VALUE")
+                .font(.caption.bold())
+                .padding(.horizontal, 12)
+                .padding(.vertical, 4)
+                .background(Color(red: 0.12, green: 0.44, blue: 0.35))
+                .foregroundStyle(.white)
+                .clipShape(Capsule())
+
+            // Features
+            VStack(alignment: .leading, spacing: 10) {
+                featureRow("Everything in Premium — forever")
+                featureRow("All future features included")
+                featureRow("AI Weekly Brief for life")
+                featureRow("No recurring charges")
+                featureRow("Support indie Canadian development")
+            }
+            .padding()
+            .background(.regularMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+
+            if let product = subscriptionVM.lifetime {
+                purchaseButton(product: product, label: "Lifetime Access", price: product.displayPrice)
+            }
+
+            Text("One-time purchase. No subscription.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
     }
 

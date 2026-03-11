@@ -6,21 +6,21 @@ struct OnboardingView: View {
 
     private let pages: [OnboardingPage] = [
         OnboardingPage(
-            icon: "book.closed.fill",
-            title: "The School Canada Forgot",
-            description: "Learn what 13 years of education never taught you about money — compound interest, TFSAs, RRSPs, and how to actually build wealth.",
-            color: .blue
+            icon: "chart.line.uptrend.xyaxis",
+            title: "Understand Your Financial Future",
+            description: "Learn what 13 years of education never taught you — compound interest, TFSAs, RRSPs, and how Canadians actually build wealth.",
+            color: Color(red: 0.08, green: 0.15, blue: 0.30)
         ),
         OnboardingPage(
-            icon: "chart.line.uptrend.xyaxis",
-            title: "Your Financial Dashboard",
-            description: "Track your RRSP room, TFSA contributions, and savings goals — all in one place. See exactly where you stand.",
-            color: .green
+            icon: "gauge.with.needle.fill",
+            title: "Improve Your Financial Score",
+            description: "Get a personalized Money Score, track your savings progress, and see exactly where you stand with your RRSP and TFSA goals.",
+            color: Color(red: 0.12, green: 0.44, blue: 0.35)
         ),
         OnboardingPage(
             icon: "brain.head.profile",
-            title: "AI-Powered Weekly Guidance",
-            description: "Every Monday morning, get a personalized financial briefing based on your profile, current markets, and Bank of Canada decisions.",
+            title: "Get Weekly Financial Insights",
+            description: "Every Monday morning, receive an AI-powered briefing personalized to your profile — with Bank of Canada context and actionable recommendations.",
             color: .purple
         ),
     ]

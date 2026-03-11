@@ -9,6 +9,7 @@ const webhookRoutes = require('./routes/webhooks');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const { router: pushRoutes } = require('./routes/push');
+const calculatorRoutes = require('./routes/calculator');
 const { generateWeeklyBriefs } = require('./jobs/weeklyBriefGenerator');
 
 const app = express();
@@ -32,6 +33,7 @@ app.use('/profile', authMiddleware, profileRoutes);
 app.use('/briefs', authMiddleware, briefsRoutes);
 app.use('/subscription', authMiddleware, subscriptionRoutes);
 app.use('/push', authMiddleware, pushRoutes);
+app.use('/calculator', authMiddleware, calculatorRoutes);
 app.use('/admin', adminRoutes);
 
 // Sunday 23:00 EST cron job for Weekly Brief generation

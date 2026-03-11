@@ -55,11 +55,12 @@ enum StoreKitProductID: String, CaseIterable {
     case basicAnnual = "com.themileschool.wealthwise.basic.annual"
     case premiumMonthly = "com.themileschool.wealthwise.premium.monthly"
     case premiumAnnual = "com.themileschool.wealthwise.premium.annual"
+    case lifetime = "com.themileschool.wealthwise.lifetime"
 
     var tier: SubscriptionTier {
         switch self {
         case .basicMonthly, .basicAnnual: return .basic
-        case .premiumMonthly, .premiumAnnual: return .premium
+        case .premiumMonthly, .premiumAnnual, .lifetime: return .premium
         }
     }
 
@@ -68,6 +69,10 @@ enum StoreKitProductID: String, CaseIterable {
         case .basicAnnual, .premiumAnnual: return true
         default: return false
         }
+    }
+
+    var isLifetime: Bool {
+        self == .lifetime
     }
 
     static var allProductIDs: Set<String> {

@@ -69,6 +69,19 @@ struct PlannerTabView: View {
                     )
                 }
                 .disabled(subscriptionVM.currentTier < .basic)
+
+                NavigationLink {
+                    SimulatorView()
+                } label: {
+                    calculatorRow(
+                        icon: "slider.horizontal.3",
+                        title: "Life Simulator",
+                        subtitle: "Compare financial scenarios side by side",
+                        color: .purple,
+                        requiresBasic: true
+                    )
+                }
+                .disabled(subscriptionVM.currentTier < .basic)
             }
             .navigationTitle("Planner")
         }

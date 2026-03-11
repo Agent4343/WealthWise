@@ -6,17 +6,17 @@ struct MainTabView: View {
 
     var body: some View {
         TabView(selection: $selectedTab) {
+            HomeView()
+                .environmentObject(subscriptionVM)
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
+                .tag(0)
+
             ChapterListView()
                 .environmentObject(subscriptionVM)
                 .tabItem {
                     Label("School", systemImage: "book.fill")
-                }
-                .tag(0)
-
-            DashboardView()
-                .environmentObject(subscriptionVM)
-                .tabItem {
-                    Label("Dashboard", systemImage: "chart.bar.fill")
                 }
                 .tag(1)
 

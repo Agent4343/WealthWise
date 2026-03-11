@@ -62,6 +62,16 @@ struct RetirementCalculatorView: View {
                         growthChart(balances: result.yearByYearBalances)
                     }
 
+                    // Share Card (Viral Growth Feature)
+                    RetirementShareSheet(
+                        result: result,
+                        age: viewModel.retCurrentAge,
+                        retirementAge: viewModel.retRetirementAge,
+                        monthlyContribution: Double(viewModel.retMonthlyAmount) ?? 0,
+                        userName: AuthManager.shared.currentUser?.fullName ?? ""
+                    )
+                    .padding(.top, 8)
+
                     disclaimer
                 }
             }

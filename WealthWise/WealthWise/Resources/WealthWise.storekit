@@ -1,6 +1,22 @@
 {
   "identifier" : "com.themileschool.wealthwise",
-  "nonRenewableSubscriptions" : [],
+  "nonRenewableSubscriptions" : [
+    {
+      "displayPrice" : "299.99",
+      "familyShareable" : false,
+      "internalID" : "lifetime_001",
+      "localizations" : [
+        {
+          "description" : "Lifetime access to all WealthWise features including AI Weekly Brief",
+          "displayName" : "Lifetime Access",
+          "locale" : "en_CA"
+        }
+      ],
+      "productID" : "com.themileschool.wealthwise.lifetime",
+      "referenceName" : "Lifetime Access",
+      "type" : "NonRenewingSubscription"
+    }
+  ],
   "products" : [],
   "settings" : {
     "_billingIssuesEnabled" : false,
@@ -66,7 +82,7 @@
         {
           "adHocOffers" : [],
           "codeOffers" : [],
-          "displayPrice" : "24.99",
+          "displayPrice" : "19.99",
           "familyShareable" : false,
           "groupNumber" : 3,
           "internalID" : "premium_monthly_001",
