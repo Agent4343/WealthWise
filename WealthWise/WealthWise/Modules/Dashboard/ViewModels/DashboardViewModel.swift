@@ -36,20 +36,18 @@ final class DashboardViewModel: ObservableObject {
 
     // TFSA max room based on eligibility since 2009
     var tfsaMaxRoom: Double {
-        // Simplified: $7,000/year for recent years, varies historically
-        // Total cumulative room if eligible since 2009 = $95,000 (as of 2024)
-        95_000
+        TaxCalculator.tfsaCumulativeRoom // $102,000 through 2026
     }
 
     var tfsaRoomRemaining: Double {
         tfsaMaxRoom - (profile?.tfsaRoomUsed ?? 0)
     }
 
-    // RRSP: 18% of previous year income up to $31,560
+    // RRSP: 18% of previous year income up to $33,810 (2026)
     var estimatedRrspRoom: Double {
         guard let profile = profile else { return 0 }
         let bracketMidpoint = IncomeBracket(rawValue: profile.incomeBracket)?.midpoint ?? 75_000
-        return min(bracketMidpoint * 0.18, 31_560)
+        return min(bracketMidpoint * 0.18, TaxCalculator.rrspMaxDeduction)
     }
 
     var rrspRoomRemaining: Double {

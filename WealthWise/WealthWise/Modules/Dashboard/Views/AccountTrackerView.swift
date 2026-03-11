@@ -14,7 +14,7 @@ struct AccountTrackerView: View {
                     color: .green,
                     used: viewModel.profile?.tfsaRoomUsed ?? 0,
                     total: viewModel.tfsaMaxRoom,
-                    explanation: "Your TFSA room accumulates each year ($7,000 for 2024). Cumulative room since 2009 is $95,000. Withdrawals restore room on January 1st of the following year."
+                    explanation: "Your TFSA room accumulates each year ($7,000 for 2025/2026). Cumulative room since 2009 is $102,000. Withdrawals restore room on January 1st of the following year."
                 )
 
                 // RRSP Tracker
@@ -24,7 +24,7 @@ struct AccountTrackerView: View {
                     color: .blue,
                     used: viewModel.profile?.rrspRoomUsed ?? 0,
                     total: viewModel.estimatedRrspRoom,
-                    explanation: "RRSP room is 18% of your previous year's earned income, up to $31,560 (2024). Unused room carries forward. Check your CRA My Account for exact figures."
+                    explanation: "RRSP room is 18% of your previous year's earned income, up to $33,810 (2026). Unused room carries forward. Check your CRA My Account for exact figures."
                 )
 
                 // Room comparison chart

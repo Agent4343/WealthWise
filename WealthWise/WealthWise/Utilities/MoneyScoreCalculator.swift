@@ -82,7 +82,7 @@ enum MoneyScoreCalculator {
         ))
 
         // 3. TFSA Usage (15% weight)
-        let tfsaMaxRoom = 95_000.0 // Cumulative room since 2009
+        let tfsaMaxRoom = TaxCalculator.tfsaCumulativeRoom // Cumulative room since 2009 (through 2026)
         let tfsaUsageRate = tfsaMaxRoom > 0 ? profile.tfsaRoomUsed / tfsaMaxRoom : 0
         let tfsaScore = min(100, Int(tfsaUsageRate * 100))
         components.append(ScoreComponent(
@@ -96,7 +96,7 @@ enum MoneyScoreCalculator {
         ))
 
         // 4. RRSP Usage (15% weight)
-        let rrspRoom = min(income * 0.18, 31_560)
+        let rrspRoom = min(income * 0.18, TaxCalculator.rrspMaxDeduction)
         let rrspUsageRate = rrspRoom > 0 ? min(profile.rrspRoomUsed / rrspRoom, 1.0) : 0
         let rrspScore = min(100, Int(rrspUsageRate * 100))
         components.append(ScoreComponent(

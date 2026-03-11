@@ -1,7 +1,7 @@
 import Foundation
 
 enum TaxCalculator {
-    // 2024/2025 Federal Tax Brackets (Canada)
+    // 2025 Federal Tax Brackets (Canada) — updated per CRA
     struct TaxBracket {
         let lowerBound: Double
         let upperBound: Double
@@ -9,12 +9,31 @@ enum TaxCalculator {
     }
 
     static let federalBrackets: [TaxBracket] = [
-        TaxBracket(lowerBound: 0, upperBound: 55_867, rate: 0.15),
-        TaxBracket(lowerBound: 55_867, upperBound: 111_733, rate: 0.205),
-        TaxBracket(lowerBound: 111_733, upperBound: 154_906, rate: 0.26),
-        TaxBracket(lowerBound: 154_906, upperBound: 220_000, rate: 0.29),
+        TaxBracket(lowerBound: 0, upperBound: 57_375, rate: 0.15),
+        TaxBracket(lowerBound: 57_375, upperBound: 114_750, rate: 0.205),
+        TaxBracket(lowerBound: 114_750, upperBound: 158_468, rate: 0.26),
+        TaxBracket(lowerBound: 158_468, upperBound: 220_000, rate: 0.29),
         TaxBracket(lowerBound: 220_000, upperBound: .infinity, rate: 0.33),
     ]
+
+    /// 2026 RRSP annual deduction limit
+    static let rrspMaxDeduction: Double = 33_810
+
+    /// 2026 TFSA annual contribution limit
+    static let tfsaAnnualLimit: Double = 7_000
+
+    /// Cumulative TFSA room if eligible since 2009 (through 2026)
+    static let tfsaCumulativeRoom: Double = 102_000
+
+    /// FHSA annual and lifetime limits
+    static let fhsaAnnualLimit: Double = 8_000
+    static let fhsaLifetimeLimit: Double = 40_000
+
+    /// RESP lifetime limit per beneficiary
+    static let respLifetimeLimit: Double = 50_000
+
+    /// CESG annual maximum (20% on first $2,500 contributed)
+    static let cespAnnualMax: Double = 500
 
     // Provincial top marginal rates (simplified)
     static let provincialTopRates: [String: Double] = [
