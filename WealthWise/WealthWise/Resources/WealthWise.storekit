@@ -1,0 +1,131 @@
+{
+  "identifier" : "com.themileschool.wealthwise",
+  "nonRenewableSubscriptions" : [
+    {
+      "displayPrice" : "299.99",
+      "familyShareable" : false,
+      "internalID" : "lifetime_001",
+      "localizations" : [
+        {
+          "description" : "Lifetime access to all WealthWise features including AI Weekly Brief",
+          "displayName" : "Lifetime Access",
+          "locale" : "en_CA"
+        }
+      ],
+      "productID" : "com.themileschool.wealthwise.lifetime",
+      "referenceName" : "Lifetime Access",
+      "type" : "NonRenewingSubscription"
+    }
+  ],
+  "products" : [],
+  "settings" : {
+    "_billingIssuesEnabled" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_CA",
+    "_storefront" : "CAN",
+    "_storeKitErrors" : []
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "wealthwise_plans",
+      "localizations" : [
+        {
+          "description" : "WealthWise Subscription Plans",
+          "displayName" : "WealthWise Plans",
+          "locale" : "en_CA"
+        }
+      ],
+      "name" : "WealthWise Plans",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "9.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "basic_monthly_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Full access to all 7 School chapters, calculators, dashboard, and tracking",
+              "displayName" : "Basic Monthly",
+              "locale" : "en_CA"
+            }
+          ],
+          "productID" : "com.themileschool.wealthwise.basic.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Basic Monthly",
+          "subscriptionGroupID" : "wealthwise_plans",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "79.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "basic_annual_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Basic plan — annual billing (save 33%)",
+              "displayName" : "Basic Annual",
+              "locale" : "en_CA"
+            }
+          ],
+          "productID" : "com.themileschool.wealthwise.basic.annual",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Basic Annual",
+          "subscriptionGroupID" : "wealthwise_plans",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "19.99",
+          "familyShareable" : false,
+          "groupNumber" : 3,
+          "internalID" : "premium_monthly_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Everything in Basic plus AI-powered Weekly Brief every Monday",
+              "displayName" : "Premium Monthly",
+              "locale" : "en_CA"
+            }
+          ],
+          "productID" : "com.themileschool.wealthwise.premium.monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Premium Monthly",
+          "subscriptionGroupID" : "wealthwise_plans",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "199.99",
+          "familyShareable" : false,
+          "groupNumber" : 4,
+          "internalID" : "premium_annual_001",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Premium plan — annual billing (save 33%)",
+              "displayName" : "Premium Annual",
+              "locale" : "en_CA"
+            }
+          ],
+          "productID" : "com.themileschool.wealthwise.premium.annual",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Premium Annual",
+          "subscriptionGroupID" : "wealthwise_plans",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

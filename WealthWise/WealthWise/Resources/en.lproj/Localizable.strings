@@ -1,0 +1,159 @@
+/* WealthWise — English (Base) Localization */
+
+/* App */
+"app.name" = "WealthWise";
+"app.tagline" = "The Financial Education App Canada Never Had";
+
+/* Tab Bar */
+"tab.school" = "School";
+"tab.dashboard" = "Dashboard";
+"tab.planner" = "Planner";
+"tab.briefs" = "Briefs";
+"tab.settings" = "Settings";
+
+/* Onboarding */
+"onboarding.welcome.title" = "Welcome to WealthWise";
+"onboarding.welcome.subtitle" = "The financial education app Canada never had.";
+"onboarding.learn.title" = "Learn What School Missed";
+"onboarding.learn.subtitle" = "7 chapters of Canadian financial literacy — from compound interest to the 1-2 Punch strategy.";
+"onboarding.plan.title" = "Plan Your Future";
+"onboarding.plan.subtitle" = "Interactive calculators for retirement, RRSP, TFSA, and FIRE planning.";
+"onboarding.brief.title" = "Get Weekly Guidance";
+"onboarding.brief.subtitle" = "AI-powered Monday morning briefings personalized to your financial profile.";
+"onboarding.getStarted" = "Get Started";
+"onboarding.next" = "Next";
+"onboarding.skip" = "Skip";
+
+/* Auth */
+"auth.signIn" = "Sign In";
+"auth.signUp" = "Create Account";
+"auth.email" = "Email";
+"auth.password" = "Password";
+"auth.fullName" = "Full Name";
+"auth.forgotPassword" = "Forgot Password?";
+"auth.noAccount" = "Don't have an account?";
+"auth.hasAccount" = "Already have an account?";
+"auth.signOut" = "Sign Out";
+"auth.signOutConfirm" = "Are you sure you want to sign out?";
+
+/* School */
+"school.title" = "The School";
+"school.progress" = "Your Progress";
+"school.lessonsCompleted" = "%d/%d lessons";
+"school.chapter" = "Chapter %d";
+"school.quiz" = "Chapter %d Quiz";
+"school.quizQuestion" = "Question %d of %d";
+"school.correct" = "%d correct";
+"school.nextQuestion" = "Next Question";
+"school.seeResults" = "See Results";
+"school.greatJob" = "Great Job!";
+"school.keepLearning" = "Keep Learning!";
+"school.done" = "Done";
+
+/* Dashboard */
+"dashboard.title" = "Dashboard";
+"dashboard.setupProfile" = "Set Up Your Profile";
+"dashboard.setupDescription" = "Tell us about your financial situation and goals to unlock your personalized dashboard.";
+"dashboard.getStarted" = "Get Started";
+"dashboard.retirementProjection" = "Retirement Projection";
+"dashboard.monthlyIncome" = "Monthly Income";
+"dashboard.interestEarned" = "Interest Earned";
+"dashboard.contributed" = "Contributed";
+"dashboard.tfsaRoom" = "TFSA Room";
+"dashboard.rrspRoom" = "RRSP Room";
+"dashboard.remaining" = "remaining";
+"dashboard.used" = "%@ used";
+"dashboard.monthlyContribution" = "Monthly Contribution";
+"dashboard.annual" = "Annual";
+"dashboard.quickStats" = "Quick Stats";
+"dashboard.currentSavings" = "Current Savings";
+"dashboard.riskProfile" = "Risk Profile";
+"dashboard.yearsToRetire" = "Years to Retire";
+
+/* Profile Setup */
+"profile.title" = "Financial Profile";
+"profile.aboutYou" = "About You";
+"profile.age" = "Age: %d";
+"profile.retirementAge" = "Retirement Age: %d";
+"profile.province" = "Province";
+"profile.incomeBracket" = "Income Bracket";
+"profile.yourAccounts" = "Your Accounts";
+"profile.rrspRoomUsed" = "RRSP Room Used";
+"profile.tfsaRoomUsed" = "TFSA Room Used";
+"profile.currentSavings" = "Current Savings";
+"profile.monthlyContribution" = "Monthly Contribution";
+"profile.riskTolerance" = "Risk Tolerance";
+"profile.save" = "Save Profile";
+"profile.cancel" = "Cancel";
+
+/* Planner */
+"planner.title" = "Planner";
+"planner.retirementBuilder" = "Retirement Builder";
+"planner.tfsaOptimizer" = "TFSA Optimizer";
+"planner.rrspTaxSaver" = "RRSP Tax Saver";
+"planner.feeDrag" = "Fee Drag Calculator";
+"planner.fireCalculator" = "FIRE Calculator";
+"planner.calculate" = "Calculate";
+
+/* Briefs */
+"briefs.title" = "Weekly Briefs";
+"briefs.noBriefs" = "No Briefs Yet";
+"briefs.noBriefsDescription" = "Your first Weekly Brief will arrive on Monday morning. Check back then!";
+"briefs.premiumRequired" = "AI Weekly Briefs";
+"briefs.premiumDescription" = "Every Monday morning, get a personalized financial briefing based on your profile, current market conditions, and Bank of Canada decisions.";
+"briefs.upgrade" = "Upgrade to Premium — $24.99/mo";
+"briefs.section1" = "Your Week at a Glance";
+"briefs.section2" = "The Canadian Economic Pulse";
+"briefs.section3" = "Your Accounts This Week";
+"briefs.section4" = "What to Think About";
+"briefs.section5" = "Your Monday Action Item";
+
+/* Paywall */
+"paywall.title" = "Unlock WealthWise";
+"paywall.subtitle" = "The financial education app Canada never had";
+"paywall.basic" = "Basic";
+"paywall.premium" = "Premium";
+"paywall.aiPowered" = "AI-POWERED";
+"paywall.restorePurchases" = "Restore Purchases";
+"paywall.monthly" = "Monthly";
+"paywall.annual" = "Annual — Save 33%";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.account" = "Account";
+"settings.subscription" = "Subscription";
+"settings.upgradePlan" = "Upgrade Plan";
+"settings.app" = "App";
+"settings.disclaimer" = "Disclaimer";
+"settings.privacyPolicy" = "Privacy Policy";
+"settings.termsOfService" = "Terms of Service";
+"settings.support" = "Support";
+"settings.contactSupport" = "Contact Support";
+"settings.restorePurchases" = "Restore Purchases";
+"settings.version" = "Version";
+
+/* Risk Tolerance */
+"risk.conservative" = "Conservative";
+"risk.conservative.desc" = "Lower risk, steady returns. Bonds and GICs.";
+"risk.balanced" = "Balanced";
+"risk.balanced.desc" = "Mix of growth and stability. ETFs and balanced funds.";
+"risk.growth" = "Growth";
+"risk.growth.desc" = "Higher risk, higher potential returns. Equity-heavy.";
+
+/* Notifications */
+"notification.briefReady.title" = "Your Weekly Brief Is Ready";
+"notification.briefReady.body" = "Your personalized Monday morning financial briefing is waiting for you.";
+"notification.engagement.title" = "Your Money Doesn't Take Days Off";
+"notification.engagement.body" = "You haven't checked WealthWise in a while. Your weekly progress and financial insights are waiting.";
+
+/* Disclaimer */
+"disclaimer.title" = "Important Disclaimer";
+"disclaimer.full" = "WealthWise is a financial education application developed by The Money School Inc. The content provided in this app, including the AI-generated Weekly Brief, is for educational and informational purposes only.\n\nWealthWise does NOT provide personalized financial, investment, or tax advice as defined by IIROC, OSC, or provincial securities regulators.\n\nAll calculations, projections, and illustrations are for educational purposes only and are based on hypothetical scenarios. Actual results will vary.\n\nPast performance does not guarantee future results. Investing involves risk, including the potential loss of principal.\n\nAlways consult with a qualified Certified Financial Planner (CFP), tax professional, or registered investment advisor before making financial decisions specific to your situation.";
+
+/* Common */
+"common.error" = "Error";
+"common.ok" = "OK";
+"common.cancel" = "Cancel";
+"common.save" = "Save";
+"common.loading" = "Loading...";
+"common.retry" = "Retry";

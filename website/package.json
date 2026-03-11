@@ -1,0 +1,17 @@
+{
+  "name": "wealthwise-website",
+  "version": "1.0.0",
+  "description": "WealthWise Marketing Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "compression": "^1.7.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

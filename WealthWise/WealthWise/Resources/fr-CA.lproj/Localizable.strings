@@ -1,0 +1,159 @@
+/* WealthWise — French Canadian Localization (Phase 3 Prep) */
+
+/* App */
+"app.name" = "WealthWise";
+"app.tagline" = "L'application d'éducation financière que le Canada n'a jamais eue";
+
+/* Tab Bar */
+"tab.school" = "École";
+"tab.dashboard" = "Tableau de bord";
+"tab.planner" = "Planificateur";
+"tab.briefs" = "Bulletins";
+"tab.settings" = "Réglages";
+
+/* Onboarding */
+"onboarding.welcome.title" = "Bienvenue sur WealthWise";
+"onboarding.welcome.subtitle" = "L'application d'éducation financière que le Canada n'a jamais eue.";
+"onboarding.learn.title" = "Apprenez ce que l'école a oublié";
+"onboarding.learn.subtitle" = "7 chapitres de littératie financière canadienne — de l'intérêt composé à la stratégie 1-2.";
+"onboarding.plan.title" = "Planifiez votre avenir";
+"onboarding.plan.subtitle" = "Calculatrices interactives pour la retraite, le REER, le CELI et la planification FIRE.";
+"onboarding.brief.title" = "Recevez des conseils hebdomadaires";
+"onboarding.brief.subtitle" = "Bulletins du lundi matin propulsés par l'IA, personnalisés selon votre profil financier.";
+"onboarding.getStarted" = "Commencer";
+"onboarding.next" = "Suivant";
+"onboarding.skip" = "Passer";
+
+/* Auth */
+"auth.signIn" = "Se connecter";
+"auth.signUp" = "Créer un compte";
+"auth.email" = "Courriel";
+"auth.password" = "Mot de passe";
+"auth.fullName" = "Nom complet";
+"auth.forgotPassword" = "Mot de passe oublié?";
+"auth.noAccount" = "Vous n'avez pas de compte?";
+"auth.hasAccount" = "Vous avez déjà un compte?";
+"auth.signOut" = "Se déconnecter";
+"auth.signOutConfirm" = "Êtes-vous sûr de vouloir vous déconnecter?";
+
+/* School */
+"school.title" = "L'École";
+"school.progress" = "Votre progression";
+"school.lessonsCompleted" = "%d/%d leçons";
+"school.chapter" = "Chapitre %d";
+"school.quiz" = "Quiz du chapitre %d";
+"school.quizQuestion" = "Question %d sur %d";
+"school.correct" = "%d correctes";
+"school.nextQuestion" = "Question suivante";
+"school.seeResults" = "Voir les résultats";
+"school.greatJob" = "Excellent travail!";
+"school.keepLearning" = "Continuez à apprendre!";
+"school.done" = "Terminé";
+
+/* Dashboard */
+"dashboard.title" = "Tableau de bord";
+"dashboard.setupProfile" = "Configurez votre profil";
+"dashboard.setupDescription" = "Parlez-nous de votre situation financière et de vos objectifs pour débloquer votre tableau de bord personnalisé.";
+"dashboard.getStarted" = "Commencer";
+"dashboard.retirementProjection" = "Projection de retraite";
+"dashboard.monthlyIncome" = "Revenu mensuel";
+"dashboard.interestEarned" = "Intérêts gagnés";
+"dashboard.contributed" = "Contribué";
+"dashboard.tfsaRoom" = "Espace CELI";
+"dashboard.rrspRoom" = "Espace REER";
+"dashboard.remaining" = "restant";
+"dashboard.used" = "%@ utilisé";
+"dashboard.monthlyContribution" = "Cotisation mensuelle";
+"dashboard.annual" = "Annuel";
+"dashboard.quickStats" = "Statistiques rapides";
+"dashboard.currentSavings" = "Épargne actuelle";
+"dashboard.riskProfile" = "Profil de risque";
+"dashboard.yearsToRetire" = "Années avant la retraite";
+
+/* Profile Setup */
+"profile.title" = "Profil financier";
+"profile.aboutYou" = "À propos de vous";
+"profile.age" = "Âge: %d";
+"profile.retirementAge" = "Âge de la retraite: %d";
+"profile.province" = "Province";
+"profile.incomeBracket" = "Tranche de revenu";
+"profile.yourAccounts" = "Vos comptes";
+"profile.rrspRoomUsed" = "Espace REER utilisé";
+"profile.tfsaRoomUsed" = "Espace CELI utilisé";
+"profile.currentSavings" = "Épargne actuelle";
+"profile.monthlyContribution" = "Cotisation mensuelle";
+"profile.riskTolerance" = "Tolérance au risque";
+"profile.save" = "Enregistrer le profil";
+"profile.cancel" = "Annuler";
+
+/* Planner */
+"planner.title" = "Planificateur";
+"planner.retirementBuilder" = "Calculatrice de retraite";
+"planner.tfsaOptimizer" = "Optimiseur CELI";
+"planner.rrspTaxSaver" = "Économie d'impôt REER";
+"planner.feeDrag" = "Calculatrice de frais";
+"planner.fireCalculator" = "Calculatrice FIRE";
+"planner.calculate" = "Calculer";
+
+/* Briefs */
+"briefs.title" = "Bulletins hebdomadaires";
+"briefs.noBriefs" = "Aucun bulletin pour l'instant";
+"briefs.noBriefsDescription" = "Votre premier bulletin hebdomadaire arrivera lundi matin. Revenez à ce moment!";
+"briefs.premiumRequired" = "Bulletins IA hebdomadaires";
+"briefs.premiumDescription" = "Chaque lundi matin, recevez un bulletin financier personnalisé basé sur votre profil, les conditions du marché et les décisions de la Banque du Canada.";
+"briefs.upgrade" = "Passer à Premium — 24,99$/mois";
+"briefs.section1" = "Votre semaine en un coup d'œil";
+"briefs.section2" = "Le pouls économique canadien";
+"briefs.section3" = "Vos comptes cette semaine";
+"briefs.section4" = "À réfléchir";
+"briefs.section5" = "Votre action du lundi";
+
+/* Paywall */
+"paywall.title" = "Débloquez WealthWise";
+"paywall.subtitle" = "L'application d'éducation financière que le Canada n'a jamais eue";
+"paywall.basic" = "Base";
+"paywall.premium" = "Premium";
+"paywall.aiPowered" = "PROPULSÉ PAR L'IA";
+"paywall.restorePurchases" = "Restaurer les achats";
+"paywall.monthly" = "Mensuel";
+"paywall.annual" = "Annuel — Économisez 33%";
+
+/* Settings */
+"settings.title" = "Réglages";
+"settings.account" = "Compte";
+"settings.subscription" = "Abonnement";
+"settings.upgradePlan" = "Améliorer le forfait";
+"settings.app" = "Application";
+"settings.disclaimer" = "Avis de non-responsabilité";
+"settings.privacyPolicy" = "Politique de confidentialité";
+"settings.termsOfService" = "Conditions d'utilisation";
+"settings.support" = "Soutien";
+"settings.contactSupport" = "Contacter le support";
+"settings.restorePurchases" = "Restaurer les achats";
+"settings.version" = "Version";
+
+/* Risk Tolerance */
+"risk.conservative" = "Prudent";
+"risk.conservative.desc" = "Risque plus faible, rendements stables. Obligations et CPG.";
+"risk.balanced" = "Équilibré";
+"risk.balanced.desc" = "Mélange de croissance et de stabilité. FNB et fonds équilibrés.";
+"risk.growth" = "Croissance";
+"risk.growth.desc" = "Risque plus élevé, rendements potentiels plus élevés. Axé sur les actions.";
+
+/* Notifications */
+"notification.briefReady.title" = "Votre bulletin hebdomadaire est prêt";
+"notification.briefReady.body" = "Votre bulletin financier personnalisé du lundi matin vous attend.";
+"notification.engagement.title" = "Votre argent ne prend pas de congé";
+"notification.engagement.body" = "Vous n'avez pas consulté WealthWise depuis un moment. Vos progrès et vos perspectives financières vous attendent.";
+
+/* Disclaimer */
+"disclaimer.title" = "Avis important";
+"disclaimer.full" = "WealthWise est une application d'éducation financière développée par The Money School Inc. Le contenu fourni dans cette application, y compris le bulletin hebdomadaire généré par l'IA, est à des fins éducatives et informatives uniquement.\n\nWealthWise ne fournit PAS de conseils financiers, d'investissement ou fiscaux personnalisés tels que définis par l'OCRCVM, la CVMO ou les organismes provinciaux de réglementation des valeurs mobilières.\n\nTous les calculs, projections et illustrations sont à des fins éducatives uniquement et sont basés sur des scénarios hypothétiques. Les résultats réels varieront.\n\nLes performances passées ne garantissent pas les résultats futurs. L'investissement comporte des risques, y compris la perte potentielle du capital.\n\nConsultez toujours un planificateur financier agréé (Pl. Fin.), un professionnel de la fiscalité ou un conseiller en placement inscrit avant de prendre des décisions financières propres à votre situation.";
+
+/* Common */
+"common.error" = "Erreur";
+"common.ok" = "OK";
+"common.cancel" = "Annuler";
+"common.save" = "Enregistrer";
+"common.loading" = "Chargement...";
+"common.retry" = "Réessayer";
