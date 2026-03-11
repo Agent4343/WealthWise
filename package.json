@@ -1,0 +1,12 @@
+{
+  "name": "wealthwise",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "cd website && npm start",
+    "install": "cd website && npm install"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

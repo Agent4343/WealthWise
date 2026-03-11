@@ -2,7 +2,7 @@
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["cd website && npm install"]
+cmds = ["npm install --prefix website"]
 
 [start]
-cmd = "cd website && npm start"
+cmd = "npm start --prefix website"
