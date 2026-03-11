@@ -20,6 +20,10 @@ app.use(cors());
 app.use(express.json());
 
 // Health check
+app.get('/', (req, res) => {
+  res.json({ status: 'ok', service: 'wealthwise-api', timestamp: new Date().toISOString() });
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'wealthwise-api', timestamp: new Date().toISOString() });
 });
