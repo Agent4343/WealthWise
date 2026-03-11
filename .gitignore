@@ -1,0 +1,48 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables — NEVER commit secrets
+backend/.env
+ios/.env
+
+# Build artifacts
+backend/dist/
+ios/build/
+ios/DerivedData/
+
+# Xcode
+ios/*.xcworkspace/
+ios/WealthWise.xcodeproj/xcuserdata/
+ios/WealthWise.xcodeproj/project.xcworkspace/xcuserdata/
+ios/WealthWise.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+*.xccheckout
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+
+# Test coverage
+coverage/
+
+# Railway
+.railway/
+
+# Logs
+*.log
+logs/
