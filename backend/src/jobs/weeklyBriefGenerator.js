@@ -9,8 +9,8 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY
 );
 
-const anthropic = new Anthropic({ apiKey: process.env.CLAUDE_API_KEY });
-const resend = new Resend(process.env.RESEND_API_KEY);
+const anthropic = process.env.CLAUDE_API_KEY ? new Anthropic({ apiKey: process.env.CLAUDE_API_KEY }) : null;
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 const SYSTEM_PROMPT = `You are WealthWise, a Canadian financial education assistant. You provide educational guidance — not personalized financial advice. You are knowledgeable about Canadian tax rules, RRSP, TFSA, CPP, OAS, and investment fundamentals.
 
@@ -84,6 +84,7 @@ async function generateWeeklyBriefs() {
 }
 
 async function fetchMarketContext() {
+  if (!anthropic) return 'Market data unavailable — CLAUDE_API_KEY not configured.';
   try {
     const response = await anthropic.messages.create({
       model: 'claude-sonnet-4-6',
@@ -118,6 +119,11 @@ async function generateBriefForUser(userId, marketContext) {
 
   if (!profile) {
     console.log(`[BRIEF] No profile for user ${userId}, skipping`);
+    return;
+  }
+
+  if (!anthropic) {
+    console.log(`[BRIEF] CLAUDE_API_KEY not configured, skipping brief generation`);
     return;
   }
 
