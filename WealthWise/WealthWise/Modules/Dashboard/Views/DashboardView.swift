@@ -42,22 +42,27 @@ struct DashboardView: View {
                     retirementCard(result: result, profile: profile)
                 }
 
-                // Account Tracker Cards
-                HStack(spacing: 12) {
-                    accountCard(
-                        title: "TFSA Room",
-                        used: profile.tfsaRoomUsed,
-                        total: viewModel.tfsaMaxRoom,
-                        color: .green
-                    )
+                // Account Tracker Cards (tap for detailed view)
+                NavigationLink {
+                    AccountTrackerView(viewModel: viewModel)
+                } label: {
+                    HStack(spacing: 12) {
+                        accountCard(
+                            title: "TFSA Room",
+                            used: profile.tfsaRoomUsed,
+                            total: viewModel.tfsaMaxRoom,
+                            color: .green
+                        )
 
-                    accountCard(
-                        title: "RRSP Room",
-                        used: profile.rrspRoomUsed,
-                        total: viewModel.estimatedRrspRoom,
-                        color: .blue
-                    )
+                        accountCard(
+                            title: "RRSP Room",
+                            used: profile.rrspRoomUsed,
+                            total: viewModel.estimatedRrspRoom,
+                            color: .blue
+                        )
+                    }
                 }
+                .buttonStyle(.plain)
 
                 // Monthly Contribution
                 contributionCard(profile: profile)

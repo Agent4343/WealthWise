@@ -42,5 +42,8 @@ struct MainTabView: View {
                 .tag(4)
         }
         .tint(.accent)
+        .onReceive(NotificationCenter.default.publisher(for: .navigateToBriefs)) { _ in
+            selectedTab = 3
+        }
     }
 }

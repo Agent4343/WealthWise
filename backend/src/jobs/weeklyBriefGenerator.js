@@ -1,6 +1,8 @@
 const Anthropic = require('@anthropic-ai/sdk');
 const { createClient } = require('@supabase/supabase-js');
 const { Resend } = require('resend');
+const { weeklyBriefEmail } = require('../services/emailTemplates');
+const { apnsService } = require('../routes/push');
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -207,51 +209,23 @@ async function sendBriefEmail(email, name, brief, weekOf) {
       from: 'WealthWise <briefs@wealthwise.ca>',
       to: email,
       subject: `Your WealthWise Weekly Brief — ${formattedDate}`,
-      html: `
-        <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #1a1a1a;">Your Weekly Brief</h1>
-          <p style="color: #666;">Week of ${formattedDate}${name ? ` | Hi ${name}` : ''}</p>
-
-          <div style="background: #f0f7ff; padding: 16px; border-radius: 8px; margin: 16px 0;">
-            <h3 style="color: #0066cc; margin-top: 0;">Your Week at a Glance</h3>
-            <p>${brief.section_1_snapshot}</p>
-          </div>
-
-          <div style="background: #f0fff0; padding: 16px; border-radius: 8px; margin: 16px 0;">
-            <h3 style="color: #008800; margin-top: 0;">The Canadian Economic Pulse</h3>
-            <p>${brief.section_2_market}</p>
-          </div>
-
-          <div style="background: #f5f0ff; padding: 16px; border-radius: 8px; margin: 16px 0;">
-            <h3 style="color: #6600cc; margin-top: 0;">Your Accounts This Week</h3>
-            <p>${brief.section_3_accounts}</p>
-          </div>
-
-          <div style="background: #fff8f0; padding: 16px; border-radius: 8px; margin: 16px 0;">
-            <h3 style="color: #cc6600; margin-top: 0;">What to Think About</h3>
-            <p>${brief.section_4_learn}</p>
-          </div>
-
-          <div style="background: #f0ffff; padding: 16px; border-radius: 8px; margin: 16px 0;">
-            <h3 style="color: #008888; margin-top: 0;">Your Monday Action Item</h3>
-            <p>${brief.section_5_action}</p>
-          </div>
-
-          <hr style="border: none; border-top: 1px solid #eee; margin: 24px 0;">
-          <p style="font-size: 11px; color: #999; line-height: 1.5;">
-            WealthWise Weekly Brief is educational guidance only and does not constitute
-            personalized financial, investment, or tax advice under OSC regulations. Past
-            performance does not guarantee future results. Consult a Certified Financial
-            Planner (CFP) for advice specific to your situation.
-          </p>
-          <p style="font-size: 11px; color: #999;">
-            The Money School Inc. | <a href="https://wealthwise.ca">wealthwise.ca</a>
-          </p>
-        </div>
-      `
+      html: weeklyBriefEmail(brief, name, formattedDate)
     });
   } catch (error) {
     console.error(`[EMAIL] Failed to send to ${email}:`, error);
+  }
+}
+
+async function sendPushNotifications(weekOf) {
+  const formattedDate = weekOf.toLocaleDateString('en-CA', {
+    month: 'long', day: 'numeric', year: 'numeric'
+  });
+
+  try {
+    const result = await apnsService.notifyAllPremiumUsers(formattedDate);
+    console.log(`[PUSH] Notifications: ${result.sent} sent, ${result.failed} failed`);
+  } catch (error) {
+    console.error('[PUSH] Failed to send push notifications:', error);
   }
 }
 
