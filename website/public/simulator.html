@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Simulator — WealthWise</title>
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container">
+      <div class="app-header">
+        <h1><span class="gradient-text">Life Simulator</span></h1>
+        <p>Run what-if scenarios and see the impact on your retirement.</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="currentAge">Current Age</label>
+          <input type="number" id="currentAge" class="form-input" value="30" min="18" max="70">
+        </div>
+        <div class="form-group">
+          <label for="retireAge">Retirement Age</label>
+          <input type="number" id="retireAge" class="form-input" value="65" min="45" max="80">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="monthly">Monthly Investment</label>
+          <input type="number" id="monthly" class="form-input" value="500" min="100" max="5000">
+        </div>
+        <div class="form-group">
+          <label for="savings">Existing Savings</label>
+          <input type="number" id="savings" class="form-input" value="25000">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="returnRate">Expected Return</label>
+          <span class="label-value" id="returnDisplay">7%</span>
+        </div>
+        <input type="range" id="returnRate" class="range-slider" min="3" max="10" step="0.5" value="7">
+      </div>
+
+      <h3 style="margin-top:32px;margin-bottom:4px">What-If Scenarios</h3>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px">Toggle scenarios to compare against your baseline.</p>
+
+      <div class="scenario-toggles">
+        <label class="scenario-toggle" id="tog-1" onclick="this.classList.toggle('active');calculate()">
+          <input type="checkbox" id="sc-1">
+          <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="scenario-label">Increase monthly investment by $200</span>
+        </label>
+        <label class="scenario-toggle" id="tog-2" onclick="this.classList.toggle('active');calculate()">
+          <input type="checkbox" id="sc-2">
+          <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="scenario-label">Retire 5 years earlier</span>
+        </label>
+        <label class="scenario-toggle" id="tog-3" onclick="this.classList.toggle('active');calculate()">
+          <input type="checkbox" id="sc-3">
+          <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="scenario-label">Reduce fees by 1.5% (switch to index ETFs)</span>
+        </label>
+        <label class="scenario-toggle" id="tog-4" onclick="this.classList.toggle('active');calculate()">
+          <input type="checkbox" id="sc-4">
+          <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="scenario-label">Start RESP for child ($200/mo deducted)</span>
+        </label>
+        <label class="scenario-toggle" id="tog-5" onclick="this.classList.toggle('active');calculate()">
+          <input type="checkbox" id="sc-5">
+          <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <span class="scenario-label">Buy a home ($100K down payment deducted)</span>
+        </label>
+      </div>
+
+      <div class="results-section" style="margin-top:32px">
+        <h3>Comparison</h3>
+        <div class="result-grid">
+          <div class="result-item">
+            <span class="result-value" id="res-baseline" style="color:#60a5fa">$0</span>
+            <span class="result-label">Baseline</span>
+          </div>
+          <div class="result-item positive">
+            <span class="result-value" id="res-scenario">$0</span>
+            <span class="result-label">With Scenarios</span>
+          </div>
+        </div>
+        <div class="result-card" style="text-align:center;margin-top:16px">
+          <div id="res-diff" style="font-size:1.3rem;font-weight:700">$0</div>
+          <div style="color:var(--text-muted);font-size:0.85rem;margin-top:4px">Difference</div>
+        </div>
+      </div>
+
+      <div class="chart-container" style="margin-top:16px">
+        <canvas id="simChart" class="chart-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function growthCalc(startBalance, monthly, annualReturn, years) {
+      const monthlyRate = annualReturn / 12;
+      let balance = startBalance;
+      const data = [balance];
+      for (let m = 0; m < years * 12; m++) {
+        balance = (balance + monthly) * (1 + monthlyRate);
+        if ((m + 1) % 12 === 0) data.push(balance);
+      }
+      return { final: balance, data };
+    }
+
+    function calculate() {
+      const currentAge = parseInt(document.getElementById('currentAge').value) || 30;
+      let retireAge = parseInt(document.getElementById('retireAge').value) || 65;
+      const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+      let savings = parseFloat(document.getElementById('savings').value) || 0;
+      const rate = parseFloat(document.getElementById('returnRate').value) / 100;
+
+      document.getElementById('returnDisplay').textContent = (rate * 100).toFixed(1) + '%';
+
+      const sc1 = document.getElementById('tog-1').classList.contains('active');
+      const sc2 = document.getElementById('tog-2').classList.contains('active');
+      const sc3 = document.getElementById('tog-3').classList.contains('active');
+      const sc4 = document.getElementById('tog-4').classList.contains('active');
+      const sc5 = document.getElementById('tog-5').classList.contains('active');
+
+      // Baseline
+      const baseYears = Math.max(0, retireAge - currentAge);
+      const baseline = growthCalc(savings, monthly, rate, baseYears);
+
+      // Scenario
+      let scMonthly = monthly;
+      let scRetireAge = retireAge;
+      let scRate = rate;
+      let scSavings = savings;
+
+      if (sc1) scMonthly += 200;
+      if (sc2) scRetireAge = Math.max(currentAge + 1, retireAge - 5);
+      if (sc3) scRate += 0.015;
+      if (sc4) scMonthly = Math.max(0, scMonthly - 200);
+      if (sc5) scSavings = Math.max(0, scSavings - 100000);
+
+      const scYears = Math.max(0, scRetireAge - currentAge);
+      const scenario = growthCalc(scSavings, scMonthly, scRate, scYears);
+
+      document.getElementById('res-baseline').textContent = '$' + Math.round(baseline.final).toLocaleString();
+      document.getElementById('res-scenario').textContent = '$' + Math.round(scenario.final).toLocaleString();
+
+      const diff = scenario.final - baseline.final;
+      const diffEl = document.getElementById('res-diff');
+      diffEl.textContent = (diff >= 0 ? '+$' : '-$') + Math.abs(Math.round(diff)).toLocaleString();
+      diffEl.style.color = diff >= 0 ? '#34d399' : '#f87171';
+
+      drawChart(baseline.data, scenario.data, currentAge);
+    }
+
+    function drawChart(baseData, scData, startAge) {
+      const canvas = document.getElementById('simChart');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width, h = rect.height;
+      const pad = { top: 20, right: 20, bottom: 40, left: 70 };
+      const cw = w - pad.left - pad.right;
+      const ch = h - pad.top - pad.bottom;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const maxLen = Math.max(baseData.length, scData.length);
+      const allVals = [...baseData, ...scData];
+      const maxVal = Math.max(...allVals);
+      const xStep = cw / (maxLen - 1);
+
+      // Grid
+      ctx.strokeStyle = '#243352'; ctx.lineWidth = 1;
+      ctx.fillStyle = '#64748b'; ctx.font = '11px Inter, sans-serif'; ctx.textAlign = 'right';
+      for (let i = 0; i <= 4; i++) {
+        const y = pad.top + ch - (ch * i / 4);
+        const val = maxVal * i / 4;
+        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w - pad.right, y); ctx.stroke();
+        ctx.fillText('$' + (val >= 1000000 ? (val/1000000).toFixed(1)+'M' : Math.round(val/1000)+'K'), pad.left - 8, y + 4);
+      }
+
+      ctx.textAlign = 'center';
+      const labelStep = Math.max(1, Math.floor(maxLen / 6));
+      for (let i = 0; i < maxLen; i += labelStep) {
+        ctx.fillText(startAge + i, pad.left + i * xStep, h - pad.bottom + 20);
+      }
+
+      function drawLine(data, color) {
+        ctx.beginPath();
+        for (let i = 0; i < data.length; i++) {
+          const x = pad.left + i * xStep;
+          const y = pad.top + ch - (data[i] / maxVal * ch);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
+      }
+
+      drawLine(baseData, '#60a5fa');
+      drawLine(scData, '#34d399');
+
+      // Legend
+      ctx.fillStyle = '#60a5fa'; ctx.fillRect(pad.left + 10, pad.top + 10, 12, 3);
+      ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left'; ctx.fillText('Baseline', pad.left + 28, pad.top + 14);
+      ctx.fillStyle = '#34d399'; ctx.fillRect(pad.left + 90, pad.top + 10, 12, 3);
+      ctx.fillStyle = '#94a3b8'; ctx.fillText('With Scenarios', pad.left + 108, pad.top + 14);
+    }
+
+    document.querySelectorAll('#currentAge, #retireAge, #monthly, #savings, #returnRate').forEach(el => {
+      el.addEventListener('input', calculate);
+    });
+    calculate();
+    window.addEventListener('resize', calculate);
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

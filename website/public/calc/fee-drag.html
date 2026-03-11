@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fee Drag Calculator — WealthWise</title>
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container">
+      <a href="/calculators.html" class="back-link">&larr; All Calculators</a>
+      <div class="app-header">
+        <h1>💸 <span class="gradient-text">Fee Drag Calculator</span></h1>
+        <p>See exactly how much MER fees cost you over your investing lifetime.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="portfolio">Portfolio Value</label>
+        <input type="number" id="portfolio" class="form-input" placeholder="e.g. 100000" value="100000">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <div class="label-row">
+            <label for="lowMER">Index ETF MER</label>
+            <span class="label-value" id="lowDisplay">0.20%</span>
+          </div>
+          <input type="range" id="lowMER" class="range-slider" min="0.05" max="0.5" step="0.01" value="0.20">
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label for="highMER">Mutual Fund MER</label>
+            <span class="label-value" id="highDisplay" style="color:#f87171">2.30%</span>
+          </div>
+          <input type="range" id="highMER" class="range-slider" min="1" max="3.5" step="0.1" value="2.3">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="years">Time Period</label>
+          <span class="label-value" id="yearsDisplay">30 years</span>
+        </div>
+        <input type="range" id="years" class="range-slider" min="5" max="50" step="1" value="30">
+      </div>
+
+      <div class="results-section">
+        <h3>The Cost of High Fees</h3>
+        <div class="result-card result-hero">
+          <div class="result-value" id="res-cost" style="background:linear-gradient(135deg,#f87171,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">$0</div>
+          <div class="result-label">Lost to Higher Fees</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-item positive">
+            <span class="result-value" id="res-low">$0</span>
+            <span class="result-label">Low-Fee Portfolio (ETF)</span>
+          </div>
+          <div class="result-item negative">
+            <span class="result-value" id="res-high">$0</span>
+            <span class="result-label">High-Fee Portfolio (Mutual Fund)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="feeChart" class="chart-canvas"></canvas>
+      </div>
+
+      <div class="info-box warning">
+        <strong>Canadian mutual fund MERs are among the highest in the world.</strong> A low-cost index ETF can save you hundreds of thousands of dollars over your investing lifetime. The math is not debatable.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const GROSS_RETURN = 0.07;
+
+    function calculate() {
+      const portfolio = parseFloat(document.getElementById('portfolio').value) || 0;
+      const lowMER = parseFloat(document.getElementById('lowMER').value) / 100;
+      const highMER = parseFloat(document.getElementById('highMER').value) / 100;
+      const years = parseInt(document.getElementById('years').value) || 30;
+
+      document.getElementById('lowDisplay').textContent = (lowMER * 100).toFixed(2) + '%';
+      document.getElementById('highDisplay').textContent = (highMER * 100).toFixed(2) + '%';
+      document.getElementById('yearsDisplay').textContent = years + ' years';
+
+      const lowBalance = portfolio * Math.pow(1 + (GROSS_RETURN - lowMER), years);
+      const highBalance = portfolio * Math.pow(1 + (GROSS_RETURN - highMER), years);
+      const cost = lowBalance - highBalance;
+
+      document.getElementById('res-cost').textContent = '$' + Math.round(cost).toLocaleString();
+      document.getElementById('res-low').textContent = '$' + Math.round(lowBalance).toLocaleString();
+      document.getElementById('res-high').textContent = '$' + Math.round(highBalance).toLocaleString();
+
+      drawChart(portfolio, lowMER, highMER, years);
+    }
+
+    function drawChart(portfolio, lowMER, highMER, years) {
+      const canvas = document.getElementById('feeChart');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width;
+      const h = rect.height;
+      const pad = { top: 20, right: 20, bottom: 40, left: 70 };
+      const cw = w - pad.left - pad.right;
+      const ch = h - pad.top - pad.bottom;
+
+      ctx.clearRect(0, 0, w, h);
+
+      const lowData = [], highData = [];
+      for (let y = 0; y <= years; y++) {
+        lowData.push(portfolio * Math.pow(1 + (GROSS_RETURN - lowMER), y));
+        highData.push(portfolio * Math.pow(1 + (GROSS_RETURN - highMER), y));
+      }
+
+      const maxVal = Math.max(...lowData);
+      const xStep = cw / years;
+
+      // Grid
+      ctx.strokeStyle = '#243352';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'right';
+      for (let i = 0; i <= 4; i++) {
+        const y = pad.top + ch - (ch * i / 4);
+        const val = maxVal * i / 4;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(w - pad.right, y);
+        ctx.stroke();
+        ctx.fillText('$' + (val >= 1000000 ? (val / 1000000).toFixed(1) + 'M' : Math.round(val / 1000) + 'K'), pad.left - 8, y + 4);
+      }
+
+      ctx.textAlign = 'center';
+      const labelStep = Math.max(1, Math.floor(years / 6));
+      for (let i = 0; i <= years; i += labelStep) {
+        ctx.fillText('Yr ' + i, pad.left + i * xStep, h - pad.bottom + 20);
+      }
+
+      // Draw lines
+      function drawLine(data, color) {
+        ctx.beginPath();
+        for (let i = 0; i < data.length; i++) {
+          const x = pad.left + i * xStep;
+          const y = pad.top + ch - (data[i] / maxVal * ch);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+      }
+
+      drawLine(lowData, '#34d399');
+      drawLine(highData, '#f87171');
+
+      // Legend
+      ctx.fillStyle = '#34d399';
+      ctx.fillRect(pad.left + 10, pad.top + 10, 12, 3);
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText('Index ETF', pad.left + 28, pad.top + 14);
+
+      ctx.fillStyle = '#f87171';
+      ctx.fillRect(pad.left + 100, pad.top + 10, 12, 3);
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('Mutual Fund', pad.left + 118, pad.top + 14);
+    }
+
+    document.querySelectorAll('#portfolio, #lowMER, #highMER, #years').forEach(el => {
+      el.addEventListener('input', calculate);
+    });
+    calculate();
+    window.addEventListener('resize', calculate);
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retirement Calculator — WealthWise</title>
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container">
+      <a href="/calculators.html" class="back-link">&larr; All Calculators</a>
+      <div class="app-header">
+        <h1>🏖️ <span class="gradient-text">Retirement Calculator</span></h1>
+        <p>Project your portfolio growth and retirement income.</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="currentAge">Current Age</label>
+          <input type="number" id="currentAge" class="form-input" value="30" min="18" max="75">
+        </div>
+        <div class="form-group">
+          <label for="retireAge">Retirement Age</label>
+          <input type="number" id="retireAge" class="form-input" value="65" min="45" max="80">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="monthly">Monthly Contribution</label>
+        <input type="number" id="monthly" class="form-input" placeholder="e.g. 500" value="500">
+      </div>
+
+      <div class="form-group">
+        <label for="savings">Existing Savings</label>
+        <input type="number" id="savings" class="form-input" placeholder="e.g. 25000" value="25000">
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="returnRate">Expected Annual Return</label>
+          <span class="label-value" id="returnDisplay">7%</span>
+        </div>
+        <input type="range" id="returnRate" class="range-slider" min="2" max="12" step="0.5" value="7">
+      </div>
+
+      <div class="results-section">
+        <h3>Retirement Projection</h3>
+        <div class="result-card result-hero">
+          <div class="result-value" id="res-portfolio">$0</div>
+          <div class="result-label">Portfolio Value at Retirement</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-item positive">
+            <span class="result-value" id="res-income">$0/mo</span>
+            <span class="result-label">Monthly Income (4% Rule)</span>
+          </div>
+          <div class="result-item">
+            <span class="result-value" id="res-contributed">$0</span>
+            <span class="result-label">Total Contributed</span>
+          </div>
+          <div class="result-item highlight">
+            <span class="result-value" id="res-interest">$0</span>
+            <span class="result-label">Interest Earned</span>
+          </div>
+          <div class="result-item accent">
+            <span class="result-value" id="res-years">0 yrs</span>
+            <span class="result-label">Time to Retirement</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="growthChart" class="chart-canvas"></canvas>
+      </div>
+
+      <div class="info-box">
+        <strong>The 4% Rule:</strong> Research suggests you can safely withdraw 4% of your portfolio per year in retirement without running out of money over a 30-year period. This is the standard benchmark for retirement planning.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const currentAge = parseInt(document.getElementById('currentAge').value) || 30;
+      const retireAge = parseInt(document.getElementById('retireAge').value) || 65;
+      const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+      const savings = parseFloat(document.getElementById('savings').value) || 0;
+      const rate = parseFloat(document.getElementById('returnRate').value) / 100;
+
+      document.getElementById('returnDisplay').textContent = (rate * 100).toFixed(1) + '%';
+
+      const years = Math.max(0, retireAge - currentAge);
+      const monthlyRate = rate / 12;
+      let balance = savings;
+      const dataPoints = [balance];
+
+      for (let m = 0; m < years * 12; m++) {
+        balance = (balance + monthly) * (1 + monthlyRate);
+        if ((m + 1) % 12 === 0) dataPoints.push(balance);
+      }
+
+      const totalContributed = savings + (monthly * 12 * years);
+      const interest = balance - totalContributed;
+      const monthlyIncome = (balance * 0.04) / 12;
+
+      document.getElementById('res-portfolio').textContent = '$' + Math.round(balance).toLocaleString();
+      document.getElementById('res-income').textContent = '$' + Math.round(monthlyIncome).toLocaleString() + '/mo';
+      document.getElementById('res-contributed').textContent = '$' + Math.round(totalContributed).toLocaleString();
+      document.getElementById('res-interest').textContent = '$' + Math.round(interest).toLocaleString();
+      document.getElementById('res-years').textContent = years + ' yrs';
+
+      drawChart(dataPoints, currentAge);
+    }
+
+    function drawChart(data, startAge) {
+      const canvas = document.getElementById('growthChart');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width;
+      const h = rect.height;
+      const pad = { top: 20, right: 20, bottom: 40, left: 70 };
+      const cw = w - pad.left - pad.right;
+      const ch = h - pad.top - pad.bottom;
+
+      ctx.clearRect(0, 0, w, h);
+
+      if (data.length < 2) return;
+
+      const maxVal = Math.max(...data);
+      const xStep = cw / (data.length - 1);
+
+      // Grid lines
+      ctx.strokeStyle = '#243352';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = '#64748b';
+      ctx.font = '11px Inter, sans-serif';
+      ctx.textAlign = 'right';
+
+      for (let i = 0; i <= 4; i++) {
+        const y = pad.top + ch - (ch * i / 4);
+        const val = (maxVal * i / 4);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(w - pad.right, y);
+        ctx.stroke();
+        ctx.fillText('$' + (val >= 1000000 ? (val / 1000000).toFixed(1) + 'M' : Math.round(val / 1000) + 'K'), pad.left - 8, y + 4);
+      }
+
+      // X labels
+      ctx.textAlign = 'center';
+      const labelStep = Math.max(1, Math.floor(data.length / 6));
+      for (let i = 0; i < data.length; i += labelStep) {
+        const x = pad.left + i * xStep;
+        ctx.fillText(startAge + i, x, h - pad.bottom + 20);
+      }
+
+      // Area fill
+      const gradient = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+      gradient.addColorStop(0, 'rgba(52, 211, 153, 0.2)');
+      gradient.addColorStop(1, 'rgba(52, 211, 153, 0)');
+      ctx.beginPath();
+      ctx.moveTo(pad.left, pad.top + ch);
+      for (let i = 0; i < data.length; i++) {
+        const x = pad.left + i * xStep;
+        const y = pad.top + ch - (data[i] / maxVal * ch);
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(pad.left + (data.length - 1) * xStep, pad.top + ch);
+      ctx.closePath();
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Line
+      ctx.beginPath();
+      for (let i = 0; i < data.length; i++) {
+        const x = pad.left + i * xStep;
+        const y = pad.top + ch - (data[i] / maxVal * ch);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = '#34d399';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    }
+
+    document.querySelectorAll('#currentAge, #retireAge, #monthly, #savings, #returnRate').forEach(el => {
+      el.addEventListener('input', calculate);
+    });
+    calculate();
+    window.addEventListener('resize', calculate);
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

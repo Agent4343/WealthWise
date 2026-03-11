@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Money Score — WealthWise</title>
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container">
+      <div class="app-header">
+        <h1><span class="gradient-text">Money Score</span></h1>
+        <p>A single 0-100 number showing your overall financial health.</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="income">Monthly Income</label>
+          <input type="number" id="income" class="form-input" placeholder="e.g. 6000" value="6000">
+        </div>
+        <div class="form-group">
+          <label for="contribution">Monthly Savings/Investment</label>
+          <input type="number" id="contribution" class="form-input" placeholder="e.g. 800" value="800">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="savings">Current Savings/Investments</label>
+          <input type="number" id="savings" class="form-input" placeholder="e.g. 50000" value="50000">
+        </div>
+        <div class="form-group">
+          <label for="annualIncome">Annual Income</label>
+          <input type="number" id="annualIncome" class="form-input" placeholder="e.g. 72000" value="72000">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="tfsaUsed">TFSA Room Used ($)</label>
+          <input type="number" id="tfsaUsed" class="form-input" placeholder="e.g. 35000" value="35000">
+        </div>
+        <div class="form-group">
+          <label for="rrspUsed">RRSP Room Used ($)</label>
+          <input type="number" id="rrspUsed" class="form-input" placeholder="e.g. 15000" value="15000">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="riskProfile">Investment Style</label>
+        <select id="riskProfile" class="form-select">
+          <option value="growth">Growth (Low-cost ETFs)</option>
+          <option value="balanced" selected>Balanced (Mix)</option>
+          <option value="conservative">Conservative (GICs/Savings)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Which accounts do you use?</label>
+        <div class="form-row" style="margin-top:8px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:400;font-size:0.9rem;color:var(--text-muted)">
+            <input type="checkbox" id="hasTFSA" checked style="width:18px;height:18px;accent-color:#34d399"> TFSA
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-weight:400;font-size:0.9rem;color:var(--text-muted)">
+            <input type="checkbox" id="hasRRSP" checked style="width:18px;height:18px;accent-color:#34d399"> RRSP
+          </label>
+        </div>
+      </div>
+
+      <!-- Score Display -->
+      <div class="results-section">
+        <h3>Your Money Score</h3>
+        <div class="result-card" style="text-align:center;padding:40px 24px">
+          <div class="score-ring-large">
+            <svg viewBox="0 0 200 200">
+              <circle cx="100" cy="100" r="85" fill="none" stroke="#1a2a44" stroke-width="12"/>
+              <circle id="scoreRing" cx="100" cy="100" r="85" fill="none" stroke="url(#scoreGradLg)" stroke-width="12" stroke-dasharray="0 534" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+              <defs><linearGradient id="scoreGradLg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs>
+            </svg>
+            <div class="score-number" id="scoreNum">0</div>
+          </div>
+          <div class="score-grade" id="scoreGrade">—</div>
+        </div>
+
+        <div class="score-breakdown" id="breakdown"></div>
+
+        <div class="recommendations" id="recommendations"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const factors = [
+      { name: 'Savings Rate', weight: 0.20 },
+      { name: 'Emergency Fund', weight: 0.15 },
+      { name: 'TFSA Usage', weight: 0.15 },
+      { name: 'RRSP Usage', weight: 0.15 },
+      { name: 'Investment Fees', weight: 0.10 },
+      { name: 'Diversification', weight: 0.10 },
+      { name: 'Debt Ratio', weight: 0.15 }
+    ];
+
+    const recommendations = {
+      'Savings Rate': 'Try to save at least 15-20% of your income. Automate transfers on payday.',
+      'Emergency Fund': 'Build up to 6 months of expenses in a high-interest savings account.',
+      'TFSA Usage': 'Your cumulative TFSA room may be up to $95,000. Max it out with index ETFs.',
+      'RRSP Usage': 'Contribute 18% of income (max $31,560) to get your full tax deduction.',
+      'Investment Fees': 'Switch to low-cost index ETFs (MER under 0.25%) to keep more of your returns.',
+      'Diversification': 'Use both RRSP and TFSA together — the 1-2 Punch strategy.',
+      'Debt Ratio': 'Aim for total savings equal to at least 1x your annual income.'
+    };
+
+    function calculate() {
+      const income = parseFloat(document.getElementById('income').value) || 1;
+      const contribution = parseFloat(document.getElementById('contribution').value) || 0;
+      const savings = parseFloat(document.getElementById('savings').value) || 0;
+      const annualIncome = parseFloat(document.getElementById('annualIncome').value) || 1;
+      const tfsaUsed = parseFloat(document.getElementById('tfsaUsed').value) || 0;
+      const rrspUsed = parseFloat(document.getElementById('rrspUsed').value) || 0;
+      const riskProfile = document.getElementById('riskProfile').value;
+      const hasTFSA = document.getElementById('hasTFSA').checked;
+      const hasRRSP = document.getElementById('hasRRSP').checked;
+
+      // Calculate each factor score (0-100)
+      const savingsRate = Math.min(100, ((contribution / income) / 0.20) * 100);
+      const monthlyExpenses = income * 0.7;
+      const emergencyMonths = savings / monthlyExpenses;
+      const emergencyScore = Math.min(100, (emergencyMonths / 6) * 100);
+      const tfsaScore = Math.min(100, (tfsaUsed / 95000) * 100);
+      const rrspRoom = Math.min(annualIncome * 0.18, 31560);
+      const rrspScore = Math.min(100, (rrspUsed / rrspRoom) * 100);
+
+      let feeScore;
+      if (riskProfile === 'growth') feeScore = 85;
+      else if (riskProfile === 'balanced') feeScore = 65;
+      else feeScore = 50;
+
+      let diversScore;
+      if (hasTFSA && hasRRSP) diversScore = 80;
+      else if (hasTFSA || hasRRSP) diversScore = 50;
+      else diversScore = 10;
+
+      const savingsToIncome = savings / annualIncome;
+      let debtScore;
+      if (savingsToIncome >= 1.0) debtScore = 90;
+      else if (savingsToIncome >= 0.5) debtScore = 75;
+      else if (savingsToIncome >= 0.25) debtScore = 60;
+      else debtScore = 40;
+
+      const scores = [savingsRate, emergencyScore, tfsaScore, rrspScore, feeScore, diversScore, debtScore];
+
+      // Weighted total
+      let total = 0;
+      for (let i = 0; i < scores.length; i++) {
+        total += scores[i] * factors[i].weight;
+      }
+      total = Math.round(Math.min(100, total));
+
+      // Update score ring
+      const circumference = 2 * Math.PI * 85;
+      const dashArray = (total / 100) * circumference;
+      document.getElementById('scoreRing').setAttribute('stroke-dasharray', dashArray + ' ' + circumference);
+      document.getElementById('scoreNum').textContent = total;
+
+      // Grade
+      let grade;
+      if (total >= 85) grade = 'Excellent';
+      else if (total >= 70) grade = 'Great';
+      else if (total >= 55) grade = 'Good';
+      else if (total >= 40) grade = 'Fair';
+      else grade = 'Needs Work';
+      document.getElementById('scoreGrade').textContent = grade;
+
+      // Breakdown
+      const breakdownEl = document.getElementById('breakdown');
+      breakdownEl.innerHTML = '<h3 style="font-size:1rem;color:var(--text-muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Score Breakdown</h3>';
+      for (let i = 0; i < factors.length; i++) {
+        const s = Math.round(scores[i]);
+        breakdownEl.innerHTML += `
+          <div class="score-factor">
+            <div class="score-factor-header">
+              <span class="score-factor-name">${factors[i].name}</span>
+              <span class="score-factor-score">${s}/100</span>
+            </div>
+            <div class="score-factor-bar">
+              <div class="score-factor-fill" style="width:${s}%"></div>
+            </div>
+          </div>`;
+      }
+
+      // Recommendations (top 3 lowest)
+      const indexed = scores.map((s, i) => ({ score: s, index: i }));
+      indexed.sort((a, b) => a.score - b.score);
+      const top3 = indexed.slice(0, 3);
+
+      const recEl = document.getElementById('recommendations');
+      recEl.innerHTML = '<h3 style="font-size:1rem;color:var(--text-muted);margin-bottom:12px">Recommendations</h3>';
+      for (const item of top3) {
+        const name = factors[item.index].name;
+        recEl.innerHTML += `
+          <div class="rec-item">
+            <div class="rec-icon">!</div>
+            <div class="rec-text"><strong>${name}:</strong> ${recommendations[name]}</div>
+          </div>`;
+      }
+    }
+
+    document.querySelectorAll('#income, #contribution, #savings, #annualIncome, #tfsaUsed, #rrspUsed, #riskProfile, #hasTFSA, #hasRRSP').forEach(el => {
+      el.addEventListener('input', calculate);
+      el.addEventListener('change', calculate);
+    });
+    calculate();
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

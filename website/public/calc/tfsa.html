@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TFSA Optimizer — WealthWise</title>
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container">
+      <a href="/calculators.html" class="back-link">&larr; All Calculators</a>
+      <div class="app-header">
+        <h1>🏦 <span class="gradient-text">TFSA Optimizer</span></h1>
+        <p>Project your tax-free growth and see how much you're saving in taxes.</p>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="age">Current Age</label>
+          <input type="number" id="age" class="form-input" value="30" min="18" max="64">
+        </div>
+        <div class="form-group">
+          <label for="balance">Existing TFSA Balance</label>
+          <input type="number" id="balance" class="form-input" placeholder="e.g. 15000" value="15000">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="annual">Annual Contribution</label>
+        <input type="number" id="annual" class="form-input" placeholder="e.g. 7000" value="7000">
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="returnRate">Expected Annual Return</label>
+          <span class="label-value" id="returnDisplay">7%</span>
+        </div>
+        <input type="range" id="returnRate" class="range-slider" min="2" max="12" step="0.5" value="7">
+      </div>
+
+      <div class="results-section">
+        <h3>Results at Age 65</h3>
+        <div class="result-card result-hero">
+          <div class="result-value" id="res-total">$0</div>
+          <div class="result-label">Tax-Free Value at 65</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-item">
+            <span class="result-value" id="res-contributed">$0</span>
+            <span class="result-label">Total Contributed</span>
+          </div>
+          <div class="result-item positive">
+            <span class="result-value" id="res-growth">$0</span>
+            <span class="result-label">Tax-Free Growth</span>
+          </div>
+          <div class="result-item highlight">
+            <span class="result-value" id="res-taxsaved">$0</span>
+            <span class="result-label">Est. Tax Savings vs Taxable</span>
+          </div>
+          <div class="result-item accent">
+            <span class="result-value" id="res-years">0</span>
+            <span class="result-label">Years of Growth</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>Remember:</strong> A TFSA is not a savings account — it's a tax-free investment container. Fill it with low-cost index ETFs and let compound interest work completely tax-free for decades.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const age = parseInt(document.getElementById('age').value) || 30;
+      const balance = parseFloat(document.getElementById('balance').value) || 0;
+      const annual = parseFloat(document.getElementById('annual').value) || 0;
+      const rate = parseFloat(document.getElementById('returnRate').value) / 100;
+
+      document.getElementById('returnDisplay').textContent = (rate * 100).toFixed(1) + '%';
+
+      const years = Math.max(0, 65 - age);
+      const monthlyRate = rate / 12;
+      const monthlyContrib = annual / 12;
+
+      let total = balance;
+      for (let m = 0; m < years * 12; m++) {
+        total = (total + monthlyContrib) * (1 + monthlyRate);
+      }
+
+      const totalContributed = balance + (annual * years);
+      const growth = total - totalContributed;
+      const taxSaved = growth * 0.25;
+
+      document.getElementById('res-total').textContent = '$' + Math.round(total).toLocaleString();
+      document.getElementById('res-contributed').textContent = '$' + Math.round(totalContributed).toLocaleString();
+      document.getElementById('res-growth').textContent = '$' + Math.round(growth).toLocaleString();
+      document.getElementById('res-taxsaved').textContent = '$' + Math.round(taxSaved).toLocaleString();
+      document.getElementById('res-years').textContent = years;
+    }
+
+    document.querySelectorAll('#age, #balance, #annual, #returnRate').forEach(el => {
+      el.addEventListener('input', calculate);
+    });
+    calculate();
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

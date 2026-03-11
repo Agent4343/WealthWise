@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financial School — WealthWise</title>
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container">
+      <div class="app-header">
+        <h1><span class="gradient-text">Financial School</span></h1>
+        <p>7 chapters covering everything from compound interest to advanced retirement strategies.</p>
+      </div>
+
+      <!-- Chapter List -->
+      <div id="chapterList" class="chapters-list"></div>
+
+      <!-- Chapter View (hidden initially) -->
+      <div id="chapterView" style="display:none">
+        <a href="#" class="back-link" id="backToChapters">&larr; All Chapters</a>
+        <div id="chapterContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const chapters = [
+      {
+        id: 1, title: "What School Got Wrong", subtitle: "Compound interest, the savings account trap, and the CPP reality check", tier: "free",
+        lessons: [
+          {
+            title: "The $200,000 Problem",
+            content: [
+              { type: "heading", text: "Why Most Canadians Retire Broke" },
+              { type: "paragraph", text: "The average Canadian retires with less than $200,000 in savings. That sounds like a lot — until you realize it needs to last 20-30 years. At $10,000 per year, that's barely covering groceries and property tax." },
+              { type: "statistic", text: "32% of Canadians have zero retirement savings", highlight: "32%" },
+              { type: "paragraph", text: "This isn't because Canadians are lazy or irresponsible. It's because nobody ever taught them how money actually works. You spent 13 years in school learning the quadratic formula — but not a single hour on compound interest." },
+              { type: "callout", text: "Think about this: if you invest $200 per month starting at age 25 at a 7% average return, you'll have over $520,000 by age 65. Start at 35? You'll have about $240,000. Ten years of waiting costs you $280,000.", highlight: "$280,000" },
+              { type: "key_takeaway", text: "The single most powerful force in personal finance is time — not income, not timing, not stock picks. Time in the market, starting as early as possible, with consistent contributions." }
+            ]
+          },
+          {
+            title: "The Savings Account Trap",
+            content: [
+              { type: "heading", text: "Your Bank Is Not Your Friend" },
+              { type: "paragraph", text: "If your TFSA money is sitting in a savings account earning 1-2%, you're actually losing purchasing power every year. With inflation averaging 2-3%, your 'safe' savings are quietly shrinking." },
+              { type: "statistic", text: "57% of Canadian TFSAs are held entirely in cash or GICs", highlight: "57%" },
+              { type: "example", text: "$10,000 in a savings account at 1.5% grows to $11,605 in 10 years. The same $10,000 in a diversified index fund at 7% average grows to $19,672. That's $8,067 left on the table — tax-free inside a TFSA.", highlight: "$8,067" },
+              { type: "key_takeaway", text: "A TFSA is not a savings account — it's a container. You can hold stocks, ETFs, bonds, and GICs inside it. The name 'Tax-Free Savings Account' is the most misleading name in Canadian finance." }
+            ]
+          }
+        ],
+        quiz: [
+          { question: "What is the average retirement savings for a Canadian?", options: ["Under $100,000", "Under $200,000", "Under $500,000", "Over $500,000"], correct: 1, explanation: "The average Canadian retires with less than $200,000 — enough for roughly 6-8 years of income." },
+          { question: "What percentage of Canadian TFSAs are held in cash or GICs?", options: ["About 25%", "About 40%", "About 57%", "About 75%"], correct: 2, explanation: "Approximately 57% of TFSAs are held in cash or GICs, missing out on significant tax-free growth potential." },
+          { question: "A TFSA is best described as:", options: ["A high-interest savings account", "A tax-sheltered container for investments", "A government pension plan", "A tax deduction"], correct: 1, explanation: "A TFSA is a container — not a savings account. You can hold stocks, ETFs, bonds, and more inside it, all growing tax-free." }
+        ]
+      },
+      {
+        id: 2, title: "The Danger of Stock Picking", subtitle: "Why 90% lose, emotional trading, and the timing myth", tier: "free",
+        lessons: [{
+          title: "The 90% Rule",
+          content: [
+            { type: "heading", text: "Almost Everyone Loses at Stock Picking" },
+            { type: "statistic", text: "Over 90% of individual stock pickers underperform a simple index fund over 15 years", highlight: "Over 90%" },
+            { type: "paragraph", text: "This isn't just retail investors — this includes professional fund managers with teams of analysts, Bloomberg terminals, and decades of experience. If they can't beat the market, what makes us think we can by reading Reddit posts?" },
+            { type: "callout", text: "The S&P/TSX Composite Index (Canada's main stock index) has returned an average of about 7-9% annually over the past 30 years. You can own the entire index for a management fee of 0.06% per year through an ETF.", highlight: "0.06%" },
+            { type: "key_takeaway", text: "Investing isn't about finding the next big stock. It's about consistently buying a diversified index fund and letting compound interest do the heavy lifting over decades." }
+          ]
+        }],
+        quiz: [
+          { question: "What percentage of stock pickers underperform a simple index fund over 15 years?", options: ["About 50%", "About 70%", "Over 90%", "About 30%"], correct: 2, explanation: "S&P SPIVA Canada data shows that over 90% of individual stock pickers (including professionals) underperform index funds over 15 years." }
+        ]
+      },
+      {
+        id: 3, title: "Mutual Funds & Diversification", subtitle: "ETFs vs mutual funds, sector allocation, and MER fee drag", tier: "free",
+        lessons: [{
+          title: "The MER Problem",
+          content: [
+            { type: "heading", text: "The Fee You Never See" },
+            { type: "paragraph", text: "The Management Expense Ratio (MER) is a percentage of your total portfolio value that your fund charges every year. It's deducted silently — you never see a bill. But over 30 years, it can eat hundreds of thousands of dollars." },
+            { type: "example", text: "A $100,000 portfolio with a 2.3% MER (typical Canadian mutual fund) vs a 0.20% MER (index ETF) over 30 years at 7% gross return: The mutual fund grows to $283,000. The ETF grows to $661,000. The fee difference costs you $378,000.", highlight: "$378,000" },
+            { type: "key_takeaway", text: "Canadian mutual fund MERs are among the highest in the world. A low-cost index ETF can save you hundreds of thousands of dollars over your investing lifetime. The math is not debatable." }
+          ]
+        }],
+        quiz: [
+          { question: "What is a typical MER for a Canadian mutual fund?", options: ["0.10%", "0.50%", "2.3%", "5.0%"], correct: 2, explanation: "Canadian mutual funds typically charge around 2.0-2.5% MER, which is among the highest in the world." }
+        ]
+      },
+      {
+        id: 4, title: "RRSP — The Tax Deduction Machine", subtitle: "Contribution room, spousal RRSP, HBP, and how to invest inside", tier: "basic",
+        lessons: [{
+          title: "How the RRSP Actually Works",
+          content: [
+            { type: "heading", text: "The Government Pays You to Save" },
+            { type: "paragraph", text: "An RRSP (Registered Retirement Savings Plan) is a tax-deferred account. When you contribute, you get a tax deduction — meaning the government gives you back a portion of your contribution based on your marginal tax rate." },
+            { type: "example", text: "If you earn $90,000 in Ontario and contribute $10,000 to your RRSP, your marginal tax rate is roughly 31.5%. You'll receive approximately $3,150 back as a tax refund. Your actual out-of-pocket cost for $10,000 in investments is $6,850.", highlight: "$3,150" },
+            { type: "statistic", text: "Over 80% of RRSP contribution room in Canada goes unused every year", highlight: "Over 80%" },
+            { type: "callout", text: "Your RRSP contribution room is 18% of your previous year's earned income, up to the annual maximum ($31,560 in 2024). Unused room carries forward indefinitely — check your CRA My Account to see yours." },
+            { type: "key_takeaway", text: "The RRSP is most powerful for people in higher tax brackets who expect to withdraw in a lower bracket during retirement. The tax deduction now + tax-deferred growth + lower tax at withdrawal = triple benefit." }
+          ]
+        }],
+        quiz: [
+          { question: "What percentage of RRSP contribution room goes unused each year?", options: ["About 30%", "About 50%", "About 65%", "Over 80%"], correct: 3, explanation: "CRA data shows that over 80% of available RRSP contribution room goes unused every year — representing massive tax savings left on the table." }
+        ]
+      },
+      {
+        id: 5, title: "TFSA — The Silent Wealth Builder", subtitle: "Tax-free growth, withdrawal room restoration, and the name trap", tier: "basic",
+        lessons: [{
+          title: "Tax-Free Means Tax-Free",
+          content: [
+            { type: "heading", text: "The Most Powerful Account Most People Misuse" },
+            { type: "paragraph", text: "The TFSA is arguably the most powerful savings vehicle in Canada. Everything inside it — interest, dividends, capital gains — is completely tax-free. Forever. You don't pay tax when you contribute, you don't pay tax when it grows, and you don't pay tax when you withdraw." },
+            { type: "callout", text: "If you've been eligible since 2009 and never contributed, your total TFSA contribution room in 2024 is $95,000. At a 7% average return, maxing this out and leaving it invested for 20 years could grow to over $367,000 — completely tax-free.", highlight: "$367,000" },
+            { type: "paragraph", text: "Here's the part most people miss: when you withdraw from a TFSA, that room is restored the following January 1st. This makes the TFSA incredibly flexible — unlike the RRSP, where withdrawals are taxed and the room is gone forever." },
+            { type: "key_takeaway", text: "Stop using your TFSA as a savings account. It's a tax-free investment container. Fill it with low-cost index ETFs and let compound interest work completely tax-free for decades." }
+          ]
+        }],
+        quiz: [
+          { question: "When you withdraw money from a TFSA, what happens to the contribution room?", options: ["It's gone forever", "It's restored the next January 1st", "It's restored immediately", "You lose half the room"], correct: 1, explanation: "TFSA withdrawal room is restored on January 1st of the following year. This makes the TFSA uniquely flexible among registered accounts." }
+        ]
+      },
+      {
+        id: 6, title: "The 1-2 Punch Strategy", subtitle: "Using RRSP + TFSA together for income bracket optimization", tier: "basic",
+        lessons: [{
+          title: "Making the Accounts Work Together",
+          content: [
+            { type: "heading", text: "The Strategy No Bank Will Teach You" },
+            { type: "paragraph", text: "Most people treat their RRSP and TFSA as separate decisions. The real power comes from using them together strategically based on your income bracket." },
+            { type: "callout", text: "The 1-2 Punch: (1) Contribute to your RRSP to get the tax deduction, then (2) take the tax refund and invest it directly into your TFSA. You're now investing in two tax-sheltered accounts, and the second contribution effectively cost you $0 extra.", highlight: "$0 extra" },
+            { type: "example", text: "Earning $100,000 in Ontario? Contribute $10,000 to RRSP → get ~$3,150 refund → invest that $3,150 in TFSA. You now have $13,150 growing in tax-sheltered accounts from a $10,000 out-of-pocket investment.", highlight: "$13,150" },
+            { type: "key_takeaway", text: "If your income is over $55,000, prioritize RRSP first (higher tax deduction), then sweep the refund into TFSA. Under $55,000? TFSA first, since the RRSP deduction is worth less at lower brackets. Save the RRSP room for when your income grows." }
+          ]
+        }],
+        quiz: [
+          { question: "What is the 1-2 Punch strategy?", options: ["Buy two different stocks", "Contribute to RRSP, then invest the tax refund in TFSA", "Split money 50/50 between savings and investing", "Withdraw TFSA to fund RRSP"], correct: 1, explanation: "The 1-2 Punch means contributing to your RRSP for the tax deduction, then investing the tax refund into your TFSA — maximizing both tax-sheltered accounts." }
+        ]
+      },
+      {
+        id: 7, title: "The 9 Rules of Wealth Building", subtitle: "Automation, fee reduction, time in market, and never touching it", tier: "basic",
+        lessons: [{
+          title: "The Rules That Actually Work",
+          content: [
+            { type: "heading", text: "Simple Rules, Life-Changing Results" },
+            { type: "paragraph", text: "Wealth building isn't complicated. It's just rarely taught. Here are 9 rules that, followed consistently, virtually guarantee financial security." },
+            { type: "callout", text: "Rule 1: Automate everything. Set up automatic transfers on payday.\n\nRule 2: Keep fees below 0.25%. Every dollar in fees is a dollar that isn't compounding.\n\nRule 3: Never try to time the market. Time IN the market beats timing the market.\n\nRule 4: Don't touch it. Your investments should be boring. Check quarterly, not daily.\n\nRule 5: Use tax-sheltered accounts first. RRSP and TFSA before taxable accounts.\n\nRule 6: Diversify with index funds. Own the whole market, not individual stocks.\n\nRule 7: Increase contributions with every raise. Lifestyle inflation is the wealth killer.\n\nRule 8: Ignore financial news. It's entertainment, not strategy.\n\nRule 9: Start now. The best time was 10 years ago. The second best time is today." },
+            { type: "key_takeaway", text: "These rules aren't exciting. They won't make you feel like a financial genius at dinner parties. But they work — and they've worked for decades. Boring is beautiful when it comes to building wealth." }
+          ]
+        }],
+        quiz: [
+          { question: "Which approach does academic research consistently support?", options: ["Timing the market", "Picking individual stocks", "Time IN the market with consistent contributions", "Following financial news closely"], correct: 2, explanation: "Every major academic study shows that time in the market with consistent, automated contributions to diversified index funds outperforms market timing and stock picking." }
+        ]
+      }
+    ];
+
+    function renderChapterList() {
+      const list = document.getElementById('chapterList');
+      list.innerHTML = '';
+      chapters.forEach(ch => {
+        const card = document.createElement('a');
+        card.href = '#';
+        card.className = 'chapter-card';
+        card.onclick = (e) => { e.preventDefault(); openChapter(ch.id); };
+        card.innerHTML = `
+          <div class="chapter-num">${ch.id}</div>
+          <div class="chapter-info">
+            <h3>${ch.title}</h3>
+            <p>${ch.subtitle}</p>
+          </div>
+          <span class="chapter-badge ${ch.tier}">${ch.tier}</span>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function renderContent(blocks) {
+      return blocks.map(block => {
+        switch (block.type) {
+          case 'heading':
+            return `<div class="lesson-block"><h2>${block.text}</h2></div>`;
+          case 'paragraph':
+            return `<div class="lesson-block"><p>${block.text}</p></div>`;
+          case 'statistic':
+            return `<div class="lesson-block lesson-stat"><span class="stat-highlight">${block.highlight || ''}</span><p>${block.text}</p></div>`;
+          case 'callout':
+            return `<div class="lesson-block lesson-callout">${block.text.replace(/\n\n/g, '<br><br>')}</div>`;
+          case 'example':
+            return `<div class="lesson-block lesson-example">${block.text}</div>`;
+          case 'key_takeaway':
+            return `<div class="lesson-block lesson-takeaway">${block.text}</div>`;
+          default:
+            return `<div class="lesson-block"><p>${block.text}</p></div>`;
+        }
+      }).join('');
+    }
+
+    function renderQuiz(quiz) {
+      return quiz.map((q, qi) => `
+        <div class="quiz-question" data-qi="${qi}">
+          <p>${qi + 1}. ${q.question}</p>
+          <div class="quiz-options">
+            ${q.options.map((opt, oi) => `
+              <button class="quiz-option" onclick="checkAnswer(${qi}, ${oi}, ${q.correct})" data-qi="${qi}">${opt}</button>
+            `).join('')}
+          </div>
+          <div class="quiz-explanation" id="exp-${qi}">${q.explanation}</div>
+        </div>
+      `).join('');
+    }
+
+    function openChapter(id) {
+      const ch = chapters.find(c => c.id === id);
+      if (!ch) return;
+
+      document.getElementById('chapterList').style.display = 'none';
+      document.getElementById('chapterView').style.display = 'block';
+      document.querySelector('.app-header').style.display = 'none';
+
+      let html = `<h2 style="margin-bottom:4px">Chapter ${ch.id}: ${ch.title}</h2>
+        <p style="color:var(--text-muted);margin-bottom:32px">${ch.subtitle}</p>`;
+
+      ch.lessons.forEach((lesson, li) => {
+        if (ch.lessons.length > 1) {
+          html += `<h3 style="color:var(--primary);margin-bottom:16px;margin-top:${li > 0 ? '40px' : '0'}">Lesson ${li + 1}: ${lesson.title}</h3>`;
+        }
+        html += `<div class="lesson-content">${renderContent(lesson.content)}</div>`;
+      });
+
+      if (ch.quiz && ch.quiz.length > 0) {
+        html += `<div class="quiz-section"><h3>Quiz — Test Your Knowledge</h3>${renderQuiz(ch.quiz)}</div>`;
+      }
+
+      document.getElementById('chapterContent').innerHTML = html;
+      window.scrollTo(0, 0);
+    }
+
+    window.checkAnswer = function(qi, selected, correct) {
+      const buttons = document.querySelectorAll(`.quiz-option[data-qi="${qi}"]`);
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === correct) btn.classList.add('correct');
+        if (i === selected && i !== correct) btn.classList.add('incorrect');
+      });
+      document.getElementById('exp-' + qi).classList.add('show');
+    };
+
+    document.getElementById('backToChapters').addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('chapterList').style.display = 'flex';
+      document.getElementById('chapterView').style.display = 'none';
+      document.querySelector('.app-header').style.display = 'block';
+    });
+
+    renderChapterList();
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

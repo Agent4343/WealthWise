@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIRE Calculator — WealthWise</title>
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container">
+      <a href="/calculators.html" class="back-link">&larr; All Calculators</a>
+      <div class="app-header">
+        <h1>🔥 <span class="gradient-text">FIRE Calculator</span></h1>
+        <p>Calculate your Financial Independence, Retire Early number.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="expenses">Monthly Expenses</label>
+        <input type="number" id="expenses" class="form-input" placeholder="e.g. 4000" value="4000">
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="withdrawal">Safe Withdrawal Rate</label>
+          <span class="label-value" id="withdrawalDisplay">4%</span>
+        </div>
+        <input type="range" id="withdrawal" class="range-slider" min="3" max="5" step="0.25" value="4">
+      </div>
+
+      <div class="results-section">
+        <h3>Your FIRE Number</h3>
+        <div class="result-card result-hero">
+          <div class="result-value" id="res-fire">$0</div>
+          <div class="result-label">Target Portfolio to Retire</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-item">
+            <span class="result-value" id="res-annual">$0</span>
+            <span class="result-label">Annual Expenses</span>
+          </div>
+          <div class="result-item positive">
+            <span class="result-value" id="res-income">$0/yr</span>
+            <span class="result-label">Annual Investment Income</span>
+          </div>
+          <div class="result-item highlight">
+            <span class="result-value" id="res-rate">4%</span>
+            <span class="result-label">Withdrawal Rate</span>
+          </div>
+          <div class="result-item accent">
+            <span class="result-value" id="res-monthly">$0/mo</span>
+            <span class="result-label">Monthly From Portfolio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>What is the FIRE number?</strong> It's the portfolio amount where your investment returns cover your living expenses indefinitely. At a 4% withdrawal rate, you need 25x your annual expenses. Lower withdrawal rates are more conservative but require a larger portfolio.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const expenses = parseFloat(document.getElementById('expenses').value) || 0;
+      const rate = parseFloat(document.getElementById('withdrawal').value) / 100;
+
+      document.getElementById('withdrawalDisplay').textContent = (rate * 100).toFixed(2) + '%';
+
+      const annualExpenses = expenses * 12;
+      const fireNumber = annualExpenses / rate;
+      const annualIncome = fireNumber * rate;
+
+      document.getElementById('res-fire').textContent = '$' + Math.round(fireNumber).toLocaleString();
+      document.getElementById('res-annual').textContent = '$' + Math.round(annualExpenses).toLocaleString();
+      document.getElementById('res-income').textContent = '$' + Math.round(annualIncome).toLocaleString() + '/yr';
+      document.getElementById('res-rate').textContent = (rate * 100).toFixed(2) + '%';
+      document.getElementById('res-monthly').textContent = '$' + Math.round(annualIncome / 12).toLocaleString() + '/mo';
+    }
+
+    document.querySelectorAll('#expenses, #withdrawal').forEach(el => {
+      el.addEventListener('input', calculate);
+    });
+    calculate();
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

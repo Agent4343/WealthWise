@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compound Interest Calculator — WealthWise</title>
+  <meta name="theme-color" content="#0A1628">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+  <nav class="nav scrolled" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+      </div>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="app-page">
+    <div class="app-container">
+      <a href="/calculators.html" class="back-link">&larr; All Calculators</a>
+      <div class="app-header">
+        <h1>📈 <span class="gradient-text">Compound Interest</span></h1>
+        <p>Visualize the power of compound growth on any investment scenario.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="principal">Starting Amount</label>
+        <input type="number" id="principal" class="form-input" placeholder="e.g. 10000" value="10000">
+      </div>
+
+      <div class="form-group">
+        <label for="monthly">Monthly Contribution</label>
+        <input type="number" id="monthly" class="form-input" placeholder="e.g. 500" value="500">
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="rate">Annual Return</label>
+          <span class="label-value" id="rateDisplay">7%</span>
+        </div>
+        <input type="range" id="rate" class="range-slider" min="1" max="15" step="0.5" value="7">
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="years">Time Period</label>
+          <span class="label-value" id="yearsDisplay">25 years</span>
+        </div>
+        <input type="range" id="years" class="range-slider" min="1" max="50" step="1" value="25">
+      </div>
+
+      <div class="results-section">
+        <h3>Growth Projection</h3>
+        <div class="result-card result-hero">
+          <div class="result-value" id="res-total">$0</div>
+          <div class="result-label">Final Balance</div>
+        </div>
+        <div class="result-grid">
+          <div class="result-item">
+            <span class="result-value" id="res-principal">$0</span>
+            <span class="result-label">Starting Amount</span>
+          </div>
+          <div class="result-item">
+            <span class="result-value" id="res-contributions">$0</span>
+            <span class="result-label">Total Contributions</span>
+          </div>
+          <div class="result-item positive">
+            <span class="result-value" id="res-interest">$0</span>
+            <span class="result-label">Interest Earned</span>
+          </div>
+          <div class="result-item accent">
+            <span class="result-value" id="res-multiplier">0x</span>
+            <span class="result-label">Money Multiplier</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <canvas id="compoundChart" class="chart-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculate() {
+      const principal = parseFloat(document.getElementById('principal').value) || 0;
+      const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+      const rate = parseFloat(document.getElementById('rate').value) / 100;
+      const years = parseInt(document.getElementById('years').value) || 25;
+
+      document.getElementById('rateDisplay').textContent = (rate * 100).toFixed(1) + '%';
+      document.getElementById('yearsDisplay').textContent = years + ' years';
+
+      const monthlyRate = rate / 12;
+      let balance = principal;
+      const contributionData = [principal];
+      const balanceData = [principal];
+
+      for (let m = 0; m < years * 12; m++) {
+        balance = (balance + monthly) * (1 + monthlyRate);
+        if ((m + 1) % 12 === 0) {
+          balanceData.push(balance);
+          contributionData.push(principal + monthly * 12 * ((m + 1) / 12));
+        }
+      }
+
+      const totalContributed = principal + monthly * 12 * years;
+      const interest = balance - totalContributed;
+      const multiplier = totalContributed > 0 ? (balance / totalContributed) : 0;
+
+      document.getElementById('res-total').textContent = '$' + Math.round(balance).toLocaleString();
+      document.getElementById('res-principal').textContent = '$' + Math.round(principal).toLocaleString();
+      document.getElementById('res-contributions').textContent = '$' + Math.round(totalContributed).toLocaleString();
+      document.getElementById('res-interest').textContent = '$' + Math.round(interest).toLocaleString();
+      document.getElementById('res-multiplier').textContent = multiplier.toFixed(1) + 'x';
+
+      drawChart(balanceData, contributionData, years);
+    }
+
+    function drawChart(balanceData, contribData, years) {
+      const canvas = document.getElementById('compoundChart');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = rect.height + 'px';
+      ctx.scale(dpr, dpr);
+
+      const w = rect.width, h = rect.height;
+      const pad = { top: 20, right: 20, bottom: 40, left: 70 };
+      const cw = w - pad.left - pad.right;
+      const ch = h - pad.top - pad.bottom;
+
+      ctx.clearRect(0, 0, w, h);
+      if (balanceData.length < 2) return;
+
+      const maxVal = Math.max(...balanceData);
+      const xStep = cw / (balanceData.length - 1);
+
+      // Grid
+      ctx.strokeStyle = '#243352'; ctx.lineWidth = 1;
+      ctx.fillStyle = '#64748b'; ctx.font = '11px Inter, sans-serif'; ctx.textAlign = 'right';
+      for (let i = 0; i <= 4; i++) {
+        const y = pad.top + ch - (ch * i / 4);
+        const val = maxVal * i / 4;
+        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(w - pad.right, y); ctx.stroke();
+        ctx.fillText('$' + (val >= 1000000 ? (val/1000000).toFixed(1)+'M' : Math.round(val/1000)+'K'), pad.left - 8, y + 4);
+      }
+
+      ctx.textAlign = 'center';
+      const labelStep = Math.max(1, Math.floor(balanceData.length / 6));
+      for (let i = 0; i < balanceData.length; i += labelStep) {
+        ctx.fillText('Yr ' + i, pad.left + i * xStep, h - pad.bottom + 20);
+      }
+
+      // Contributions area (blue)
+      ctx.beginPath();
+      ctx.moveTo(pad.left, pad.top + ch);
+      for (let i = 0; i < contribData.length; i++) {
+        ctx.lineTo(pad.left + i * xStep, pad.top + ch - (contribData[i] / maxVal * ch));
+      }
+      ctx.lineTo(pad.left + (contribData.length - 1) * xStep, pad.top + ch);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(96, 165, 250, 0.2)';
+      ctx.fill();
+
+      // Balance area (green)
+      ctx.beginPath();
+      ctx.moveTo(pad.left, pad.top + ch);
+      for (let i = 0; i < balanceData.length; i++) {
+        ctx.lineTo(pad.left + i * xStep, pad.top + ch - (balanceData[i] / maxVal * ch));
+      }
+      ctx.lineTo(pad.left + (balanceData.length - 1) * xStep, pad.top + ch);
+      ctx.closePath();
+      const gradient = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+      gradient.addColorStop(0, 'rgba(52, 211, 153, 0.2)');
+      gradient.addColorStop(1, 'rgba(52, 211, 153, 0)');
+      ctx.fillStyle = gradient;
+      ctx.fill();
+
+      // Lines
+      function drawLine(data, color) {
+        ctx.beginPath();
+        for (let i = 0; i < data.length; i++) {
+          const x = pad.left + i * xStep;
+          const y = pad.top + ch - (data[i] / maxVal * ch);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = color; ctx.lineWidth = 2.5; ctx.stroke();
+      }
+      drawLine(contribData, '#60a5fa');
+      drawLine(balanceData, '#34d399');
+
+      // Legend
+      ctx.fillStyle = '#34d399'; ctx.fillRect(pad.left + 10, pad.top + 10, 12, 3);
+      ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left'; ctx.fillText('Total Balance', pad.left + 28, pad.top + 14);
+      ctx.fillStyle = '#60a5fa'; ctx.fillRect(pad.left + 120, pad.top + 10, 12, 3);
+      ctx.fillStyle = '#94a3b8'; ctx.fillText('Contributions', pad.left + 138, pad.top + 14);
+    }
+
+    document.querySelectorAll('#principal, #monthly, #rate, #years').forEach(el => {
+      el.addEventListener('input', calculate);
+    });
+    calculate();
+    window.addEventListener('resize', calculate);
+  </script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
