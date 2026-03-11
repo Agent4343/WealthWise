@@ -1,8 +1,7 @@
 [build]
 builder = "nixpacks"
 
-[build.nixpacks]
-aptPkgs = []
-
 [deploy]
-startCommand = "cd backend && npm start"
+startCommand = "cd website && npm start"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
