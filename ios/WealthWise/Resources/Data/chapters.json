@@ -1,0 +1,219 @@
+[
+  {
+    "id": 1,
+    "title": "What School Got Wrong",
+    "subtitle": "Compound interest, the savings account trap, and the CPP reality check",
+    "emoji": "🏫",
+    "lessons": [
+      {
+        "id": "1-1",
+        "title": "The Compound Interest Secret",
+        "content": "Compound interest is the most powerful force in personal finance — and it was never taught in school. When you earn a return on your investment, and then earn a return on that return, your money grows exponentially over time.\n\nAlbert Einstein allegedly called compound interest the eighth wonder of the world. Whether or not he said that, the math is undeniably powerful: $200 per month invested at 7% for 40 years becomes over $525,000.\n\nThe secret weapon? Time. Starting at 25 instead of 35 nearly doubles your outcome. Every year of delay is permanent.",
+        "key_points": [
+          "Compound interest earns returns on your returns — not just your principal",
+          "$200/month at 7% for 40 years = $525,000+",
+          "Starting 10 years earlier can nearly double your final balance",
+          "The savings account trap: 1.5% interest barely keeps pace with inflation"
+        ],
+        "quiz": {
+          "question": "You have two options: invest $200/month starting at age 25, or invest $400/month starting at age 35. Assuming 7% annual return, which approach will likely result in a larger portfolio at age 65?",
+          "options": [
+            "$200/month starting at 25 — more time in the market",
+            "$400/month starting at 35 — larger contributions",
+            "They end up roughly equal",
+            "It depends entirely on market conditions"
+          ],
+          "correct_index": 0,
+          "explanation": "Starting earlier wins dramatically thanks to compound interest. $200/month from age 25 at 7% grows to ~$525K. $400/month from age 35 grows to only ~$480K — despite double the contribution rate. Time beats contribution amount."
+        }
+      },
+      {
+        "id": "1-2",
+        "title": "The Savings Account Trap",
+        "content": "Most Canadians keep their 'savings' in a savings account earning 1.5–2.5% annually. With inflation running at 2–3%, your real purchasing power is either flat or declining.\n\nA TFSA or RRSP invested in a simple index ETF tracking the TSX or S&P 500 has historically returned 7–10% annually over long periods. The difference between 2% and 7% over 30 years on $50,000 is staggering: $90,000 vs. $380,000.\n\nThe savings account isn't savings — it's a waiting room for money that should be invested.",
+        "key_points": [
+          "A savings account at 1.5% barely keeps pace with inflation",
+          "Index ETFs have historically returned 7-10% annually over long periods",
+          "$50,000 at 2% for 30 years = $90,000. At 7% = $380,000",
+          "The right place for long-term savings is a TFSA or RRSP invested in index funds"
+        ],
+        "quiz": null
+      },
+      {
+        "id": "1-3",
+        "title": "The CPP Reality Check",
+        "content": "The Canada Pension Plan (CPP) is the government's retirement savings program. You contribute to it every paycheque — but most Canadians have no idea what it will actually pay them.\n\nThe maximum CPP payout in 2025 is $1,433/month. But the average Canadian receives only $760/month. That's $9,120/year — nowhere near enough to live on.\n\nOld Age Security (OAS) adds another $700/month maximum. Combined, the government programs provide roughly $1,400–$2,100/month for most Canadians. The rest must come from your personal savings.",
+        "key_points": [
+          "Maximum CPP in 2025 is ~$1,433/month — average is only $760/month",
+          "OAS adds ~$700/month maximum",
+          "Government programs provide $1,400–$2,100/month total for most Canadians",
+          "A $70,000/year lifestyle requires ~$5,800/month — meaning you need $3,700+ from personal savings"
+        ],
+        "quiz": {
+          "question": "What is the average monthly CPP payout received by Canadians in 2025?",
+          "options": [
+            "$1,433 — the maximum",
+            "$760 — the average",
+            "$400 — for recent retirees",
+            "$1,200 — if you contributed the full amount"
+          ],
+          "correct_index": 1,
+          "explanation": "The average Canadian receives only $760/month from CPP, not the $1,433 maximum. This is because many workers don't contribute at the maximum rate for their full career. Combined with OAS, most Canadians get $1,400–$2,100/month from the government — far less than a comfortable retirement requires."
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "The Danger of Stock Picking",
+    "subtitle": "Why 90% lose, emotional trading, and the timing the market myth",
+    "emoji": "📉",
+    "lessons": [
+      {
+        "id": "2-1",
+        "title": "Why 90% of Stock Pickers Underperform",
+        "content": "The S&P SPIVA Canada report — the most comprehensive study of active vs. passive investing — consistently shows that over 90% of active fund managers underperform the index over 15-year periods.\n\nIndividual investors do even worse. They buy high (after reading good news), sell low (after reading bad news), and pay transaction costs along the way.\n\nThe solution isn't to find the right stock — it's to own the whole market through index funds and let time do the work.",
+        "key_points": [
+          "Over 90% of active fund managers underperform the index over 15 years (SPIVA Canada)",
+          "Individual investors underperform even further due to emotional decisions",
+          "Buying after good news and selling after bad news locks in losses",
+          "The index always recovers — individual stocks sometimes don't"
+        ],
+        "quiz": {
+          "question": "According to the S&P SPIVA Canada 15-year report, what percentage of active Canadian equity fund managers underperform their benchmark index?",
+          "options": [
+            "About 50% — roughly half beat the market",
+            "About 70% — most but not all",
+            "Over 90% — almost all underperform",
+            "About 30% — most managers add value"
+          ],
+          "correct_index": 2,
+          "explanation": "Over 90% of active fund managers in Canada underperform their benchmark index over 15 years, according to S&P's SPIVA Canada report. This is why low-cost index funds outperform most actively managed funds over the long term."
+        }
+      },
+      {
+        "id": "2-2",
+        "title": "Timing the Market Is a Myth",
+        "content": "Countless studies have shown that 'time in the market' beats 'timing the market' every time.\n\nA famous JPMorgan study showed that if you missed just the 10 best trading days over a 20-year period, your returns would be cut in half. Most of those best days cluster immediately after the worst days — which means the investors who panic-sold at the bottom missed the best recovery.\n\nThe correct strategy: invest regularly, stay invested, don't react to headlines.",
+        "key_points": [
+          "Missing the 10 best days over 20 years can cut your returns in half",
+          "The best market days often follow the worst market days",
+          "Panic selling at the bottom means missing the recovery",
+          "Dollar-cost averaging (regular monthly investing) removes emotional timing"
+        ],
+        "quiz": null
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Mutual Funds & Diversification",
+    "subtitle": "ETFs vs mutual funds, sector allocation, MER fee drag",
+    "emoji": "📊",
+    "lessons": [
+      {
+        "id": "3-1",
+        "title": "ETFs vs Mutual Funds: The MER Problem",
+        "content": "The average Canadian mutual fund charges a Management Expense Ratio (MER) of 2.3%. A comparable index ETF charges 0.2%. That 2.1% difference seems small — but compounded over 30 years on a $100,000 portfolio, it costs you over $200,000.\n\nMutual funds at major Canadian banks are heavily promoted because they generate enormous profit for the bank. Index ETFs generate almost no profit for anyone except you.\n\nThe MER is charged automatically inside the fund — you never see a bill. This is why most Canadians don't realize how much they're paying.",
+        "key_points": [
+          "Average Canadian mutual fund MER: 2.3%. Average index ETF MER: 0.2%",
+          "2.1% MER difference on $100K over 30 years costs $200,000+",
+          "MERs are deducted automatically — you never see the charge",
+          "Banks profit from high-MER mutual funds — ETFs benefit you, not the bank"
+        ],
+        "quiz": {
+          "question": "You have $100,000 in a mutual fund charging 2.3% MER vs. an index ETF charging 0.2%. Assuming 7% gross annual return over 30 years, roughly how much more do you have with the ETF?",
+          "options": [
+            "About $20,000 more",
+            "About $50,000 more",
+            "About $200,000 more",
+            "They end up about the same"
+          ],
+          "correct_index": 2,
+          "explanation": "The 2.1% MER difference compounds dramatically over 30 years. At 7% gross return: the 2.3% MER mutual fund grows to ~$375K. The 0.2% ETF grows to ~$575K. The fee drag costs over $200,000 in lost compounding — money that went to the fund manager, not you."
+        }
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "RRSP — The Tax Deduction Machine",
+    "subtitle": "Contribution room, spousal RRSP, HBP, how to invest inside",
+    "emoji": "🏦",
+    "lessons": [
+      {
+        "id": "4-1",
+        "title": "How RRSP Contribution Room Works",
+        "content": "The Registered Retirement Savings Plan (RRSP) is Canada's most powerful tax deferral tool. Every dollar you contribute reduces your taxable income for that year.\n\nYou can contribute 18% of your previous year's earned income, up to $31,560 in 2025. Unused room carries forward indefinitely — you can see your total available room in your CRA My Account.\n\nWhen you withdraw in retirement, you pay tax on the withdrawal — but most people are in a lower tax bracket in retirement, making the RRSP a genuine tax arbitrage opportunity.",
+        "key_points": [
+          "RRSP contributions reduce your taxable income dollar-for-dollar",
+          "Contribution limit: 18% of prior year income, max $31,560 in 2025",
+          "Unused room carries forward — check yours at CRA My Account",
+          "Withdrawals taxed at retirement (usually lower bracket than working years)"
+        ],
+        "quiz": null
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "TFSA — The Silent Wealth Builder",
+    "subtitle": "Tax-free growth, withdrawal room restoration, the name trap",
+    "emoji": "✨",
+    "lessons": [
+      {
+        "id": "5-1",
+        "title": "Why the TFSA Name Is Misleading",
+        "content": "The Tax-Free Savings Account (TFSA) is tragically misnamed. It's not a savings account — it's a registered investment account where all growth is completely tax-free, forever.\n\nApproximately 57% of TFSAs are held entirely in cash or GICs. That's like buying a sports car and leaving it in the garage. The real power of the TFSA comes from investing it in index ETFs and letting decades of tax-free compounding work for you.\n\nUnlike the RRSP, TFSA withdrawals are never taxed. And when you withdraw, you get the room back the following calendar year — meaning you can re-contribute.",
+        "key_points": [
+          "TFSA is an investment account, not a savings account — the name is misleading",
+          "57% of TFSAs are held in cash or GICs — leaving massive growth on the table",
+          "All TFSA growth (dividends, capital gains) is 100% tax-free, forever",
+          "Withdrawals restore contribution room the following January 1st",
+          "Cumulative TFSA room from 2009 to 2025: $95,000"
+        ],
+        "quiz": null
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "The 1-2 Punch Strategy",
+    "subtitle": "Using RRSP + TFSA together, income bracket optimization",
+    "emoji": "🥊",
+    "lessons": [
+      {
+        "id": "6-1",
+        "title": "The RRSP + TFSA Optimization",
+        "content": "The most powerful Canadian tax strategy is using RRSP and TFSA together strategically based on your income.\n\nThe 1-2 Punch: Contribute to your RRSP when your income is highest (30s-50s) to get the maximum tax deduction at your peak marginal rate. Then, in retirement when your income is lower, draw from the RRSP strategically and shelter the tax refunds and retirement income in your TFSA.\n\nHigh income years: RRSP first. Lower income years or tax-free shelter: TFSA first.",
+        "key_points": [
+          "RRSP gives you a refund at your current high marginal rate",
+          "Invest that refund into your TFSA for tax-free growth",
+          "Draw down RRSP in retirement at lower marginal rates",
+          "Use TFSA for income that doesn't affect OAS clawback calculations"
+        ],
+        "quiz": null
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "The 9 Rules of Wealth Building",
+    "subtitle": "Automation, fee reduction, time in market, never touching it",
+    "emoji": "🏆",
+    "lessons": [
+      {
+        "id": "7-1",
+        "title": "Rules 1–3: Automate, Minimize Fees, Start Now",
+        "content": "Rule 1 — Automate Everything. Set up automatic transfers on every paycheque to your RRSP and TFSA. If you never see the money, you won't miss it. Automation removes the need for willpower.\n\nRule 2 — Minimize Fees Ruthlessly. Switch from mutual funds to index ETFs. The 2% MER difference on a $200,000 portfolio is $4,000/year — straight out of your retirement.\n\nRule 3 — Start Today, Not Monday. The cost of waiting one year on $500/month at 7% over 30 years is over $57,000. There is no 'right time to start' — the right time was yesterday, the second best time is today.",
+        "key_points": [
+          "Automate RRSP and TFSA transfers on paycheque day — remove willpower from the equation",
+          "2% MER on $200K portfolio = $4,000/year in fees going to someone else",
+          "Every year of delay costs more than the previous year due to compounding",
+          "Never, ever touch your long-term investments before retirement"
+        ],
+        "quiz": null
+      }
+    ]
+  }
+]
