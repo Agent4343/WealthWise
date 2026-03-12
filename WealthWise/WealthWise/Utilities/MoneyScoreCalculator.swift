@@ -40,9 +40,9 @@ enum MoneyScoreCalculator {
         static func from(score: Int) -> Grade {
             switch score {
             case 85...100: return .excellent
-            case 70..<85: return .great
-            case 55..<70: return .good
-            case 40..<55: return .fair
+            case 75..<85: return .great
+            case 60..<75: return .good
+            case 45..<60: return .fair
             default: return .needsWork
             }
         }
@@ -157,7 +157,12 @@ enum MoneyScoreCalculator {
         ))
 
         // Calculate total weighted score
-        let totalWeighted = components.reduce(0.0) { $0 + $1.weighted }
+        var totalWeighted = components.reduce(0.0) { $0 + $1.weighted }
+
+        // Critical-failure penalty: if a core metric is near zero, cap the score
+        if savingsScore < 10 { totalWeighted = min(totalWeighted, 45) }     // Can't be "Good" saving nothing
+        if emergencyScore < 10 { totalWeighted = min(totalWeighted, 50) }   // No emergency fund is serious
+
         let totalScore = min(100, Int(totalWeighted))
         let grade = Grade.from(score: totalScore)
 

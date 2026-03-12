@@ -186,19 +186,23 @@
       else diversScore = 10;
 
       const savingsToIncome = savings / annualIncome;
-      let debtScore;
-      if (savingsToIncome >= 1.0) debtScore = 90;
-      else if (savingsToIncome >= 0.5) debtScore = 75;
-      else if (savingsToIncome >= 0.25) debtScore = 60;
-      else debtScore = 40;
+      let netWorthScore;
+      if (savingsToIncome >= 1.0) netWorthScore = 90;
+      else if (savingsToIncome >= 0.5) netWorthScore = 75;
+      else if (savingsToIncome >= 0.25) netWorthScore = 60;
+      else netWorthScore = 40;
 
-      const scores = [savingsRate, emergencyScore, tfsaScore, rrspScore, feeScore, diversScore, debtScore];
+      const scores = [savingsRate, emergencyScore, tfsaScore, rrspScore, feeScore, diversScore, netWorthScore];
 
       // Weighted total
       let total = 0;
       for (let i = 0; i < scores.length; i++) {
         total += scores[i] * factors[i].weight;
       }
+
+      // Critical-failure penalty: if any core metric is near zero, cap the score
+      if (savingsRate < 10) total = Math.min(total, 45);        // Can't be "Good" saving nothing
+      if (emergencyScore < 10) total = Math.min(total, 50);     // No emergency fund is serious
       total = Math.round(Math.min(100, total));
 
       // Update score ring
@@ -210,9 +214,9 @@
       // Grade
       let grade;
       if (total >= 85) grade = 'Excellent';
-      else if (total >= 70) grade = 'Great';
-      else if (total >= 55) grade = 'Good';
-      else if (total >= 40) grade = 'Fair';
+      else if (total >= 75) grade = 'Great';
+      else if (total >= 60) grade = 'Good';
+      else if (total >= 45) grade = 'Fair';
       else grade = 'Needs Work';
       document.getElementById('scoreGrade').textContent = grade;
 
@@ -233,20 +237,24 @@
           </div>`;
       }
 
-      // Recommendations (top 3 lowest)
+      // Recommendations — only for components scoring below 80
       const indexed = scores.map((s, i) => ({ score: s, index: i }));
       indexed.sort((a, b) => a.score - b.score);
-      const top3 = indexed.slice(0, 3);
+      const weak = indexed.filter(item => item.score < 80).slice(0, 3);
 
       const recEl = document.getElementById('recommendations');
-      recEl.innerHTML = '<h3 style="font-size:1rem;color:var(--text-muted);margin-bottom:12px">Recommendations</h3>';
-      for (const item of top3) {
-        const name = factors[item.index].name;
-        recEl.innerHTML += `
-          <div class="rec-item">
-            <div class="rec-icon">!</div>
-            <div class="rec-text"><strong>${name}:</strong> ${recommendations[name]}</div>
-          </div>`;
+      if (weak.length > 0) {
+        recEl.innerHTML = '<h3 style="font-size:1rem;color:var(--text-muted);margin-bottom:12px">Recommendations</h3>';
+        for (const item of weak) {
+          const name = factors[item.index].name;
+          recEl.innerHTML += `
+            <div class="rec-item">
+              <div class="rec-icon">!</div>
+              <div class="rec-text"><strong>${name}:</strong> ${recommendations[name]}</div>
+            </div>`;
+        }
+      } else {
+        recEl.innerHTML = '<h3 style="font-size:1rem;color:var(--text-muted);margin-bottom:12px">Recommendations</h3><div class="rec-item"><div class="rec-text">You\'re in great shape across all categories. Keep it up!</div></div>';
       }
     }
 

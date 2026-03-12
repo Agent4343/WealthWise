@@ -102,44 +102,52 @@ function calculateMoneyScore(profile) {
     suggestion: 'Contribute to RRSP for immediate tax refund'
   });
 
-  // 5. Investment Fees (10%) — assume moderate score without detailed data
-  const feeScore = 65;
+  // 5. Investment Fees (10%) — based on risk tolerance as proxy
+  const riskTolerance = profile.risk_tolerance || 'balanced';
+  const feeScore = riskTolerance === 'growth' ? 85 : riskTolerance === 'balanced' ? 65 : 50;
   components.push({
     name: 'Investment Fees',
     score: feeScore,
     weight: 0.10,
-    description: 'Fee assessment based on general profile',
+    description: riskTolerance === 'growth' ? 'Growth profile suggests low-cost investing' : 'Consider reviewing your investment fees',
     suggestion: 'Switch to index ETFs with MERs under 0.25%'
   });
 
-  // 6. Diversification (10%)
-  const diversificationScore = 60;
+  // 6. Diversification (10%) — based on whether using both RRSP and TFSA
+  const usesBoth = (profile.tfsa_room_used || 0) > 0 && (profile.rrsp_room_used || 0) > 0;
+  const usesEither = (profile.tfsa_room_used || 0) > 0 || (profile.rrsp_room_used || 0) > 0;
+  const diversificationScore = usesBoth ? 80 : usesEither ? 50 : 10;
   components.push({
     name: 'Diversification',
     score: diversificationScore,
     weight: 0.10,
-    description: 'Diversification assessment based on profile',
-    suggestion: 'Use a single all-in-one ETF like XBAL or VGRO'
+    description: usesBoth ? 'Using both RRSP and TFSA accounts' : 'Consider using multiple account types',
+    suggestion: 'Use the 1-2 Punch: contribute to RRSP, invest the refund in your TFSA'
   });
 
   // 7. Net Worth Ratio (15%) — savings vs income
-  const netWorthScore = 70;
+  const savingsToIncome = incomeMidpoint > 0 ? (profile.current_savings || 0) / incomeMidpoint : 0;
+  const netWorthScore = savingsToIncome >= 1.0 ? 90 : savingsToIncome >= 0.5 ? 75 : savingsToIncome >= 0.25 ? 60 : 40;
   components.push({
     name: 'Net Worth Ratio',
     score: netWorthScore,
     weight: 0.15,
-    description: 'Savings-to-income assessment based on general profile',
+    description: `Savings-to-income ratio: ${savingsToIncome.toFixed(1)}x`,
     suggestion: 'Aim for total savings equal to at least 1x your annual income'
   });
 
-  const totalScore = Math.round(
-    components.reduce((sum, c) => sum + c.score * c.weight, 0)
-  );
+  let weightedTotal = components.reduce((sum, c) => sum + c.score * c.weight, 0);
+
+  // Critical-failure penalty: if a core metric is near zero, cap the score
+  if (savingsScore < 10) weightedTotal = Math.min(weightedTotal, 45);
+  if (emergencyScore < 10) weightedTotal = Math.min(weightedTotal, 50);
+
+  const totalScore = Math.round(Math.min(100, weightedTotal));
 
   const grade = totalScore >= 85 ? 'Excellent'
-    : totalScore >= 70 ? 'Great'
-    : totalScore >= 55 ? 'Good'
-    : totalScore >= 40 ? 'Fair'
+    : totalScore >= 75 ? 'Great'
+    : totalScore >= 60 ? 'Good'
+    : totalScore >= 45 ? 'Fair'
     : 'Needs Work';
 
   const recommendations = [];
