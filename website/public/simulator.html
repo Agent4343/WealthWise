@@ -70,31 +70,26 @@
       <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px">Toggle scenarios to compare against your baseline.</p>
 
       <div class="scenario-toggles">
-        <label class="scenario-toggle" id="tog-1" onclick="this.classList.toggle('active');calculate();saveInputs()">
-          <input type="checkbox" id="sc-1">
+        <div class="scenario-toggle" id="tog-1" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Increase monthly investment by $200</span>
-        </label>
-        <label class="scenario-toggle" id="tog-2" onclick="this.classList.toggle('active');calculate();saveInputs()">
-          <input type="checkbox" id="sc-2">
+        </div>
+        <div class="scenario-toggle" id="tog-2" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Retire 5 years earlier</span>
-        </label>
-        <label class="scenario-toggle" id="tog-3" onclick="this.classList.toggle('active');calculate();saveInputs()">
-          <input type="checkbox" id="sc-3">
+        </div>
+        <div class="scenario-toggle" id="tog-3" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Reduce fees by 1.5% (switch to index ETFs)</span>
-        </label>
-        <label class="scenario-toggle" id="tog-4" onclick="this.classList.toggle('active');calculate();saveInputs()">
-          <input type="checkbox" id="sc-4">
+        </div>
+        <div class="scenario-toggle" id="tog-4" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Start RESP for child ($200/mo deducted)</span>
-        </label>
-        <label class="scenario-toggle" id="tog-5" onclick="this.classList.toggle('active');calculate();saveInputs()">
-          <input type="checkbox" id="sc-5">
+        </div>
+        <div class="scenario-toggle" id="tog-5" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Buy a home ($100K down payment deducted)</span>
-        </label>
+        </div>
       </div>
 
       <div class="results-section" style="margin-top:32px">
@@ -113,6 +108,7 @@
           <div id="res-diff" style="font-size:1.3rem;font-weight:700">$0</div>
           <div style="color:var(--text-muted);font-size:0.85rem;margin-top:4px">Difference</div>
         </div>
+        <div id="scenario-breakdown" style="margin-top:16px"></div>
       </div>
 
       <div class="chart-container" style="margin-top:16px">
@@ -195,7 +191,7 @@
       const baseYears = Math.max(0, retireAge - currentAge);
       const baseline = growthCalc(savings, monthly, rate, baseYears);
 
-      // Scenario
+      // Combined scenario
       let scMonthly = monthly;
       let scRetireAge = retireAge;
       let scRate = rate;
@@ -217,6 +213,41 @@
       const diffEl = document.getElementById('res-diff');
       diffEl.textContent = (diff >= 0 ? '+$' : '-$') + Math.abs(Math.round(diff)).toLocaleString();
       diffEl.style.color = diff >= 0 ? '#34d399' : '#f87171';
+
+      // Per-scenario breakdown
+      const breakdownEl = document.getElementById('scenario-breakdown');
+      const activeScenarios = [];
+      const scenarioLabels = [
+        { active: sc1, name: 'Extra $200/mo', monthly: monthly + 200, retire: retireAge, retRate: rate, sav: savings },
+        { active: sc2, name: 'Retire 5yr earlier', monthly: monthly, retire: Math.max(currentAge + 1, retireAge - 5), retRate: rate, sav: savings },
+        { active: sc3, name: 'Lower fees (-1.5%)', monthly: monthly, retire: retireAge, retRate: rate + 0.015, sav: savings },
+        { active: sc4, name: 'RESP ($200/mo out)', monthly: Math.max(0, monthly - 200), retire: retireAge, retRate: rate, sav: savings },
+        { active: sc5, name: 'Home ($100K down)', monthly: monthly, retire: retireAge, retRate: rate, sav: Math.max(0, savings - 100000) }
+      ];
+
+      scenarioLabels.forEach(sc => {
+        if (!sc.active) return;
+        const yrs = Math.max(0, sc.retire - currentAge);
+        const result = growthCalc(sc.sav, sc.monthly, sc.retRate, yrs);
+        const impact = result.final - baseline.final;
+        activeScenarios.push({ name: sc.name, impact });
+      });
+
+      if (activeScenarios.length > 1) {
+        let html = '<div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;font-weight:600">Individual Impact</div>';
+        activeScenarios.forEach(sc => {
+          const color = sc.impact >= 0 ? '#34d399' : '#f87171';
+          const sign = sc.impact >= 0 ? '+' : '-';
+          html += '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)">';
+          html += '<span style="font-size:0.9rem">' + sc.name + '</span>';
+          html += '<span style="font-weight:700;color:' + color + '">' + sign + '$' + Math.abs(Math.round(sc.impact)).toLocaleString() + '</span>';
+          html += '</div>';
+        });
+        breakdownEl.innerHTML = html;
+        breakdownEl.style.display = 'block';
+      } else {
+        breakdownEl.style.display = 'none';
+      }
 
       drawChart(baseline.data, scenario.data, currentAge);
     }
