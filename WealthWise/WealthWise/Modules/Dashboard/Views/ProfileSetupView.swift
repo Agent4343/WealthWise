@@ -11,7 +11,13 @@ struct ProfileSetupView: View {
                     Stepper("Age: \(viewModel.age)", value: $viewModel.age, in: 18...80)
 
                     Stepper("Retirement Age: \(viewModel.retirementAge)",
-                            value: $viewModel.retirementAge, in: 45...80)
+                            value: $viewModel.retirementAge, in: (viewModel.age + 1)...80)
+
+                    if viewModel.retirementAge <= viewModel.age {
+                        Text("Retirement age must be after your current age.")
+                            .font(.caption)
+                            .foregroundStyle(.red)
+                    }
 
                     Picker("Province", selection: $viewModel.selectedProvince) {
                         ForEach(Province.allCases, id: \.self) { province in

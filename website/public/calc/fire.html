@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FIRE Calculator — WealthWise</title>
+  <meta name="description" content="Free FIRE calculator for Canadians. Find your financial independence number and see when you can retire early based on your savings rate.">
   <meta name="theme-color" content="#0A1628">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -93,6 +94,27 @@
   </div>
 
   <script>
+    const STORAGE_KEY = 'ws_fire_calc';
+    function saveInputs() {
+      const data = {};
+      document.querySelectorAll('.form-input, input[type=range]').forEach(el => {
+        if (!el.id) return;
+        data[el.id] = el.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    function restoreInputs() {
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!data) return;
+        Object.entries(data).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.value = val;
+        });
+      } catch(e) {}
+    }
+
     function calculate() {
       const expenses = parseFloat(document.getElementById('expenses').value) || 0;
       const rate = parseFloat(document.getElementById('withdrawal').value) / 100;
@@ -111,8 +133,9 @@
     }
 
     document.querySelectorAll('#expenses, #withdrawal').forEach(el => {
-      el.addEventListener('input', calculate);
+      el.addEventListener('input', () => { calculate(); saveInputs(); });
     });
+    restoreInputs();
     calculate();
   </script>
   <script src="/js/main.js"></script>

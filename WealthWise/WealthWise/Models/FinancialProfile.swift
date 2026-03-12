@@ -5,6 +5,7 @@ struct FinancialProfile: Codable, Identifiable {
     let userId: UUID
     var age: Int
     var retirementAge: Int
+    var province: String
     var incomeBracket: String
     var rrspRoomUsed: Double
     var tfsaRoomUsed: Double
@@ -13,11 +14,17 @@ struct FinancialProfile: Codable, Identifiable {
     var riskTolerance: RiskTolerance
     var updatedAt: Date?
 
+    /// Province as enum, falling back to Ontario
+    var provinceEnum: Province {
+        Province(rawValue: province) ?? .on
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case userId = "user_id"
         case age
         case retirementAge = "retirement_age"
+        case province
         case incomeBracket = "income_bracket"
         case rrspRoomUsed = "rrsp_room_used"
         case tfsaRoomUsed = "tfsa_room_used"

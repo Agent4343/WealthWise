@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Life Simulator — WealthWise</title>
+  <meta name="description" content="Run side-by-side financial scenarios. See how extra savings, earlier retirement, or lower fees change your future. Built for Canadians.">
   <meta name="theme-color" content="#0A1628">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,27 +70,27 @@
       <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:12px">Toggle scenarios to compare against your baseline.</p>
 
       <div class="scenario-toggles">
-        <label class="scenario-toggle" id="tog-1" onclick="this.classList.toggle('active');calculate()">
+        <label class="scenario-toggle" id="tog-1" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <input type="checkbox" id="sc-1">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Increase monthly investment by $200</span>
         </label>
-        <label class="scenario-toggle" id="tog-2" onclick="this.classList.toggle('active');calculate()">
+        <label class="scenario-toggle" id="tog-2" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <input type="checkbox" id="sc-2">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Retire 5 years earlier</span>
         </label>
-        <label class="scenario-toggle" id="tog-3" onclick="this.classList.toggle('active');calculate()">
+        <label class="scenario-toggle" id="tog-3" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <input type="checkbox" id="sc-3">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Reduce fees by 1.5% (switch to index ETFs)</span>
         </label>
-        <label class="scenario-toggle" id="tog-4" onclick="this.classList.toggle('active');calculate()">
+        <label class="scenario-toggle" id="tog-4" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <input type="checkbox" id="sc-4">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Start RESP for child ($200/mo deducted)</span>
         </label>
-        <label class="scenario-toggle" id="tog-5" onclick="this.classList.toggle('active');calculate()">
+        <label class="scenario-toggle" id="tog-5" onclick="this.classList.toggle('active');calculate();saveInputs()">
           <input type="checkbox" id="sc-5">
           <div class="scenario-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
           <span class="scenario-label">Buy a home ($100K down payment deducted)</span>
@@ -132,6 +133,38 @@
   </div>
 
   <script>
+    const STORAGE_KEY = 'ws_simulator';
+    function saveInputs() {
+      const data = {};
+      document.querySelectorAll('.form-input, input[type=range]').forEach(el => {
+        if (!el.id) return;
+        data[el.id] = el.value;
+      });
+      // Save scenario toggle states
+      for (let i = 1; i <= 5; i++) {
+        const tog = document.getElementById('tog-' + i);
+        if (tog) data['tog-' + i] = tog.classList.contains('active');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    function restoreInputs() {
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!data) return;
+        Object.entries(data).forEach(([id, val]) => {
+          if (id.startsWith('tog-')) {
+            const el = document.getElementById(id);
+            if (el && val) el.classList.add('active');
+            else if (el) el.classList.remove('active');
+            return;
+          }
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.value = val;
+        });
+      } catch(e) {}
+    }
+
     function growthCalc(startBalance, monthly, annualReturn, years) {
       const monthlyRate = annualReturn / 12;
       let balance = startBalance;
@@ -248,8 +281,9 @@
     }
 
     document.querySelectorAll('#currentAge, #retireAge, #monthly, #savings, #returnRate').forEach(el => {
-      el.addEventListener('input', calculate);
+      el.addEventListener('input', () => { calculate(); saveInputs(); });
     });
+    restoreInputs();
     calculate();
     window.addEventListener('resize', calculate);
   </script>

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TFSA Optimizer — WealthWise</title>
+  <meta name="description" content="Free TFSA calculator. Project your tax-free growth to age 65 and see how much tax you save. Uses real Canadian contribution limits.">
   <meta name="theme-color" content="#0A1628">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -105,6 +106,27 @@
   </div>
 
   <script>
+    const STORAGE_KEY = 'ws_tfsa_calc';
+    function saveInputs() {
+      const data = {};
+      document.querySelectorAll('.form-input, input[type=range]').forEach(el => {
+        if (!el.id) return;
+        data[el.id] = el.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    function restoreInputs() {
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!data) return;
+        Object.entries(data).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.value = val;
+        });
+      } catch(e) {}
+    }
+
     function calculate() {
       const age = parseInt(document.getElementById('age').value) || 30;
       const balance = parseFloat(document.getElementById('balance').value) || 0;
@@ -134,8 +156,9 @@
     }
 
     document.querySelectorAll('#age, #balance, #annual, #returnRate').forEach(el => {
-      el.addEventListener('input', calculate);
+      el.addEventListener('input', () => { calculate(); saveInputs(); });
     });
+    restoreInputs();
     calculate();
   </script>
   <script src="/js/main.js"></script>

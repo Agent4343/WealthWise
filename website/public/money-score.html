@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Money Score — WealthWise</title>
+  <meta name="description" content="Get your free Money Score — a 0-100 rating of your financial health based on TFSA, RRSP, savings rate, and more. Built for Canadians.">
   <meta name="theme-color" content="#0A1628">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -37,18 +38,13 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="income">Monthly Income</label>
-          <input type="number" id="income" class="form-input" placeholder="e.g. 6000" value="6000">
+          <label for="annualIncome">Annual Income (gross)</label>
+          <input type="number" id="annualIncome" class="form-input" placeholder="e.g. 72000" value="72000" min="0">
         </div>
         <div class="form-group">
           <label for="contribution">Monthly Savings/Investment</label>
-          <input type="number" id="contribution" class="form-input" placeholder="e.g. 800" value="800">
+          <input type="number" id="contribution" class="form-input" placeholder="e.g. 800" value="800" min="0">
         </div>
-      </div>
-
-      <div class="form-group">
-        <label for="annualIncome">Annual Income (gross)</label>
-        <input type="number" id="annualIncome" class="form-input" placeholder="e.g. 72000" value="72000">
       </div>
 
       <div class="info-box" style="margin-bottom:20px">
@@ -57,19 +53,21 @@
 
       <div class="form-group">
         <label for="savings">Total Savings &amp; Investments (everything — TFSA + RRSP + RESP + cash + non-reg)</label>
-        <input type="number" id="savings" class="form-input" placeholder="e.g. 120000" value="120000">
+        <input type="number" id="savings" class="form-input" placeholder="e.g. 120000" value="120000" min="0">
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="tfsaUsed">Of that total, how much is in your TFSA? ($)</label>
-          <input type="number" id="tfsaUsed" class="form-input" placeholder="e.g. 35000" value="35000">
+          <input type="number" id="tfsaUsed" class="form-input" placeholder="e.g. 35000" value="35000" min="0">
         </div>
         <div class="form-group">
           <label for="rrspUsed">Of that total, how much is in your RRSP? ($)</label>
-          <input type="number" id="rrspUsed" class="form-input" placeholder="e.g. 15000" value="15000">
+          <input type="number" id="rrspUsed" class="form-input" placeholder="e.g. 15000" value="15000" min="0">
         </div>
       </div>
+
+      <div id="validationWarning" style="display:none;padding:12px 16px;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:8px;color:#f87171;font-size:0.85rem;margin-bottom:16px"></div>
 
       <div class="form-group">
         <label for="riskProfile">Investment Style</label>
@@ -126,6 +124,28 @@
   </div>
 
   <script>
+    const STORAGE_KEY = 'ws_money_score';
+    function saveInputs() {
+      const data = {};
+      document.querySelectorAll('.form-input, .form-select, input[type=checkbox]').forEach(el => {
+        if (!el.id) return;
+        data[el.id] = el.type === 'checkbox' ? el.checked : el.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    function restoreInputs() {
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!data) return;
+        Object.entries(data).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          if (el.type === 'checkbox') el.checked = val;
+          else el.value = val;
+        });
+      } catch(e) {}
+    }
+
     const factors = [
       { name: 'Savings Rate', weight: 0.20 },
       { name: 'Emergency Fund', weight: 0.15 },
@@ -150,20 +170,34 @@
     };
 
     function calculate() {
-      const income = parseFloat(document.getElementById('income').value) || 1;
-      const contribution = parseFloat(document.getElementById('contribution').value) || 0;
-      const savings = parseFloat(document.getElementById('savings').value) || 0;
-      const annualIncome = parseFloat(document.getElementById('annualIncome').value) || 1;
-      const tfsaUsed = parseFloat(document.getElementById('tfsaUsed').value) || 0;
-      const rrspUsed = parseFloat(document.getElementById('rrspUsed').value) || 0;
+      const annualIncome = Math.max(0, parseFloat(document.getElementById('annualIncome').value) || 0);
+      const income = annualIncome / 12 || 1; // Derive monthly from annual
+      const contribution = Math.max(0, parseFloat(document.getElementById('contribution').value) || 0);
+      const savings = Math.max(0, parseFloat(document.getElementById('savings').value) || 0);
+      let tfsaUsed = Math.max(0, parseFloat(document.getElementById('tfsaUsed').value) || 0);
+      let rrspUsed = Math.max(0, parseFloat(document.getElementById('rrspUsed').value) || 0);
       const riskProfile = document.getElementById('riskProfile').value;
       const hasTFSA = document.getElementById('hasTFSA').checked;
       const hasRRSP = document.getElementById('hasRRSP').checked;
 
       // Validate: TFSA + RRSP can't exceed total savings
-      const accountTotal = tfsaUsed + rrspUsed;
-      if (accountTotal > savings && savings > 0) {
-        // Auto-cap to total savings proportionally — no error, just clamp
+      const warnings = [];
+      if (tfsaUsed + rrspUsed > savings && savings > 0) {
+        warnings.push('TFSA + RRSP ($' + (tfsaUsed + rrspUsed).toLocaleString() + ') exceeds your total savings ($' + savings.toLocaleString() + '). Check your numbers.');
+      }
+      if (contribution > income) {
+        warnings.push('Monthly savings exceeds monthly income. Are you sure?');
+      }
+      if (tfsaUsed > TFSA_CUMULATIVE) {
+        warnings.push('TFSA amount exceeds maximum cumulative room ($' + TFSA_CUMULATIVE.toLocaleString() + ').');
+        tfsaUsed = TFSA_CUMULATIVE;
+      }
+      const warnEl = document.getElementById('validationWarning');
+      if (warnings.length > 0) {
+        warnEl.innerHTML = warnings.join('<br>');
+        warnEl.style.display = 'block';
+      } else {
+        warnEl.style.display = 'none';
       }
 
       // Calculate each factor score (0-100)
@@ -225,10 +259,11 @@
       breakdownEl.innerHTML = '<h3 style="font-size:1rem;color:var(--text-muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:0.06em;font-weight:600">Score Breakdown</h3>';
       for (let i = 0; i < factors.length; i++) {
         const s = Math.round(scores[i]);
+        const w = Math.round(factors[i].weight * 100);
         breakdownEl.innerHTML += `
           <div class="score-factor">
             <div class="score-factor-header">
-              <span class="score-factor-name">${factors[i].name}</span>
+              <span class="score-factor-name">${factors[i].name} <span style="color:var(--text-dim);font-weight:400;font-size:0.75rem">${w}% weight</span></span>
               <span class="score-factor-score">${s}/100</span>
             </div>
             <div class="score-factor-bar">
@@ -258,10 +293,11 @@
       }
     }
 
-    document.querySelectorAll('#income, #contribution, #savings, #annualIncome, #tfsaUsed, #rrspUsed, #riskProfile, #hasTFSA, #hasRRSP').forEach(el => {
-      el.addEventListener('input', calculate);
-      el.addEventListener('change', calculate);
+    document.querySelectorAll('#contribution, #savings, #annualIncome, #tfsaUsed, #rrspUsed, #riskProfile, #hasTFSA, #hasRRSP').forEach(el => {
+      el.addEventListener('input', () => { calculate(); saveInputs(); });
+      el.addEventListener('change', () => { calculate(); saveInputs(); });
     });
+    restoreInputs();
     calculate();
   </script>
   <script src="/js/main.js"></script>

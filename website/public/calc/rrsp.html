@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RRSP Tax Saver — WealthWise</title>
+  <meta name="description" content="Free RRSP calculator for Canadians. See your exact tax refund by province and income. Uses real 2026 CRA brackets and contribution limits.">
   <meta name="theme-color" content="#0A1628">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,6 +113,27 @@
   </div>
 
   <script>
+    const STORAGE_KEY = 'ws_rrsp_calc';
+    function saveInputs() {
+      const data = {};
+      document.querySelectorAll('.form-input, .form-select').forEach(el => {
+        if (!el.id) return;
+        data[el.id] = el.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    function restoreInputs() {
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!data) return;
+        Object.entries(data).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.value = val;
+        });
+      } catch(e) {}
+    }
+
     // Canadian Federal Tax Brackets (2025)
     function federalMarginalRate(income) {
       if (income <= 57375) return 0.15;
@@ -153,9 +175,10 @@
     }
 
     document.querySelectorAll('#income, #province, #contribution').forEach(el => {
-      el.addEventListener('input', calculate);
-      el.addEventListener('change', calculate);
+      el.addEventListener('input', () => { calculate(); saveInputs(); });
+      el.addEventListener('change', () => { calculate(); saveInputs(); });
     });
+    restoreInputs();
     calculate();
   </script>
   <script src="/js/main.js"></script>

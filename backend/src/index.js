@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const cron = require('node-cron');
 const { authMiddleware } = require('./middleware/auth');
 const profileRoutes = require('./routes/profile');
@@ -12,12 +14,50 @@ const { router: pushRoutes } = require('./routes/push');
 const calculatorRoutes = require('./routes/calculator');
 const { generateWeeklyBriefs } = require('./jobs/weeklyBriefGenerator');
 
+// Validate required environment variables
+const requiredEnvVars = ['SUPABASE_URL', 'SUPABASE_SERVICE_KEY', 'SUPABASE_JWT_SECRET'];
+for (const envVar of requiredEnvVars) {
+  if (!process.env[envVar]) {
+    console.error(`FATAL: Missing required environment variable: ${envVar}`);
+    process.exit(1);
+  }
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+// Security headers
+app.use(helmet());
+
+// CORS configuration
+const allowedOrigins = ['https://wealthwise.ca', 'https://www.wealthwise.ca'];
+app.use(cors({
+  origin: process.env.NODE_ENV === 'development'
+    ? true
+    : allowedOrigins
+}));
+
+// Body parsing with size limit
+app.use(express.json({ limit: '10kb' }));
+
+// General rate limiter: 100 requests per 15 minutes per IP
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many requests, please try again later' }
+});
+app.use(generalLimiter);
+
+// Admin rate limiter: 5 requests per 15 minutes per IP
+const adminLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many admin requests, please try again later' }
+});
 
 // Health check
 app.get('/', (req, res) => {
@@ -38,7 +78,7 @@ app.use('/briefs', authMiddleware, briefsRoutes);
 app.use('/subscription', authMiddleware, subscriptionRoutes);
 app.use('/push', authMiddleware, pushRoutes);
 app.use('/calculator', authMiddleware, calculatorRoutes);
-app.use('/admin', adminRoutes);
+app.use('/admin', adminLimiter, authMiddleware, adminRoutes);
 
 // Sunday 23:00 EST cron job for Weekly Brief generation
 if (process.env.CRON_ENABLED === 'true') {

@@ -72,16 +72,20 @@ final class DashboardViewModel: ObservableObject {
         isLoading = true
         defer { isLoading = false }
 
+        // Validate retirement age is after current age
+        let validRetirementAge = max(retirementAge, age + 1)
+
         let newProfile = FinancialProfile(
             id: profile?.id ?? UUID(),
             userId: profile?.userId ?? UUID(),
             age: age,
-            retirementAge: retirementAge,
+            retirementAge: validRetirementAge,
+            province: selectedProvince.rawValue,
             incomeBracket: selectedIncomeBracket.rawValue,
-            rrspRoomUsed: Double(rrspRoomUsed) ?? 0,
-            tfsaRoomUsed: Double(tfsaRoomUsed) ?? 0,
-            currentSavings: Double(currentSavings) ?? 0,
-            monthlyContribution: Double(monthlyContribution) ?? 0,
+            rrspRoomUsed: max(0, Double(rrspRoomUsed) ?? 0),
+            tfsaRoomUsed: max(0, Double(tfsaRoomUsed) ?? 0),
+            currentSavings: max(0, Double(currentSavings) ?? 0),
+            monthlyContribution: max(0, Double(monthlyContribution) ?? 0),
             riskTolerance: riskTolerance,
             updatedAt: Date()
         )
@@ -98,6 +102,7 @@ final class DashboardViewModel: ObservableObject {
     private func populateFormFromProfile(_ profile: FinancialProfile) {
         age = profile.age
         retirementAge = profile.retirementAge
+        selectedProvince = profile.provinceEnum
         selectedIncomeBracket = IncomeBracket(rawValue: profile.incomeBracket) ?? .fiftyTo75k
         rrspRoomUsed = String(format: "%.0f", profile.rrspRoomUsed)
         tfsaRoomUsed = String(format: "%.0f", profile.tfsaRoomUsed)

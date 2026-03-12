@@ -3,6 +3,26 @@
    ============================================ */
 
 (function () {
+  var STORAGE_KEY = 'ws_brief';
+  function saveInputs() {
+    var data = {};
+    ['brief-province', 'brief-income', 'brief-rrsp', 'brief-tfsa'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) data[id] = el.value;
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+  function restoreInputs() {
+    try {
+      var data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!data) return;
+      Object.keys(data).forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.value = data[id];
+      });
+    } catch(e) {}
+  }
+
   const provincialBaseRates = {
     AB: 0.10, BC: 0.0506, MB: 0.108, NB: 0.094,
     NL: 0.087, NS: 0.0879, NT: 0.059, NU: 0.04,
@@ -128,11 +148,12 @@
   ['brief-province', 'brief-income', 'brief-rrsp', 'brief-tfsa'].forEach(function (id) {
     const el = document.getElementById(id);
     if (el) {
-      el.addEventListener('input', updateBrief);
-      el.addEventListener('change', updateBrief);
+      el.addEventListener('input', function() { updateBrief(); saveInputs(); });
+      el.addEventListener('change', function() { updateBrief(); saveInputs(); });
     }
   });
 
-  // Initial render
+  // Restore saved inputs, then render
+  restoreInputs();
   updateBrief();
 })();

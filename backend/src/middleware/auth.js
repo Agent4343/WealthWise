@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const { createClient } = require('@supabase/supabase-js');
 
 const supabase = createClient(
@@ -48,4 +49,16 @@ async function premiumMiddleware(req, res, next) {
   }
 }
 
-module.exports = { authMiddleware, premiumMiddleware };
+function verifyAdminKey(providedKey) {
+  const expectedKey = process.env.ADMIN_API_KEY;
+  if (!providedKey || !expectedKey) return false;
+
+  const providedBuf = Buffer.from(String(providedKey));
+  const expectedBuf = Buffer.from(String(expectedKey));
+
+  if (providedBuf.length !== expectedBuf.length) return false;
+
+  return crypto.timingSafeEqual(providedBuf, expectedBuf);
+}
+
+module.exports = { authMiddleware, premiumMiddleware, verifyAdminKey };

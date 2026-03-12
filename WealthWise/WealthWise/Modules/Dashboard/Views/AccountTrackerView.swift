@@ -182,7 +182,7 @@ struct AccountTrackerView: View {
 
             if let profile = viewModel.profile {
                 let income = IncomeBracket(rawValue: profile.incomeBracket)?.midpoint ?? 75_000
-                let province = "ON" // Default to Ontario for display
+                let province = profile.provinceEnum.rawValue
                 let rrspContribution = min(5000, max(0, viewModel.estimatedRrspRoom - profile.rrspRoomUsed))
                 let refund = TaxCalculator.rrspTaxRefund(
                     contribution: rrspContribution,
@@ -237,7 +237,7 @@ struct AccountTrackerView: View {
 
     private func taxRefundCard(profile: FinancialProfile) -> some View {
         let income = IncomeBracket(rawValue: profile.incomeBracket)?.midpoint ?? 75_000
-        let province = "ON"
+        let province = profile.provinceEnum.rawValue
         let marginalRate = TaxCalculator.marginalRate(income: income, province: province)
 
         return VStack(alignment: .leading, spacing: 12) {

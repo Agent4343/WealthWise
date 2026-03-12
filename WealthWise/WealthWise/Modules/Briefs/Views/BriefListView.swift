@@ -123,7 +123,7 @@ struct BriefListView: View {
                     HStack {
                         Text("WealthWise Premium")
                         Spacer()
-                        Text("$9.99/month")
+                        Text(subscriptionVM.premiumMonthly?.displayPrice ?? "$9.99/month")
                             .foregroundStyle(.green)
                             .fontWeight(.bold)
                     }

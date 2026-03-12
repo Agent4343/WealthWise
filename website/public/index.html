@@ -19,6 +19,96 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/css/style.css">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "WealthWise",
+    "url": "https://wealthwise.app",
+    "logo": "https://wealthwise.app/og-image.png",
+    "description": "Canadian financial coach app with free RRSP, TFSA, and retirement calculators. Built for Canadians by The Mile School.",
+    "foundingDate": "2026",
+    "sameAs": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "support@wealthwise.app",
+      "contactType": "customer support"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "CAD",
+      "lowPrice": "0",
+      "highPrice": "149",
+      "offerCount": "4"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is WealthWise only for Canadians?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Every calculator, tax bracket, RRSP/TFSA rule, and contribution limit is built specifically for the Canadian financial system. This isn't an American app with a maple leaf — it's built from the ground up for Canadians."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does it actually cost me to NOT use WealthWise?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The average Canadian with $100K in mutual funds (2.3% MER) pays $378,000 more in fees over 30 years vs. low-cost index ETFs. Add unused RRSP deductions ($3,000+/year in lost refunds) and uninvested TFSA room — and most Canadians leave $500K+ on the table over their lifetime. WealthWise shows you exactly where."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Money Score?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It's a 0–100 rating of your overall financial health. It weighs 7 factors — savings rate, emergency fund, TFSA usage, RRSP usage, net worth ratio, investment diversification, and fees — to give you a single number and personalized recommendations to improve it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do AI Weekly Briefs work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every Monday, our AI generates a personalized financial brief based on your profile — your province, income bracket, account balances, and goals. It includes market context, actionable tips, and what to focus on that week. Delivered via push notification and email."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Absolutely. We use end-to-end encryption and Supabase with row-level security. We never connect to your bank accounts or store sensitive credentials. Your data is only accessible to you. All API communication is encrypted over HTTPS."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use it in French?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui! WealthWise is fully bilingual with support for English and French-Canadian (fr-CA). The app follows your device language setting."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to connect my bank account?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. WealthWise never connects to your bank. You manually enter your numbers — which means zero security risk, zero data sharing, and complete control over your information."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -65,7 +155,7 @@
             <span class="stat-label">App Rating</span>
           </div>
           <div class="stat">
-            <span class="stat-num">6</span>
+            <span class="stat-num">7</span>
             <span class="stat-label">Free Calculators</span>
           </div>
           <div class="stat">
@@ -225,7 +315,7 @@
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg>
           </div>
           <h3>Smart Calculators</h3>
-          <p>RRSP, TFSA, Retirement, FIRE, Fee Drag, and Compound Interest — built with Canadian tax rules and contribution limits.</p>
+          <p>RRSP, TFSA, RESP/CESG, Retirement, FIRE, Fee Drag, and Compound Interest — built with Canadian tax rules and contribution limits.</p>
           <div class="feature-tag">Try them free &rarr;</div>
         </a>
 
@@ -265,7 +355,7 @@
     <div class="container">
       <div class="section-header">
         <div class="badge">Try Them Now</div>
-        <h2>Six calculators. <span class="gradient-text">Real Canadian math.</span></h2>
+        <h2>Seven calculators. <span class="gradient-text">Real Canadian math.</span></h2>
         <p class="section-sub">No signup required. Every calculator uses real tax brackets, contribution limits, and provincial rates. Try them right now.</p>
       </div>
       <div class="calc-grid">
@@ -293,6 +383,11 @@
           <div class="calc-icon">💸</div>
           <h4>Fee Drag</h4>
           <p>See exactly how much your MER fees will cost you. The number will shock you.</p>
+        </a>
+        <a href="/calc/resp.html" class="calc-card">
+          <div class="calc-icon">🎓</div>
+          <h4>RESP / CESG</h4>
+          <p>Calculate your child's education savings with the 20% government match. Free money.</p>
         </a>
         <a href="/calc/compound.html" class="calc-card">
           <div class="calc-icon">📈</div>
@@ -329,7 +424,7 @@
         <div class="why-card">
           <div class="why-number">04</div>
           <h3>Free to Start</h3>
-          <p>All 6 calculators, Financial School, and the home screen widget are completely free. No trial period, no credit card, no catch. Upgrade only if you want more.</p>
+          <p>All 7 calculators, Financial School, and the home screen widget are completely free. No trial period, no credit card, no catch. Upgrade only if you want more.</p>
         </div>
       </div>
     </div>
@@ -361,7 +456,7 @@
           </div>
           <p class="price-desc">Try the calculators. See what you're missing.</p>
           <ul class="price-features">
-            <li>6 Financial Calculators</li>
+            <li>7 Financial Calculators</li>
             <li>Financial School (7 chapters)</li>
             <li>Home Screen Widget</li>
             <li>Bilingual (EN / FR)</li>
@@ -442,7 +537,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-q">What is the Money Score?</button>
-          <div class="faq-a"><p>It's a 0–100 rating of your overall financial health. It weighs 7 factors — savings rate, emergency fund, TFSA usage, RRSP usage, debt ratio, investment diversification, and time horizon — to give you a single number and personalized recommendations to improve it.</p></div>
+          <div class="faq-a"><p>It's a 0–100 rating of your overall financial health. It weighs 7 factors — savings rate, emergency fund, TFSA usage, RRSP usage, net worth ratio, investment diversification, and fees — to give you a single number and personalized recommendations to improve it.</p></div>
         </div>
         <div class="faq-item">
           <button class="faq-q">How do AI Weekly Briefs work?</button>

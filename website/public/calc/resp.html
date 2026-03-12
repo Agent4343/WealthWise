@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Compound Interest Calculator — WealthWise</title>
-  <meta name="description" content="Free compound interest calculator. See your money grow year by year with regular contributions. Visualize why starting early matters.">
+  <title>RESP Calculator — WealthWise</title>
+  <meta name="description" content="Calculate how much your RESP will grow with the 20% CESG government match. See the true power of free money for your child's education.">
   <meta name="theme-color" content="#0A1628">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,7 +14,7 @@
 </head>
 <body>
 
-  <nav class="nav scrolled" id="nav">
+  <nav class="nav" id="nav">
     <div class="container nav-inner">
       <a href="/" class="nav-logo"><span class="logo-icon">W</span><span>WealthWise</span></a>
       <div class="nav-links" id="nav-links">
@@ -33,68 +33,83 @@
     <div class="app-container">
       <a href="/calculators.html" class="back-link">&larr; All Calculators</a>
       <div class="app-header">
-        <h1>📈 <span class="gradient-text">Compound Interest</span></h1>
-        <p>Visualize the power of compound growth on any investment scenario.</p>
+        <h1><span class="gradient-text">RESP Calculator</span></h1>
+        <p>See how the 20% CESG government match supercharges your child's education savings.</p>
+      </div>
+
+      <div class="info-box" style="margin-bottom:20px">
+        <strong>How CESG works:</strong> The government matches 20% of the first $2,500 you contribute per child per year — that's up to <strong>$500/year in free money</strong>, and up to $7,200 lifetime per child. No other investment gives you an instant 20% return.
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="childAge">Child's Current Age</label>
+          <input type="number" id="childAge" class="form-input" placeholder="e.g. 3" value="3" min="0" max="17">
+        </div>
+        <div class="form-group">
+          <label for="monthly">Monthly Contribution</label>
+          <input type="number" id="monthly" class="form-input" placeholder="e.g. 208" value="208" min="0">
+          <span style="font-size:0.75rem;color:var(--text-dim);margin-top:4px;display:block">$208/mo = $2,500/year (max CESG match)</span>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="principal">Starting Amount</label>
-        <input type="number" id="principal" class="form-input" placeholder="e.g. 10000" value="10000">
+        <label for="existing">Current RESP Balance</label>
+        <input type="number" id="existing" class="form-input" placeholder="e.g. 0" value="0" min="0">
       </div>
 
       <div class="form-group">
-        <label for="monthly">Monthly Contribution</label>
-        <input type="number" id="monthly" class="form-input" placeholder="e.g. 500" value="500">
+        <label for="cesgUsed">CESG Already Received (lifetime)</label>
+        <input type="number" id="cesgUsed" class="form-input" placeholder="e.g. 0" value="0" min="0" max="7200">
+        <span style="font-size:0.75rem;color:var(--text-dim);margin-top:4px;display:block">Check your RESP statement or CRA My Account. Lifetime max is $7,200.</span>
       </div>
 
       <div class="form-group">
         <div class="label-row">
-          <label for="rate">Annual Return</label>
-          <span class="label-value" id="rateDisplay">7%</span>
+          <label for="rate">Expected Annual Return</label>
+          <span class="label-value" id="rateDisplay">6%</span>
         </div>
-        <input type="range" id="rate" class="range-slider" min="1" max="15" step="0.5" value="7">
-      </div>
-
-      <div class="form-group">
-        <div class="label-row">
-          <label for="years">Time Period</label>
-          <span class="label-value" id="yearsDisplay">25 years</span>
-        </div>
-        <input type="range" id="years" class="range-slider" min="1" max="50" step="1" value="25">
+        <input type="range" id="rate" class="range-slider" min="2" max="10" step="0.5" value="6">
       </div>
 
       <div class="results-section">
-        <h3>Growth Projection</h3>
+        <h3>RESP Projection at Age 18</h3>
         <div class="result-card result-hero">
           <div class="result-value" id="res-total">$0</div>
-          <div class="result-label">Final Balance</div>
+          <div class="result-label">Available for Education</div>
         </div>
         <div class="result-grid">
           <div class="result-item">
-            <span class="result-value" id="res-principal">$0</span>
-            <span class="result-label">Starting Amount</span>
-          </div>
-          <div class="result-item">
             <span class="result-value" id="res-contributions">$0</span>
-            <span class="result-label">Total Contributions</span>
+            <span class="result-label">Your Contributions</span>
           </div>
           <div class="result-item positive">
-            <span class="result-value" id="res-interest">$0</span>
-            <span class="result-label">Interest Earned</span>
+            <span class="result-value" id="res-cesg">$0</span>
+            <span class="result-label">Government CESG</span>
+          </div>
+          <div class="result-item positive">
+            <span class="result-value" id="res-growth">$0</span>
+            <span class="result-label">Investment Growth</span>
           </div>
           <div class="result-item accent">
-            <span class="result-value" id="res-multiplier">0x</span>
-            <span class="result-label">Money Multiplier</span>
+            <span class="result-value" id="res-tuition">0 years</span>
+            <span class="result-label">Tuition Covered (~$8,000/yr)</span>
           </div>
         </div>
+
+        <div class="info-box" style="margin-top:20px" id="cesgInfo"></div>
       </div>
 
       <div class="chart-container">
-        <canvas id="compoundChart" class="chart-canvas"></canvas>
+        <canvas id="respChart" class="chart-canvas"></canvas>
+      </div>
+
+      <div class="info-box" style="margin-top:20px">
+        <strong>Pro tip:</strong> If you can only afford $100/month, you still get $240/year in CESG. Even small contributions trigger the match. Start early — compound growth does the heavy lifting.
       </div>
 
       <div class="app-cta-banner">
-        <p class="app-cta-text">Get the full experience with the WealthWise iOS app.</p>
+        <p class="app-cta-text">Track your RESP alongside TFSA and RRSP in the WealthWise iOS app.</p>
         <div class="app-cta-actions">
           <a href="https://apps.apple.com" class="btn btn-primary btn-lg">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -107,7 +122,13 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'ws_compound_calc';
+    const STORAGE_KEY = 'ws_resp_calc';
+    const CESG_RATE = 0.20;
+    const CESG_ANNUAL_MAX = 500;     // 20% of $2,500
+    const CESG_LIFETIME_MAX = 7200;
+    const RESP_CONTRIBUTION_MAX = 50000; // Lifetime per beneficiary
+    const AVG_TUITION_ANNUAL = 8000;
+
     function saveInputs() {
       const data = {};
       document.querySelectorAll('.form-input, input[type=range]').forEach(el => {
@@ -129,42 +150,76 @@
     }
 
     function calculate() {
-      const principal = parseFloat(document.getElementById('principal').value) || 0;
-      const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+      const childAge = Math.min(17, Math.max(0, parseInt(document.getElementById('childAge').value) || 0));
+      const monthly = Math.max(0, parseFloat(document.getElementById('monthly').value) || 0);
+      const existing = Math.max(0, parseFloat(document.getElementById('existing').value) || 0);
+      const cesgUsed = Math.min(CESG_LIFETIME_MAX, Math.max(0, parseFloat(document.getElementById('cesgUsed').value) || 0));
       const rate = parseFloat(document.getElementById('rate').value) / 100;
-      const years = parseInt(document.getElementById('years').value) || 25;
 
       document.getElementById('rateDisplay').textContent = (rate * 100).toFixed(1) + '%';
-      document.getElementById('yearsDisplay').textContent = years + ' years';
 
+      const yearsRemaining = Math.max(0, 18 - childAge);
       const monthlyRate = rate / 12;
-      let balance = principal;
-      const contributionData = [principal];
-      const balanceData = [principal];
 
-      for (let m = 0; m < years * 12; m++) {
-        balance = (balance + monthly) * (1 + monthlyRate);
-        if ((m + 1) % 12 === 0) {
-          balanceData.push(balance);
-          contributionData.push(principal + monthly * 12 * ((m + 1) / 12));
+      let balance = existing;
+      let totalContributions = 0;
+      let totalCesg = cesgUsed;
+      let newCesg = 0;
+
+      const balanceData = [existing];
+      const contribData = [0];
+      const cesgData = [cesgUsed];
+
+      for (let year = 0; year < yearsRemaining; year++) {
+        let yearContrib = 0;
+        let yearCesg = 0;
+
+        for (let m = 0; m < 12; m++) {
+          balance = balance * (1 + monthlyRate) + monthly;
+          yearContrib += monthly;
         }
+
+        totalContributions += yearContrib;
+
+        // CESG: 20% of first $2,500 contributed per year, up to lifetime max
+        const cesgEligible = Math.min(yearContrib, 2500);
+        const cesgThisYear = Math.min(cesgEligible * CESG_RATE, CESG_ANNUAL_MAX);
+        const cesgCapped = Math.min(cesgThisYear, CESG_LIFETIME_MAX - totalCesg);
+        if (cesgCapped > 0) {
+          balance += cesgCapped;
+          totalCesg += cesgCapped;
+          newCesg += cesgCapped;
+        }
+
+        balanceData.push(Math.round(balance));
+        contribData.push(Math.round(totalContributions));
+        cesgData.push(Math.round(totalCesg));
       }
 
-      const totalContributed = principal + monthly * 12 * years;
-      const interest = balance - totalContributed;
-      const multiplier = totalContributed > 0 ? (balance / totalContributed) : 0;
+      const growth = balance - totalContributions - existing - newCesg;
+      const tuitionYears = balance > 0 ? (balance / AVG_TUITION_ANNUAL) : 0;
 
       document.getElementById('res-total').textContent = '$' + Math.round(balance).toLocaleString();
-      document.getElementById('res-principal').textContent = '$' + Math.round(principal).toLocaleString();
-      document.getElementById('res-contributions').textContent = '$' + Math.round(totalContributed).toLocaleString();
-      document.getElementById('res-interest').textContent = '$' + Math.round(interest).toLocaleString();
-      document.getElementById('res-multiplier').textContent = multiplier.toFixed(1) + 'x';
+      document.getElementById('res-contributions').textContent = '$' + Math.round(totalContributions).toLocaleString();
+      document.getElementById('res-cesg').textContent = '$' + Math.round(newCesg).toLocaleString();
+      document.getElementById('res-growth').textContent = '$' + Math.round(Math.max(0, growth)).toLocaleString();
+      document.getElementById('res-tuition').textContent = tuitionYears.toFixed(1) + ' years';
 
-      drawChart(balanceData, contributionData, years);
+      // CESG info
+      const cesgRemaining = Math.max(0, CESG_LIFETIME_MAX - totalCesg);
+      const cesgInfo = document.getElementById('cesgInfo');
+      if (cesgRemaining > 0) {
+        const optimalMonthly = Math.ceil(2500 / 12);
+        cesgInfo.innerHTML = `<strong>CESG remaining:</strong> $${cesgRemaining.toLocaleString()} of $7,200 lifetime. To maximize the match, contribute at least <strong>$${optimalMonthly}/month</strong> ($2,500/year).`;
+      } else {
+        cesgInfo.innerHTML = `<strong>CESG maxed out!</strong> You've claimed the full $7,200 lifetime CESG. Contributions still grow tax-sheltered inside the RESP.`;
+      }
+
+      drawChart(balanceData, contribData, cesgData, yearsRemaining, childAge);
     }
 
-    function drawChart(balanceData, contribData, years) {
-      const canvas = document.getElementById('compoundChart');
+    function drawChart(balanceData, contribData, cesgData, years, startAge) {
+      const canvas = document.getElementById('respChart');
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.parentElement.getBoundingClientRect();
@@ -182,7 +237,7 @@
       ctx.clearRect(0, 0, w, h);
       if (balanceData.length < 2) return;
 
-      const maxVal = Math.max(...balanceData);
+      const maxVal = Math.max(...balanceData, 1);
       const xStep = cw / (balanceData.length - 1);
 
       // Grid
@@ -196,12 +251,13 @@
       }
 
       ctx.textAlign = 'center';
-      const labelStep = Math.max(1, Math.floor(balanceData.length / 6));
-      for (let i = 0; i < balanceData.length; i += labelStep) {
-        ctx.fillText('Yr ' + i, pad.left + i * xStep, h - pad.bottom + 20);
+      for (let i = 0; i < balanceData.length; i++) {
+        if (i % Math.max(1, Math.floor(balanceData.length / 6)) === 0) {
+          ctx.fillText('Age ' + (startAge + i), pad.left + i * xStep, h - pad.bottom + 20);
+        }
       }
 
-      // Contributions area (blue)
+      // Contributions area
       ctx.beginPath();
       ctx.moveTo(pad.left, pad.top + ch);
       for (let i = 0; i < contribData.length; i++) {
@@ -212,7 +268,7 @@
       ctx.fillStyle = 'rgba(96, 165, 250, 0.2)';
       ctx.fill();
 
-      // Balance area (green)
+      // Balance area
       ctx.beginPath();
       ctx.moveTo(pad.left, pad.top + ch);
       for (let i = 0; i < balanceData.length; i++) {
@@ -239,14 +295,26 @@
       drawLine(contribData, '#60a5fa');
       drawLine(balanceData, '#34d399');
 
+      // CESG markers (dots where CESG was received)
+      ctx.fillStyle = '#fbbf24';
+      for (let i = 1; i < cesgData.length; i++) {
+        if (cesgData[i] > cesgData[i-1]) {
+          const x = pad.left + i * xStep;
+          const y = pad.top + ch - (balanceData[i] / maxVal * ch);
+          ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+
       // Legend
       ctx.fillStyle = '#34d399'; ctx.fillRect(pad.left + 10, pad.top + 10, 12, 3);
       ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left'; ctx.fillText('Total Balance', pad.left + 28, pad.top + 14);
       ctx.fillStyle = '#60a5fa'; ctx.fillRect(pad.left + 120, pad.top + 10, 12, 3);
       ctx.fillStyle = '#94a3b8'; ctx.fillText('Contributions', pad.left + 138, pad.top + 14);
+      ctx.fillStyle = '#fbbf24'; ctx.beginPath(); ctx.arc(pad.left + 230, pad.top + 11, 4, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#94a3b8'; ctx.fillText('CESG', pad.left + 240, pad.top + 14);
     }
 
-    document.querySelectorAll('#principal, #monthly, #rate, #years').forEach(el => {
+    document.querySelectorAll('#childAge, #monthly, #existing, #cesgUsed, #rate').forEach(el => {
       el.addEventListener('input', () => { calculate(); saveInputs(); });
     });
     restoreInputs();
@@ -276,8 +344,8 @@
           <h5>Resources</h5>
           <a href="/calc/rrsp.html">RRSP Calculator</a>
           <a href="/calc/tfsa.html">TFSA Calculator</a>
+          <a href="/calc/resp.html">RESP Calculator</a>
           <a href="/limits.html">Contribution Limits</a>
-          <a href="/brief.html">AI Brief</a>
         </div>
         <div class="footer-col">
           <h5>Company</h5>

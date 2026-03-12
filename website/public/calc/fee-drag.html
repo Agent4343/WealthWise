@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fee Drag Calculator — WealthWise</title>
+  <meta name="description" content="See how much Canadian mutual fund MER fees really cost you. Compare high-fee funds vs. low-cost index ETFs over your investing lifetime.">
   <meta name="theme-color" content="#0A1628">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -106,6 +107,27 @@
   </div>
 
   <script>
+    const STORAGE_KEY = 'ws_fee_drag_calc';
+    function saveInputs() {
+      const data = {};
+      document.querySelectorAll('.form-input, input[type=range]').forEach(el => {
+        if (!el.id) return;
+        data[el.id] = el.value;
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    function restoreInputs() {
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (!data) return;
+        Object.entries(data).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.value = val;
+        });
+      } catch(e) {}
+    }
+
     const GROSS_RETURN = 0.07;
 
     function calculate() {
@@ -211,8 +233,9 @@
     }
 
     document.querySelectorAll('#portfolio, #lowMER, #highMER, #years').forEach(el => {
-      el.addEventListener('input', calculate);
+      el.addEventListener('input', () => { calculate(); saveInputs(); });
     });
+    restoreInputs();
     calculate();
     window.addEventListener('resize', calculate);
   </script>
