@@ -14,7 +14,7 @@ struct AccountTrackerView: View {
                     color: .green,
                     used: viewModel.profile?.tfsaRoomUsed ?? 0,
                     total: viewModel.tfsaMaxRoom,
-                    explanation: "Your TFSA room accumulates each year ($7,000 for 2025/2026). Cumulative room since 2009 is $102,000. Withdrawals restore room on January 1st of the following year."
+                    explanation: "Your TFSA room accumulates each year ($7,000 for 2025/2026). Cumulative room since 2009 is $109,000. Withdrawals restore room on January 1st of the following year."
                 )
 
                 // RRSP Tracker

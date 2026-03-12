@@ -72,31 +72,32 @@ describe('Financial Calculations', () => {
     });
 
     it('should calculate RRSP contribution room', () => {
-      // 18% of $90,000 = $16,200 (under $31,560 max)
+      // 18% of $90,000 = $16,200 (under $33,810 max for 2026)
       const income = 90000;
-      const room = Math.min(income * 0.18, 31560);
+      const room = Math.min(income * 0.18, 33810);
       assert.strictEqual(room, 16200);
     });
 
     it('should cap RRSP room at annual maximum', () => {
-      // 18% of $200,000 = $36,000, but capped at $31,560
+      // 18% of $200,000 = $36,000, but capped at $33,810 (2026)
       const income = 200000;
-      const room = Math.min(income * 0.18, 31560);
-      assert.strictEqual(room, 31560);
+      const room = Math.min(income * 0.18, 33810);
+      assert.strictEqual(room, 33810);
     });
   });
 
   describe('TFSA Room Calculation', () => {
     it('should calculate cumulative TFSA room since 2009', () => {
-      // Cumulative room for someone eligible since 2009 = $95,000 (as of 2024)
+      // Cumulative room for someone eligible since 2009 = $109,000 (through 2026)
       const annualAmounts = {
         2009: 5000, 2010: 5000, 2011: 5000, 2012: 5000,
         2013: 5500, 2014: 5500, 2015: 10000, 2016: 5500,
         2017: 5500, 2018: 5500, 2019: 6000, 2020: 6000,
-        2021: 6000, 2022: 6000, 2023: 6500, 2024: 7000
+        2021: 6000, 2022: 6000, 2023: 6500, 2024: 7000,
+        2025: 7000, 2026: 7000
       };
       const total = Object.values(annualAmounts).reduce((a, b) => a + b, 0);
-      assert.strictEqual(total, 95000);
+      assert.strictEqual(total, 109000);
     });
   });
 });

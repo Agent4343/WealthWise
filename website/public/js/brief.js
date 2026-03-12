@@ -52,7 +52,7 @@
     const rrspUsed = parseFloat(document.getElementById('brief-rrsp').value) || 0;
     const tfsaUsed = parseFloat(document.getElementById('brief-tfsa').value) || 0;
 
-    const tfsaMax = 102000;
+    const tfsaMax = 109000;
     const rrspMax = Math.min(income * 0.18, 33810);
     const tfsaRemaining = Math.max(0, tfsaMax - tfsaUsed);
     const rrspRemaining = Math.max(0, rrspMax - rrspUsed);

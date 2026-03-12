@@ -36,7 +36,7 @@ final class DashboardViewModel: ObservableObject {
 
     // TFSA max room based on eligibility since 2009
     var tfsaMaxRoom: Double {
-        TaxCalculator.tfsaCumulativeRoom // $102,000 through 2026
+        TaxCalculator.tfsaCumulativeRoom // $109,000 through 2026
     }
 
     var tfsaRoomRemaining: Double {

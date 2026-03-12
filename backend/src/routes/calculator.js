@@ -79,7 +79,7 @@ function calculateMoneyScore(profile) {
   });
 
   // 3. TFSA Usage (15%)
-  const tfsaMax = 95000;
+  const tfsaMax = 109000; // Cumulative through 2026
   const tfsaUsage = Math.min((profile.tfsa_room_used / tfsaMax) * 100, 100);
   const tfsaScore = Math.round(tfsaUsage);
   components.push({
@@ -91,7 +91,7 @@ function calculateMoneyScore(profile) {
   });
 
   // 4. RRSP Usage (15%)
-  const rrspMax = Math.min(incomeMidpoint * 0.18, 31560);
+  const rrspMax = Math.min(incomeMidpoint * 0.18, 33810); // 2026 limit
   const rrspUsage = rrspMax > 0 ? Math.min((profile.rrsp_room_used / rrspMax) * 100, 100) : 0;
   const rrspScore = Math.round(rrspUsage);
   components.push({

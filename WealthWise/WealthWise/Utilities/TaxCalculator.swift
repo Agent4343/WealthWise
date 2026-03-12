@@ -23,7 +23,7 @@ enum TaxCalculator {
     static let tfsaAnnualLimit: Double = 7_000
 
     /// Cumulative TFSA room if eligible since 2009 (through 2026)
-    static let tfsaCumulativeRoom: Double = 102_000
+    static let tfsaCumulativeRoom: Double = 109_000
 
     /// FHSA annual and lifetime limits
     static let fhsaAnnualLimit: Double = 8_000
