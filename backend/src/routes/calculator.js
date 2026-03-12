@@ -213,7 +213,8 @@ function getIncomeMidpoint(bracket) {
     '50k_75k': 62500,
     '75k_100k': 87500,
     '100k_150k': 125000,
-    'over_150k': 200000
+    '150k_200k': 175000,
+    'over_200k': 250000
   };
   return midpoints[bracket] || 62500;
 }

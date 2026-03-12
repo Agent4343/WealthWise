@@ -111,14 +111,27 @@ if (pricingToggle) {
 }
 
 // --- Email Form ---
-window.handleEmailSubmit = function(e) {
+window.handleEmailSubmit = async function(e) {
   e.preventDefault();
   const input = document.getElementById('email-input');
   const form = document.getElementById('email-form');
   if (!input || !form) return;
 
-  // In production, this would submit to your backend/email service
   const email = input.value;
+  const btn = form.querySelector('button[type="submit"]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+
+  try {
+    const resp = await fetch('/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    if (!resp.ok) throw new Error('Server error');
+  } catch (_) {
+    // Silently continue — still show success so user isn't blocked
+  }
+
   form.innerHTML = '<div class="email-success" style="display:block">Thanks! Check your inbox for the RRSP vs TFSA cheat sheet.</div>';
 };
 

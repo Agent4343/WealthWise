@@ -3,16 +3,25 @@ import Foundation
 enum Configuration {
     // MARK: - Supabase
     static var supabaseURL: String {
-        ProcessInfo.processInfo.environment["SUPABASE_URL"] ?? "https://vvlvmgakrrdkzurdaymi.supabase.co"
+        guard let url = Bundle.main.infoDictionary?["SUPABASE_URL"] as? String, !url.isEmpty else {
+            fatalError("SUPABASE_URL not configured in Info.plist")
+        }
+        return url
     }
 
     static var supabaseAnonKey: String {
-        ProcessInfo.processInfo.environment["SUPABASE_ANON_KEY"] ?? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2bHZtZ2FrcnJka3p1cmRheW1pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxODI1NzUsImV4cCI6MjA4ODc1ODU3NX0.5qJbY4oxI2pPdP1mitdIzR0_AHM6znNxkvybiWBpKzg"
+        guard let key = Bundle.main.infoDictionary?["SUPABASE_ANON_KEY"] as? String, !key.isEmpty else {
+            fatalError("SUPABASE_ANON_KEY not configured in Info.plist")
+        }
+        return key
     }
 
     // MARK: - API
     static var apiBaseURL: String {
-        ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "https://wealthwise-production-ed51.up.railway.app"
+        guard let url = Bundle.main.infoDictionary?["API_BASE_URL"] as? String, !url.isEmpty else {
+            fatalError("API_BASE_URL not configured in Info.plist")
+        }
+        return url
     }
 
     // MARK: - App

@@ -3,8 +3,18 @@
  * HTML email templates for Weekly Brief delivery via Resend
  */
 
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 function weeklyBriefEmail(brief, userName, weekOfFormatted) {
-  const greeting = userName ? `Hi ${userName},` : 'Good morning,';
+  const greeting = userName ? `Hi ${escapeHtml(userName)},` : 'Good morning,';
 
   return `
 <!DOCTYPE html>
@@ -65,7 +75,7 @@ function weeklyBriefEmail(brief, userName, weekOfFormatted) {
           <span class="section-title">Your Week at a Glance</span>
         </div>
         <div class="section-body">
-          ${brief.section_1_snapshot}
+          ${escapeHtml(brief.section_1_snapshot)}
         </div>
       </div>
 
@@ -76,7 +86,7 @@ function weeklyBriefEmail(brief, userName, weekOfFormatted) {
           <span class="section-title">The Canadian Economic Pulse</span>
         </div>
         <div class="section-body">
-          ${brief.section_2_market}
+          ${escapeHtml(brief.section_2_market)}
         </div>
       </div>
 
@@ -87,7 +97,7 @@ function weeklyBriefEmail(brief, userName, weekOfFormatted) {
           <span class="section-title">Your Accounts This Week</span>
         </div>
         <div class="section-body">
-          ${brief.section_3_accounts}
+          ${escapeHtml(brief.section_3_accounts)}
         </div>
       </div>
 
@@ -98,7 +108,7 @@ function weeklyBriefEmail(brief, userName, weekOfFormatted) {
           <span class="section-title">What to Think About</span>
         </div>
         <div class="section-body">
-          ${brief.section_4_learn}
+          ${escapeHtml(brief.section_4_learn)}
         </div>
       </div>
 
@@ -109,7 +119,7 @@ function weeklyBriefEmail(brief, userName, weekOfFormatted) {
           <span class="section-title">Your Monday Action Item</span>
         </div>
         <div class="section-body">
-          ${brief.section_5_action}
+          ${escapeHtml(brief.section_5_action)}
         </div>
       </div>
 

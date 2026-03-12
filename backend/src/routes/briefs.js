@@ -11,8 +11,8 @@ const supabase = createClient(
 // GET /briefs — Fetch paginated list of Weekly Briefs for user
 router.get('/', premiumMiddleware, async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 0;
-    const limit = Math.min(parseInt(req.query.limit) || 20, 50);
+    const page = Math.max(0, parseInt(req.query.page) || 0);
+    const limit = Math.min(Math.max(1, parseInt(req.query.limit) || 20), 50);
     const offset = page * limit;
 
     const { data, error } = await supabase

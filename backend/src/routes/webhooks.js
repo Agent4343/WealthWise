@@ -24,14 +24,25 @@ router.post('/apple', async (req, res) => {
       return res.status(400).json({ error: 'Missing signedPayload' });
     }
 
-    // Decode the JWS payload (simplified — production should verify signature)
+    // Decode the JWS payload
+    // TODO: Verify Apple's JWS signature using their public certificates
+    // from https://appleid.apple.com/auth/keys before trusting this data
     const parts = signedPayload.split('.');
     if (parts.length !== 3) {
       return res.status(400).json({ error: 'Invalid JWS format' });
     }
 
-    const payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString());
+    let payload;
+    try {
+      payload = JSON.parse(Buffer.from(parts[1], 'base64url').toString());
+    } catch (e) {
+      return res.status(400).json({ error: 'Invalid JWS payload encoding' });
+    }
     const { notificationType, data } = payload;
+
+    if (!notificationType) {
+      return res.status(400).json({ error: 'Missing notificationType' });
+    }
 
     console.log(`[WEBHOOK] Apple notification: ${notificationType}`);
 
@@ -39,9 +50,23 @@ router.post('/apple', async (req, res) => {
       return res.status(200).json({ received: true });
     }
 
-    // Decode transaction info
+    // Decode and validate transaction info
     const txParts = data.signedTransactionInfo.split('.');
-    const transactionInfo = JSON.parse(Buffer.from(txParts[1], 'base64url').toString());
+    if (txParts.length !== 3) {
+      return res.status(400).json({ error: 'Invalid transaction JWS format' });
+    }
+
+    let transactionInfo;
+    try {
+      transactionInfo = JSON.parse(Buffer.from(txParts[1], 'base64url').toString());
+    } catch (e) {
+      return res.status(400).json({ error: 'Invalid transaction payload encoding' });
+    }
+
+    if (!transactionInfo.appAccountToken) {
+      console.error('[WEBHOOK] Missing appAccountToken in transaction');
+      return res.status(200).json({ received: true });
+    }
 
     const {
       originalTransactionId,

@@ -39,7 +39,7 @@ struct FIRECalculatorView: View {
 
                 // Your savings for time-to-FIRE
                 VStack(spacing: 12) {
-                    Text(viewModel.fireMode == .couple ? "YOUR SAVINGS" : "YOUR SAVINGS")
+                    Text(viewModel.fireMode == .couple ? "YOUR SAVINGS" : "SAVINGS")
                         .font(.caption)
                         .fontWeight(.semibold)
                         .foregroundStyle(.secondary)

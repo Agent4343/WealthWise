@@ -68,6 +68,26 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'wealthwise-api', timestamp: new Date().toISOString() });
 });
 
+// Waitlist email collection (public, no auth required)
+app.post('/api/waitlist', async (req, res) => {
+  const { email } = req.body;
+  if (!email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: 'Valid email is required' });
+  }
+
+  try {
+    const { createClient } = require('@supabase/supabase-js');
+    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+    await supabase
+      .from('waitlist')
+      .upsert({ email: email.toLowerCase().trim(), created_at: new Date().toISOString() }, { onConflict: 'email' });
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Waitlist error:', error);
+    res.status(500).json({ error: 'Failed to save email' });
+  }
+});
+
 // Public routes
 app.use('/auth', authRoutes);
 app.use('/webhooks', webhookRoutes);

@@ -70,10 +70,11 @@ final class AuthManager: ObservableObject {
 
     private func loadUser() async {
         do {
+            let session = try await supabase.auth.session
             let response: AppUser = try await supabase
                 .from("app_users")
                 .select()
-                .eq("id", value: supabase.auth.session.user.id.uuidString)
+                .eq("id", value: session.user.id.uuidString)
                 .single()
                 .execute()
                 .value

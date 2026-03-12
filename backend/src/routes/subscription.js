@@ -31,7 +31,7 @@ router.get('/status', async (req, res) => {
       if (data.status === 'active') {
         await supabase
           .from('subscriptions')
-          .update({ status: 'expired' })
+          .update({ status: 'expired', tier: 'free' })
           .eq('id', data.id);
         data.status = 'expired';
         data.tier = 'free';

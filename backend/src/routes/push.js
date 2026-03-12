@@ -14,9 +14,17 @@ router.post('/register', async (req, res) => {
   const { device_token, platform } = req.body;
   const userId = req.userId;
 
-  if (!device_token) {
+  if (!device_token || typeof device_token !== 'string') {
     return res.status(400).json({ error: 'device_token is required' });
   }
+
+  // Validate token format: APNs tokens are 64 hex characters
+  if (device_token.length > 200 || !/^[a-fA-F0-9]+$/.test(device_token)) {
+    return res.status(400).json({ error: 'Invalid device_token format' });
+  }
+
+  const VALID_PLATFORMS = ['ios', 'android'];
+  const validatedPlatform = VALID_PLATFORMS.includes(platform) ? platform : 'ios';
 
   try {
     const { error } = await supabase
@@ -24,7 +32,7 @@ router.post('/register', async (req, res) => {
       .upsert({
         user_id: userId,
         device_token,
-        platform: platform || 'ios',
+        platform: validatedPlatform,
         updated_at: new Date().toISOString()
       }, {
         onConflict: 'user_id,device_token'

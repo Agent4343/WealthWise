@@ -264,7 +264,7 @@ struct AccountTrackerView: View {
                     Text("RRSP Deduction Value")
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text("\(CurrencyFormatter.format(marginalRate * 100, compact: true)) per $100")
+                    Text("\(CurrencyFormatter.formatPercent(marginalRate)) per $100")
                         .font(.subheadline.bold())
                 }
             }

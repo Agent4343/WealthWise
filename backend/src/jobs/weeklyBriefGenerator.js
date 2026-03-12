@@ -156,10 +156,12 @@ async function generateBriefForUser(userId, marketContext) {
   const brief = JSON.parse(jsonMatch[0]);
   const tokensUsed = response.usage.input_tokens + response.usage.output_tokens;
 
-  // Calculate Monday date for this week
+  // Calculate the Monday of this week (or today if it's Monday)
   const now = new Date();
   const monday = new Date(now);
-  monday.setDate(now.getDate() + ((1 + 7 - now.getDay()) % 7));
+  const dayOfWeek = now.getDay(); // 0=Sun, 1=Mon, ...
+  const daysFromMonday = dayOfWeek === 0 ? 1 : (dayOfWeek === 1 ? 0 : 8 - dayOfWeek);
+  monday.setDate(now.getDate() + daysFromMonday);
   monday.setHours(0, 0, 0, 0);
 
   // Store in Supabase
@@ -182,6 +184,9 @@ async function generateBriefForUser(userId, marketContext) {
   if (user?.email && process.env.RESEND_API_KEY) {
     await sendBriefEmail(user.email, user.full_name, brief, monday);
   }
+
+  // Send push notification
+  await sendPushNotifications(monday);
 
   console.log(`[BRIEF] Generated for user ${userId} (${tokensUsed} tokens)`);
 }

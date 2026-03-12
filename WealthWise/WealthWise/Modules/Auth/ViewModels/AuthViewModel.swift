@@ -9,6 +9,8 @@ final class AuthViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var showError = false
+    @Published var successMessage: String?
+    @Published var showSuccess = false
 
     private let authManager = AuthManager.shared
 
@@ -71,8 +73,8 @@ final class AuthViewModel: ObservableObject {
         isLoading = true
         do {
             try await authManager.resetPassword(email: email)
-            errorMessage = "Password reset email sent. Check your inbox."
-            showError = true
+            successMessage = "Password reset email sent. Check your inbox."
+            showSuccess = true
         } catch {
             errorMessage = error.localizedDescription
             showError = true

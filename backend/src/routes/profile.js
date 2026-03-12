@@ -57,7 +57,7 @@ router.put('/', async (req, res) => {
       if (!Number.isInteger(retirement_age) || retirement_age > 100) {
         errors.push('retirement_age must be an integer with a maximum of 100');
       } else if (age !== undefined && retirement_age <= age) {
-        errors.push('retirement_age must be greater than age');
+        errors.push('retirement_age must be greater than current age');
       }
     }
 
