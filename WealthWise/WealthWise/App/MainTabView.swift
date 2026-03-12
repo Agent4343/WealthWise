@@ -45,5 +45,10 @@ struct MainTabView: View {
         .onReceive(NotificationCenter.default.publisher(for: .navigateToBriefs)) { _ in
             selectedTab = 3
         }
+        .onReceive(NotificationCenter.default.publisher(for: .navigateToTab)) { notification in
+            if let tab = notification.userInfo?["tab"] as? Int {
+                selectedTab = tab
+            }
+        }
     }
 }

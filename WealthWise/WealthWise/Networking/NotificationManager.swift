@@ -55,21 +55,7 @@ final class NotificationManager: ObservableObject {
     private func sendTokenToServer(_ token: String) async {
         // Store device token on server for Monday morning push delivery
         do {
-            struct TokenPayload: Encodable {
-                let deviceToken: String
-                let platform: String = "ios"
-            }
-            // API endpoint to register push token
-            guard let url = URL(string: "\(Configuration.apiBaseURL)/push/register") else { return }
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-            let encoder = JSONEncoder()
-            encoder.keyEncodingStrategy = .convertToSnakeCase
-            request.httpBody = try encoder.encode(TokenPayload(deviceToken: token))
-
-            let (_, _) = try await URLSession.shared.data(for: request)
+            try await APIService.shared.registerPushToken(token)
         } catch {
             print("[NOTIFICATIONS] Failed to register token with server: \(error)")
         }

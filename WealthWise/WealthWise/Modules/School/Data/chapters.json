@@ -255,7 +255,7 @@
           {
             "id": 5,
             "type": "callout",
-            "text": "Your RRSP contribution room is 18% of your previous year's earned income, up to the annual maximum ($31,560 in 2024). Unused room carries forward indefinitely — check your CRA My Account to see yours.",
+            "text": "Your RRSP contribution room is 18% of your previous year's earned income, up to the annual maximum ($33,810 in 2026). Unused room carries forward indefinitely — check your CRA My Account to see yours.",
             "highlightText": null
           },
           {
@@ -305,8 +305,8 @@
           {
             "id": 3,
             "type": "callout",
-            "text": "If you've been eligible since 2009 and never contributed, your total TFSA contribution room in 2024 is $95,000. At a 7% average return, maxing this out and leaving it invested for 20 years could grow to over $367,000 — completely tax-free.",
-            "highlightText": "$367,000"
+            "text": "If you've been eligible since 2009 and never contributed, your total TFSA contribution room through 2026 is $109,000. At a 7% average return, maxing this out and leaving it invested for 20 years could grow to over $421,000 — completely tax-free.",
+            "highlightText": "$421,000"
           },
           {
             "id": 4,

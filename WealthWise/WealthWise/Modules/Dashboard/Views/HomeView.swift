@@ -245,26 +245,37 @@ struct HomeView: View {
             GridItem(.flexible()),
             GridItem(.flexible())
         ], spacing: 12) {
-            quickActionButton(icon: "function", title: "Calculator", color: .blue)
-            quickActionButton(icon: "book.fill", title: "Learn", color: .purple)
-            quickActionButton(icon: "newspaper.fill", title: "Brief", color: .orange)
-            quickActionButton(icon: "gearshape.fill", title: "Settings", color: .gray)
+            quickActionButton(icon: "function", title: "Calculator", color: .blue) {
+                NotificationCenter.default.post(name: .navigateToTab, object: nil, userInfo: ["tab": 2])
+            }
+            quickActionButton(icon: "book.fill", title: "Learn", color: .purple) {
+                NotificationCenter.default.post(name: .navigateToTab, object: nil, userInfo: ["tab": 1])
+            }
+            quickActionButton(icon: "newspaper.fill", title: "Brief", color: .orange) {
+                NotificationCenter.default.post(name: .navigateToTab, object: nil, userInfo: ["tab": 3])
+            }
+            quickActionButton(icon: "gearshape.fill", title: "Settings", color: .gray) {
+                NotificationCenter.default.post(name: .navigateToTab, object: nil, userInfo: ["tab": 4])
+            }
         }
     }
 
-    private func quickActionButton(icon: String, title: String, color: Color) -> some View {
-        VStack(spacing: 8) {
-            Image(systemName: icon)
-                .font(.title2)
-                .foregroundStyle(color)
-            Text(title)
-                .font(.caption)
-                .foregroundStyle(.secondary)
+    private func quickActionButton(icon: String, title: String, color: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 8) {
+                Image(systemName: icon)
+                    .font(.title2)
+                    .foregroundStyle(color)
+                Text(title)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .frame(height: 70)
+            .background(.regularMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
         }
-        .frame(maxWidth: .infinity)
-        .frame(height: 70)
-        .background(.regularMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .buttonStyle(.plain)
     }
 
     private var emptyState: some View {

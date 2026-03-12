@@ -78,6 +78,20 @@ actor APIService {
         let _: EmptyResponse = try await request(endpoint: "/auth/sync", method: "POST")
     }
 
+    // MARK: - Push Notifications
+
+    func registerPushToken(_ deviceToken: String) async throws {
+        struct TokenPayload: Encodable {
+            let deviceToken: String
+            let platform: String = "ios"
+        }
+        let _: EmptyResponse = try await request(
+            endpoint: "/push/register",
+            method: "POST",
+            body: TokenPayload(deviceToken: deviceToken)
+        )
+    }
+
     // MARK: - Generic Request
 
     private func request<T: Decodable>(

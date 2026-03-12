@@ -121,4 +121,5 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 
 extension Notification.Name {
     static let navigateToBriefs = Notification.Name("navigateToBriefs")
+    static let navigateToTab = Notification.Name("navigateToTab")
 }
