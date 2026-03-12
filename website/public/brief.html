@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Weekly Brief — WealthWise</title>
+  <meta name="description" content="Every Monday, get a personalized financial brief built around YOUR numbers. Real RRSP deadlines, tax-saving moves, and exactly what to do this week.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/app.css">
+  <link rel="stylesheet" href="/css/brief.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">W</span>
+        <span>WealthWise</span>
+      </a>
+      <div class="nav-links" id="nav-links">
+        <a href="/calculators.html">Calculators</a>
+        <a href="/school.html">School</a>
+        <a href="/money-score.html">Money Score</a>
+        <a href="/simulator.html">Simulator</a>
+        <a href="/limits.html">Limits</a>
+        <a href="/#pricing">Pricing</a>
+      </div>
+      <a href="/#download" class="btn btn-primary btn-sm">Get the App</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="brief-hero">
+    <div class="container">
+      <div class="brief-hero-inner">
+        <div class="brief-hero-content">
+          <div class="badge">Premium Feature</div>
+          <h1>Your financial advisor.<br><span class="gradient-text">Every Monday. $5/mo.</span></h1>
+          <p class="hero-sub">Not a generic market update. A personalized action plan built from YOUR income, province, RRSP room, TFSA balance, and goals — delivered before your coffee gets cold.</p>
+          <div class="brief-hero-stats">
+            <div class="bh-stat">
+              <span class="bh-stat-num">$2,400+</span>
+              <span class="bh-stat-label">avg. tax savings found per user/year</span>
+            </div>
+            <div class="bh-stat">
+              <span class="bh-stat-num">52</span>
+              <span class="bh-stat-label">personalized briefs per year</span>
+            </div>
+            <div class="bh-stat">
+              <span class="bh-stat-num">2 min</span>
+              <span class="bh-stat-label">to read each Monday</span>
+            </div>
+          </div>
+          <a href="/#download" class="btn btn-primary btn-lg">Start 7-Day Free Trial</a>
+        </div>
+        <div class="brief-hero-visual">
+          <!-- Mini phone mockup showing brief notification -->
+          <div class="notif-mockup">
+            <div class="notif-time">Monday 7:00 AM</div>
+            <div class="notif-card">
+              <div class="notif-app">
+                <span class="notif-icon">W</span>
+                <span class="notif-app-name">WealthWise</span>
+                <span class="notif-when">now</span>
+              </div>
+              <div class="notif-title">Your Weekly Brief is ready</div>
+              <div class="notif-body">RRSP deadline in 12 days. Contributing $5,000 saves you $1,531 in taxes. Tap to see your full brief.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- "What You Get" — compare to financial advisor -->
+  <section class="brief-compare">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge">The Comparison</div>
+        <h2>Financial advisor: <span class="gradient-text">$2,000/year.</span><br>WealthWise Brief: <span class="gradient-text">$60/year.</span></h2>
+        <p class="section-sub">Same personalized advice. 97% less cost. No awkward meetings.</p>
+      </div>
+      <div class="compare-table">
+        <div class="compare-row compare-header">
+          <div class="compare-feature"></div>
+          <div class="compare-them">Financial Advisor</div>
+          <div class="compare-us">WealthWise Brief</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-feature">Personalized to your income & province</div>
+          <div class="compare-them">&#10003;</div>
+          <div class="compare-us">&#10003;</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-feature">RRSP/TFSA optimization</div>
+          <div class="compare-them">&#10003;</div>
+          <div class="compare-us">&#10003;</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-feature">Tax deadline reminders</div>
+          <div class="compare-them">Sometimes</div>
+          <div class="compare-us">&#10003; Every time</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-feature">Weekly check-ins</div>
+          <div class="compare-them">Quarterly (maybe)</div>
+          <div class="compare-us">&#10003; Every Monday</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-feature">Available at 7 AM Monday</div>
+          <div class="compare-them">&#10007;</div>
+          <div class="compare-us">&#10003;</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-feature">No minimum investment</div>
+          <div class="compare-them">Usually $100K+</div>
+          <div class="compare-us">&#10003; $0 minimum</div>
+        </div>
+        <div class="compare-row compare-price">
+          <div class="compare-feature">Annual cost</div>
+          <div class="compare-them">$1,500 – $3,000</div>
+          <div class="compare-us highlight">$59.88/year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sample Brief — Interactive -->
+  <section class="brief-sample">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge">See a Real Brief</div>
+        <h2>Here's what Monday <span class="gradient-text">looks like.</span></h2>
+        <p class="section-sub">This is a real sample brief for a 32-year-old in Ontario earning $85,000. Enter your numbers below to see yours.</p>
+      </div>
+
+      <!-- Personalization inputs -->
+      <div class="brief-inputs">
+        <div class="brief-input-group">
+          <label>Your Province</label>
+          <select id="brief-province" class="form-select">
+            <option value="ON" selected>Ontario</option>
+            <option value="BC">British Columbia</option>
+            <option value="AB">Alberta</option>
+            <option value="QC">Quebec</option>
+            <option value="MB">Manitoba</option>
+            <option value="SK">Saskatchewan</option>
+            <option value="NS">Nova Scotia</option>
+            <option value="NB">New Brunswick</option>
+            <option value="NL">Newfoundland</option>
+            <option value="PE">PEI</option>
+            <option value="NT">Northwest Territories</option>
+            <option value="NU">Nunavut</option>
+            <option value="YT">Yukon</option>
+          </select>
+        </div>
+        <div class="brief-input-group">
+          <label>Annual Income</label>
+          <input type="number" id="brief-income" value="85000" class="form-input">
+        </div>
+        <div class="brief-input-group">
+          <label>RRSP Room Used</label>
+          <input type="number" id="brief-rrsp" value="12000" class="form-input">
+        </div>
+        <div class="brief-input-group">
+          <label>TFSA Room Used</label>
+          <input type="number" id="brief-tfsa" value="68000" class="form-input">
+        </div>
+      </div>
+
+      <!-- The sample brief -->
+      <div class="brief-preview" id="brief-preview">
+        <div class="brief-header">
+          <div class="brief-logo">W</div>
+          <div>
+            <div class="brief-title">Your Weekly Brief</div>
+            <div class="brief-date" id="brief-date">Week of March 10, 2026</div>
+          </div>
+        </div>
+
+        <div class="brief-section brief-s1">
+          <div class="brief-section-label">
+            <span class="brief-section-icon">&#128065;</span>
+            <span>Section 1</span>
+          </div>
+          <h3>Your Week at a Glance</h3>
+          <p id="brief-s1-content">Your Money Score is 68 (Good). You're in the 30.5% combined marginal bracket in Ontario. This week's focus: your RRSP deadline is in 12 days. You have $21,810 in estimated RRSP room — even a small contribution will lower your 2025 tax bill.</p>
+        </div>
+
+        <div class="brief-section brief-s2">
+          <div class="brief-section-label">
+            <span class="brief-section-icon">&#128200;</span>
+            <span>Section 2</span>
+          </div>
+          <h3>The Canadian Economic Pulse</h3>
+          <p>The Bank of Canada held rates at 2.75% this week. GIC rates remain strong at 4.0–4.5% — a good option for your emergency fund. The S&P/TSX is up 2.1% year-to-date. If you're investing regularly (dollar-cost averaging), stay the course. Market timing costs the average investor 1.5% per year in missed returns.</p>
+        </div>
+
+        <div class="brief-section brief-s3">
+          <div class="brief-section-label">
+            <span class="brief-section-icon">&#127974;</span>
+            <span>Section 3</span>
+          </div>
+          <h3>Your Accounts This Week</h3>
+          <div class="brief-accounts" id="brief-accounts">
+            <div class="brief-account">
+              <div class="brief-account-label">TFSA Room Remaining</div>
+              <div class="brief-account-value" id="ba-tfsa">$34,000</div>
+              <div class="brief-account-bar"><div class="brief-account-fill" id="ba-tfsa-bar" style="width:66.7%"></div></div>
+              <div class="brief-account-detail" id="ba-tfsa-detail">$68,000 of $102,000 used (66.7%)</div>
+            </div>
+            <div class="brief-account">
+              <div class="brief-account-label">RRSP Room (est.)</div>
+              <div class="brief-account-value" id="ba-rrsp">$3,510</div>
+              <div class="brief-account-bar"><div class="brief-account-fill rrsp" id="ba-rrsp-bar" style="width:78.4%"></div></div>
+              <div class="brief-account-detail" id="ba-rrsp-detail">$12,000 of $15,300 used (78.4%)</div>
+            </div>
+            <div class="brief-account">
+              <div class="brief-account-label">FHSA (if eligible)</div>
+              <div class="brief-account-value">$8,000/yr</div>
+              <div class="brief-account-detail">First-time buyer? You can deduct $8,000/yr AND withdraw tax-free for a home. Double tax benefit.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brief-section brief-s4">
+          <div class="brief-section-label">
+            <span class="brief-section-icon">&#128161;</span>
+            <span>Section 4</span>
+          </div>
+          <h3>What to Think About</h3>
+          <p id="brief-s4-content">At your income of $85,000, you're in the second federal bracket (20.5%). Every dollar you contribute to your RRSP saves you 30.5¢ in combined tax. Contributing $5,000 before the March 3 deadline would save you $1,525 on your 2025 return. That refund → TFSA = the 1-2 Punch.</p>
+        </div>
+
+        <div class="brief-section brief-s5">
+          <div class="brief-section-label">
+            <span class="brief-section-icon">&#9989;</span>
+            <span>Section 5</span>
+          </div>
+          <h3>Your Monday Action Item</h3>
+          <div class="brief-action" id="brief-action">
+            <div class="brief-action-icon">&#9889;</div>
+            <div>
+              <strong id="brief-action-title">Transfer $5,000 to your RRSP before March 3</strong>
+              <p id="brief-action-detail">This saves you an estimated $1,525 in taxes. When you get the refund, invest it in your TFSA for tax-free growth. Total tax-sheltered: $6,525. Time needed: 5 minutes via online banking.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="brief-footer">
+          <p>WealthWise Weekly Brief is educational guidance only. Consult a Certified Financial Planner (CFP) for advice specific to your situation.</p>
+        </div>
+      </div>
+
+      <div class="brief-cta-below">
+        <p>This is what you get. Every Monday. Personalized to YOU.</p>
+        <a href="/#download" class="btn btn-primary btn-lg">Start 7-Day Free Trial — $4.99/mo</a>
+        <span class="brief-cta-sub">Cancel anytime. No contracts. Pays for itself after one RRSP tip.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="brief-how">
+    <div class="container">
+      <div class="section-header">
+        <h2>How it works.</h2>
+      </div>
+      <div class="brief-steps">
+        <div class="brief-step">
+          <div class="brief-step-num">1</div>
+          <h3>Set up your profile</h3>
+          <p>Enter your province, income, age, RRSP/TFSA balances, and goals. Takes 2 minutes.</p>
+        </div>
+        <div class="brief-step-arrow">&#8594;</div>
+        <div class="brief-step">
+          <div class="brief-step-num">2</div>
+          <h3>AI builds your brief</h3>
+          <p>Every Sunday night, our AI analyzes your profile against CRA rules, market conditions, and upcoming deadlines.</p>
+        </div>
+        <div class="brief-step-arrow">&#8594;</div>
+        <div class="brief-step">
+          <div class="brief-step-num">3</div>
+          <h3>Monday 7 AM delivery</h3>
+          <p>Push notification + email. 2-minute read. One clear action item. Done before your first meeting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendar of what briefs cover -->
+  <section class="brief-calendar">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge">What You'd Get</div>
+        <h2>Your year in briefs.</h2>
+        <p class="section-sub">Every brief is timed to Canadian financial deadlines so you never miss a move.</p>
+      </div>
+      <div class="calendar-grid">
+        <div class="calendar-card">
+          <div class="cal-month">Jan</div>
+          <div class="cal-topic">TFSA room resets. New $7,000 room. Withdrawal room restored. Action: contribute January 1.</div>
+        </div>
+        <div class="calendar-card">
+          <div class="cal-month">Feb</div>
+          <div class="cal-topic">RRSP deadline countdown. Maximize deductions before March 3. Calculate optimal contribution.</div>
+        </div>
+        <div class="calendar-card cal-highlight">
+          <div class="cal-month">Mar</div>
+          <div class="cal-topic">RRSP deadline March 3. Tax refund strategy. Start planning FHSA if first-time buyer.</div>
+        </div>
+        <div class="calendar-card">
+          <div class="cal-month">Apr</div>
+          <div class="cal-topic">Tax filing deadline April 30. Optimize your return. Review notice of assessment for next year's RRSP room.</div>
+        </div>
+        <div class="calendar-card">
+          <div class="cal-month">May-Jun</div>
+          <div class="cal-topic">Mid-year portfolio review. Rebalance if needed. RESP contribution for CESG matching.</div>
+        </div>
+        <div class="calendar-card">
+          <div class="cal-month">Jul-Sep</div>
+          <div class="cal-topic">Back-to-school RESP planning. Summer savings checkup. Review emergency fund.</div>
+        </div>
+        <div class="calendar-card">
+          <div class="cal-month">Oct-Nov</div>
+          <div class="cal-topic">Year-end tax planning. Tax-loss harvesting. Maximize employer match before Dec 31.</div>
+        </div>
+        <div class="calendar-card">
+          <div class="cal-month">Dec</div>
+          <div class="cal-topic">Final RRSP/TFSA moves for the year. Charitable donations for tax receipts. Set up January auto-transfers.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="cta" id="download">
+    <div class="container">
+      <div class="cta-inner">
+        <h2>Your first brief is <span class="gradient-text">free.</span></h2>
+        <p>Start your 7-day trial and get your first personalized Monday brief. If it doesn't save you more than $4.99, cancel instantly.</p>
+        <div class="cta-actions">
+          <a href="https://apps.apple.com" class="btn btn-primary btn-lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Download for iOS
+          </a>
+        </div>
+        <div class="cta-guarantee">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Cancel anytime. No contracts. Your data stays private.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="nav-logo">
+          <span class="logo-icon">W</span>
+          <span>WealthWise</span>
+        </a>
+        <p>Your Canadian financial coach.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h5>Product</h5>
+          <a href="/calculators.html">Calculators</a>
+          <a href="/school.html">Financial School</a>
+          <a href="/money-score.html">Money Score</a>
+          <a href="/simulator.html">Life Simulator</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="/calc/rrsp.html">RRSP Calculator</a>
+          <a href="/calc/tfsa.html">TFSA Calculator</a>
+          <a href="/limits.html">Contribution Limits</a>
+          <a href="/#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="mailto:support@wealthwise.app">Contact</a>
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 WealthWise. Built by The Mile School.</p>
+        <p class="disclaimer">WealthWise provides financial education and tools only. It is not a licensed financial advisor. Consult a qualified professional before making investment decisions.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/brief.js"></script>
+</body>
+</html>

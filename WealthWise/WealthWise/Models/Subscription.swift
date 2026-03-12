@@ -37,7 +37,7 @@ enum SubscriptionTier: String, Codable, Comparable {
     var displayName: String {
         switch self {
         case .free: return "Free"
-        case .basic: return "Basic"
+        case .basic: return "Pro"
         case .premium: return "Premium"
         }
     }

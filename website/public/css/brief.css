@@ -1,0 +1,506 @@
+/* ============================================
+   WealthWise — AI Weekly Brief Page
+   ============================================ */
+
+/* --- Brief Hero --- */
+.brief-hero {
+  padding: 120px 0 80px;
+}
+.brief-hero-inner {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 60px;
+  align-items: center;
+}
+.brief-hero-content h1 {
+  margin-bottom: 20px;
+}
+.brief-hero-content .hero-sub {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+.brief-hero-stats {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+.bh-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.bh-stat-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.bh-stat-label {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  max-width: 120px;
+}
+
+/* Notification mockup */
+.notif-mockup {
+  background: #1c1c1e;
+  border-radius: 24px;
+  padding: 40px 24px;
+  max-width: 360px;
+  margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.notif-time {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+.notif-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 14px 16px;
+  margin-top: 20px;
+}
+.notif-app {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.notif-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #0A1628;
+}
+.notif-app-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+}
+.notif-when {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  margin-left: auto;
+}
+.notif-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.notif-body {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+}
+
+/* --- Comparison Table --- */
+.brief-compare {
+  padding: 80px 0;
+}
+.compare-table {
+  max-width: 800px;
+  margin: 40px auto 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.compare-row {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  border-bottom: 1px solid var(--border);
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-row > div {
+  padding: 14px 20px;
+  font-size: 0.9rem;
+}
+.compare-header {
+  background: var(--surface);
+}
+.compare-header > div {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.compare-feature {
+  font-weight: 500;
+}
+.compare-them {
+  text-align: center;
+  color: var(--text-dim);
+}
+.compare-us {
+  text-align: center;
+  color: var(--primary);
+  font-weight: 600;
+}
+.compare-price {
+  background: var(--bg-card);
+}
+.compare-price .compare-them {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f87171;
+}
+.compare-price .compare-us.highlight {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* --- Brief Sample / Preview --- */
+.brief-sample {
+  padding: 80px 0;
+}
+.brief-inputs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 800px;
+  margin: 0 auto 40px;
+}
+.brief-input-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.brief-input-group .form-input,
+.brief-input-group .form-select {
+  font-size: 0.9rem;
+  padding: 10px 14px;
+}
+
+/* The brief card itself */
+.brief-preview {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.brief-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.brief-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #0A1628;
+}
+.brief-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.brief-date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.brief-section {
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.brief-section:last-of-type {
+  border-bottom: none;
+}
+.brief-section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.brief-section-icon {
+  font-size: 1rem;
+}
+.brief-section h3 {
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+}
+.brief-section p {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* Section colors */
+.brief-s1 { border-left: 3px solid #3b82f6; }
+.brief-s2 { border-left: 3px solid #34d399; }
+.brief-s3 { border-left: 3px solid #a855f7; }
+.brief-s4 { border-left: 3px solid #f59e0b; }
+.brief-s5 { border-left: 3px solid #14b8a6; }
+
+/* Account bars in section 3 */
+.brief-accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+.brief-account {
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+}
+.brief-account-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.brief-account-value {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+.brief-account-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  margin: 8px 0;
+  overflow: hidden;
+}
+.brief-account-fill {
+  height: 100%;
+  background: var(--gradient);
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+.brief-account-fill.rrsp {
+  background: linear-gradient(135deg, #3b82f6 0%, #818cf8 100%);
+}
+.brief-account-detail {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+/* Action item */
+.brief-action {
+  display: flex;
+  gap: 14px;
+  background: rgba(20, 184, 166, 0.08);
+  border: 1px solid rgba(20, 184, 166, 0.2);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-top: 12px;
+}
+.brief-action-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.brief-action strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.brief-action p {
+  font-size: 0.85rem !important;
+  color: var(--text-muted);
+  line-height: 1.6 !important;
+}
+
+.brief-footer {
+  padding: 16px 28px;
+  background: var(--surface);
+}
+.brief-footer p {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* CTA below brief */
+.brief-cta-below {
+  text-align: center;
+  margin-top: 40px;
+}
+.brief-cta-below p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.brief-cta-sub {
+  display: block;
+  margin-top: 12px;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+
+/* --- How It Works --- */
+.brief-how {
+  padding: 80px 0;
+}
+.brief-steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 40px;
+}
+.brief-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  text-align: center;
+  flex: 1;
+  max-width: 280px;
+}
+.brief-step-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--gradient);
+  color: #0A1628;
+  font-weight: 800;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+}
+.brief-step h3 {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+.brief-step p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+.brief-step-arrow {
+  font-size: 1.5rem;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+
+/* --- Calendar Grid --- */
+.brief-calendar {
+  padding: 80px 0;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+}
+.calendar-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.calendar-card.cal-highlight {
+  border-color: var(--primary);
+  background: rgba(52, 211, 153, 0.05);
+}
+.cal-month {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.cal-topic {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .brief-hero-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .brief-hero-stats {
+    justify-content: center;
+  }
+  .bh-stat-label { max-width: none; }
+  .brief-inputs {
+    grid-template-columns: 1fr 1fr;
+  }
+  .compare-row {
+    grid-template-columns: 1.2fr 0.9fr 0.9fr;
+  }
+  .brief-steps {
+    flex-direction: column;
+  }
+  .brief-step-arrow {
+    transform: rotate(90deg);
+  }
+  .calendar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .brief-hero { padding: 100px 0 60px; }
+  .brief-hero-stats {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+  }
+  .brief-inputs {
+    grid-template-columns: 1fr;
+  }
+  .compare-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .compare-header { display: none; }
+  .compare-them, .compare-us {
+    text-align: left;
+  }
+  .compare-row > div {
+    padding: 10px 20px;
+  }
+  .compare-feature {
+    padding-top: 14px !important;
+    font-weight: 700;
+  }
+  .brief-section {
+    padding: 20px 20px;
+  }
+  .brief-header {
+    padding: 20px;
+  }
+  .calendar-grid {
+    grid-template-columns: 1fr;
+  }
+  .brief-step { max-width: none; }
+}

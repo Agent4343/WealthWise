@@ -80,40 +80,82 @@ struct BriefListView: View {
     }
 
     private var premiumRequired: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "brain.head.profile")
-                .font(.system(size: 64))
-                .foregroundStyle(.purple)
+        ScrollView {
+            VStack(spacing: 24) {
+                Image(systemName: "brain.head.profile")
+                    .font(.system(size: 64))
+                    .foregroundStyle(.purple)
 
-            Text("AI Weekly Briefs")
-                .font(.title2.bold())
+                Text("Your AI Financial Coach")
+                    .font(.title2.bold())
 
-            Text("Every Monday morning, get a personalized financial briefing based on your profile, current market conditions, and Bank of Canada decisions.")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+                Text("Every Monday at 7 AM, get a personalized action plan built from YOUR income, province, RRSP room, and TFSA balance.")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 24)
+
+                // Value proposition
+                VStack(alignment: .leading, spacing: 14) {
+                    briefFeature(icon: "eye.fill", text: "Week at a Glance — your score & bracket")
+                    briefFeature(icon: "chart.bar.fill", text: "Canadian Economic Pulse — rates & markets")
+                    briefFeature(icon: "building.columns.fill", text: "Account tracker — RRSP/TFSA room updates")
+                    briefFeature(icon: "lightbulb.fill", text: "Tax-saving moves personalized to your bracket")
+                    briefFeature(icon: "checkmark.circle.fill", text: "One clear action item every Monday")
+                }
+                .padding()
+                .background(.regularMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .padding(.horizontal, 16)
+
+                // Cost comparison
+                VStack(spacing: 8) {
+                    HStack {
+                        Text("Financial advisor")
+                        Spacer()
+                        Text("$2,000+/year")
+                            .foregroundStyle(.red)
+                    }
+                    .font(.subheadline)
+
+                    Divider()
+
+                    HStack {
+                        Text("WealthWise Premium")
+                        Spacer()
+                        Text("$9.99/month")
+                            .foregroundStyle(.green)
+                            .fontWeight(.bold)
+                    }
+                    .font(.subheadline)
+                }
+                .padding()
+                .background(.regularMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.horizontal, 16)
+
+                Text("The average user saves $2,400+/year from RRSP tips alone.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+
+                Button {
+                    subscriptionVM.showPaywall = true
+                } label: {
+                    Text("Start 7-Day Free Trial")
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.purple)
                 .padding(.horizontal, 24)
 
-            VStack(alignment: .leading, spacing: 12) {
-                briefFeature(icon: "eye", text: "Your Week at a Glance")
-                briefFeature(icon: "chart.bar", text: "Canadian Economic Pulse")
-                briefFeature(icon: "building.columns", text: "RRSP & TFSA Guidance")
-                briefFeature(icon: "lightbulb", text: "What to Think About")
-                briefFeature(icon: "checkmark.circle", text: "Your Monday Action Item")
+                Text("Cancel anytime. No contracts.")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
             }
-            .padding()
-
-            Button {
-                subscriptionVM.showPaywall = true
-            } label: {
-                Text("Upgrade to Premium — $24.99/mo")
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 50)
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(.purple)
-            .padding(.horizontal, 24)
+            .padding(.vertical, 20)
         }
     }
 

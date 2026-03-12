@@ -56,9 +56,11 @@ struct HomeView: View {
                     progressCard(profile: profile, projectedBalance: result.finalBalance)
                 }
 
-                // Weekly Action Item (if Premium)
+                // Weekly Action Item (Premium) / Brief upsell (Free/Pro)
                 if subscriptionVM.currentTier >= .premium {
                     weeklyActionCard
+                } else {
+                    briefUpsellCard
                 }
 
                 // Quick Actions
@@ -197,6 +199,44 @@ struct HomeView: View {
         }
         .padding()
         .background(Color.teal.opacity(0.06))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+    }
+
+    private var briefUpsellCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Image(systemName: "newspaper.fill")
+                    .foregroundStyle(.purple)
+                Text("AI Weekly Brief")
+                    .font(.subheadline.bold())
+                Spacer()
+                Text("Premium")
+                    .font(.caption2.bold())
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 3)
+                    .background(.purple.opacity(0.15))
+                    .foregroundStyle(.purple)
+                    .clipShape(Capsule())
+            }
+
+            Text("Every Monday: a personalized action plan built from your numbers. RRSP deadlines, tax-saving moves, and exactly what to do.")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineSpacing(3)
+
+            Button {
+                subscriptionVM.showPaywall = true
+            } label: {
+                Text("Start Free Trial")
+                    .font(.caption.bold())
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 36)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.purple)
+        }
+        .padding()
+        .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 
