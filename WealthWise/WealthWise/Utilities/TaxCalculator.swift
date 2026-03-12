@@ -1,7 +1,7 @@
 import Foundation
 
 enum TaxCalculator {
-    // 2025 Federal Tax Brackets (Canada) — updated per CRA
+    // 2026 Federal Tax Brackets (Canada) — updated per CRA
     struct TaxBracket {
         let lowerBound: Double
         let upperBound: Double
@@ -33,7 +33,7 @@ enum TaxCalculator {
     static let respLifetimeLimit: Double = 50_000
 
     /// CESG annual maximum (20% on first $2,500 contributed)
-    static let cespAnnualMax: Double = 500
+    static let cesgAnnualMax: Double = 500
 
     // Provincial top marginal rates (simplified)
     static let provincialTopRates: [String: Double] = [

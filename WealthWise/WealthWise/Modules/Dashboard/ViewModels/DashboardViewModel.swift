@@ -98,7 +98,6 @@ final class DashboardViewModel: ObservableObject {
     private func populateFormFromProfile(_ profile: FinancialProfile) {
         age = profile.age
         retirementAge = profile.retirementAge
-        selectedProvince = Province(rawValue: "") ?? .on
         selectedIncomeBracket = IncomeBracket(rawValue: profile.incomeBracket) ?? .fiftyTo75k
         rrspRoomUsed = String(format: "%.0f", profile.rrspRoomUsed)
         tfsaRoomUsed = String(format: "%.0f", profile.tfsaRoomUsed)

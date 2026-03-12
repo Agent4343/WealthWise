@@ -122,14 +122,14 @@ function calculateMoneyScore(profile) {
     suggestion: 'Use a single all-in-one ETF like XBAL or VGRO'
   });
 
-  // 7. Debt Ratio (15%) — assume moderate without debt data
-  const debtScore = 70;
+  // 7. Net Worth Ratio (15%) — savings vs income
+  const netWorthScore = 70;
   components.push({
-    name: 'Debt Ratio',
-    score: debtScore,
+    name: 'Net Worth Ratio',
+    score: netWorthScore,
     weight: 0.15,
-    description: 'Debt assessment based on general profile',
-    suggestion: 'Pay off high-interest debt before investing'
+    description: 'Savings-to-income assessment based on general profile',
+    suggestion: 'Aim for total savings equal to at least 1x your annual income'
   });
 
   const totalScore = Math.round(

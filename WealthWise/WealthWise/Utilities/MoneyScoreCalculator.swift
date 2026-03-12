@@ -139,21 +139,21 @@ enum MoneyScoreCalculator {
             suggestion: diversificationScore < 70 ? "Use the 1-2 Punch strategy: contribute to RRSP for the tax deduction, then invest the refund in your TFSA." : "Good account diversification."
         ))
 
-        // 7. Debt Ratio (15% weight) — estimated from savings vs income
-        let debtScore: Int
+        // 7. Net Worth Ratio (15% weight) — savings vs income
+        let netWorthScore: Int
         let savingsToIncomeRatio = income > 0 ? profile.currentSavings / income : 0
-        if savingsToIncomeRatio >= 1.0 { debtScore = 90 }
-        else if savingsToIncomeRatio >= 0.5 { debtScore = 75 }
-        else if savingsToIncomeRatio >= 0.25 { debtScore = 60 }
-        else { debtScore = 40 }
+        if savingsToIncomeRatio >= 1.0 { netWorthScore = 90 }
+        else if savingsToIncomeRatio >= 0.5 { netWorthScore = 75 }
+        else if savingsToIncomeRatio >= 0.25 { netWorthScore = 60 }
+        else { netWorthScore = 40 }
         components.append(ScoreComponent(
-            id: "debt_ratio",
-            name: "Debt Ratio",
-            score: debtScore,
+            id: "net_worth_ratio",
+            name: "Net Worth Ratio",
+            score: netWorthScore,
             weight: 0.15,
-            weighted: Double(debtScore) * 0.15,
+            weighted: Double(netWorthScore) * 0.15,
             description: String(format: "Savings-to-income ratio: %.1fx", savingsToIncomeRatio),
-            suggestion: debtScore < 60 ? "Focus on building savings before increasing investments. Pay off high-interest debt first." : "Your savings-to-income ratio is healthy."
+            suggestion: netWorthScore < 60 ? "Aim for total savings equal to at least 1x your annual income." : "Your savings-to-income ratio is healthy."
         ))
 
         // Calculate total weighted score

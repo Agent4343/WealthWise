@@ -102,7 +102,7 @@
     const s4 = document.getElementById('brief-s4-content');
     if (s4) {
       if (rrspRemaining > 0 && suggestedContribution > 0) {
-        s4.textContent = `At your income of ${fmt(income)}, you're in the ${bracketLabel(income)} federal bracket (${pct(combinedRate)} combined with ${provName}). Every dollar you contribute to your RRSP saves you ${(combinedRate * 100).toFixed(1)}\u00A2 in combined tax. Contributing ${fmt(suggestedContribution)} before the March 3 deadline would save you ${fmt(taxSavings)} on your 2025 return. That refund \u2192 TFSA = the 1-2 Punch.`;
+        s4.textContent = `At your income of ${fmt(income)}, you're in the ${bracketLabel(income)} federal bracket (${pct(combinedRate)} combined with ${provName}). Every dollar you contribute to your RRSP saves you ${(combinedRate * 100).toFixed(1)}\u00A2 in combined tax. Contributing ${fmt(suggestedContribution)} before the March 2, 2026 deadline would save you ${fmt(taxSavings)} on your 2025 return. That refund \u2192 TFSA = the 1-2 Punch.`;
       } else {
         s4.textContent = `At your income of ${fmt(income)}, you're in the ${pct(combinedRate)} combined bracket in ${provName}. Your RRSP room is used up — well done. Focus on your TFSA: you have ${fmt(tfsaRemaining)} remaining. Every dollar inside grows completely tax-free. At 7% annual return, ${fmt(tfsaRemaining)} grows to ${fmt(tfsaRemaining * Math.pow(1.07, 20))} in 20 years — all tax-free.`;
       }
@@ -113,7 +113,7 @@
     const actionDetail = document.getElementById('brief-action-detail');
     if (actionTitle && actionDetail) {
       if (rrspRemaining > 0 && suggestedContribution > 0) {
-        actionTitle.textContent = `Transfer ${fmt(suggestedContribution)} to your RRSP before March 3`;
+        actionTitle.textContent = `Transfer ${fmt(suggestedContribution)} to your RRSP before March 2, 2026`;
         actionDetail.textContent = `This saves you an estimated ${fmt(taxSavings)} in taxes. When you get the refund, invest it in your TFSA for tax-free growth. Total tax-sheltered: ${fmt(suggestedContribution + taxSavings)}. Time needed: 5 minutes via online banking.`;
       } else {
         actionTitle.textContent = `Set up automatic monthly TFSA contribution`;
@@ -127,7 +127,10 @@
   // Bind inputs
   ['brief-province', 'brief-income', 'brief-rrsp', 'brief-tfsa'].forEach(function (id) {
     const el = document.getElementById(id);
-    if (el) el.addEventListener('input', updateBrief);
+    if (el) {
+      el.addEventListener('input', updateBrief);
+      el.addEventListener('change', updateBrief);
+    }
   });
 
   // Initial render
