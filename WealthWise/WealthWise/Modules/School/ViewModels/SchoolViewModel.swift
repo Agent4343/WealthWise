@@ -6,6 +6,7 @@ final class SchoolViewModel: ObservableObject {
     @Published var chapters: [Chapter] = []
     @Published var completedLessons: Set<Int> = []
     @Published var quizScores: [Int: Int] = [:] // chapterId: score
+    @Published var loadError: String?
 
     private let completedLessonsKey = "completedLessons"
     private let quizScoresKey = "quizScores"
@@ -74,6 +75,8 @@ final class SchoolViewModel: ObservableObject {
            let data = try? Data(contentsOf: url),
            let decoded = try? decoder.decode([Chapter].self, from: data) {
             chapters = decoded
+        } else {
+            loadError = "Unable to load course content. Please reinstall the app."
         }
     }
 

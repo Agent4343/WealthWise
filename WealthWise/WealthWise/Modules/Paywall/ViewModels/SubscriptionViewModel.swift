@@ -70,7 +70,7 @@ final class SubscriptionViewModel: ObservableObject {
                 break
 
             case .pending:
-                break
+                purchaseError = "Purchase is pending approval. You'll get access once it's confirmed."
 
             @unknown default:
                 break
