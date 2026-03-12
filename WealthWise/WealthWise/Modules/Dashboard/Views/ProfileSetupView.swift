@@ -26,9 +26,28 @@ struct ProfileSetupView: View {
                     }
                 }
 
-                Section("Your Accounts") {
+                Section {
                     HStack {
-                        Text("RRSP Room Used")
+                        Text("Total Savings & Investments")
+                        Spacer()
+                        TextField("$0", text: $viewModel.currentSavings)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 120)
+                    }
+
+                    Text("Include everything: TFSA + RRSP + RESP + non-registered + cash savings")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                } header: {
+                    Text("Your Accounts")
+                } footer: {
+                    Text("Enter your total above, then break out how much is in each account below.")
+                }
+
+                Section("Account Breakdown") {
+                    HStack {
+                        Text("In RRSP")
                         Spacer()
                         TextField("$0", text: $viewModel.rrspRoomUsed)
                             .keyboardType(.numberPad)
@@ -37,18 +56,9 @@ struct ProfileSetupView: View {
                     }
 
                     HStack {
-                        Text("TFSA Room Used")
+                        Text("In TFSA")
                         Spacer()
                         TextField("$0", text: $viewModel.tfsaRoomUsed)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.trailing)
-                            .frame(width: 120)
-                    }
-
-                    HStack {
-                        Text("Current Savings")
-                        Spacer()
-                        TextField("$0", text: $viewModel.currentSavings)
                             .keyboardType(.numberPad)
                             .multilineTextAlignment(.trailing)
                             .frame(width: 120)

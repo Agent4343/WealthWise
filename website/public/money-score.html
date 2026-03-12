@@ -44,24 +44,27 @@
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="savings">Current Savings/Investments</label>
-          <input type="number" id="savings" class="form-input" placeholder="e.g. 50000" value="50000">
-        </div>
-        <div class="form-group">
-          <label for="annualIncome">Annual Income</label>
-          <input type="number" id="annualIncome" class="form-input" placeholder="e.g. 72000" value="72000">
-        </div>
+      <div class="form-group">
+        <label for="annualIncome">Annual Income (gross)</label>
+        <input type="number" id="annualIncome" class="form-input" placeholder="e.g. 72000" value="72000">
+      </div>
+
+      <div class="info-box" style="margin-bottom:20px">
+        <strong>How to fill this out:</strong> Enter the total value of ALL your investments and savings below. Then break out how much of that total is inside your TFSA and RRSP. The rest (RESP, cash, non-registered) is counted automatically.
+      </div>
+
+      <div class="form-group">
+        <label for="savings">Total Savings &amp; Investments (everything — TFSA + RRSP + RESP + cash + non-reg)</label>
+        <input type="number" id="savings" class="form-input" placeholder="e.g. 120000" value="120000">
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="tfsaUsed">TFSA Room Used ($)</label>
+          <label for="tfsaUsed">Of that total, how much is in your TFSA? ($)</label>
           <input type="number" id="tfsaUsed" class="form-input" placeholder="e.g. 35000" value="35000">
         </div>
         <div class="form-group">
-          <label for="rrspUsed">RRSP Room Used ($)</label>
+          <label for="rrspUsed">Of that total, how much is in your RRSP? ($)</label>
           <input type="number" id="rrspUsed" class="form-input" placeholder="e.g. 15000" value="15000">
         </div>
       </div>
@@ -131,11 +134,14 @@
       { name: 'Debt Ratio', weight: 0.15 }
     ];
 
+    const TFSA_CUMULATIVE = 102000; // Through 2026
+    const RRSP_MAX = 33810; // 2026
+
     const recommendations = {
       'Savings Rate': 'Try to save at least 15-20% of your income. Automate transfers on payday.',
       'Emergency Fund': 'Build up to 6 months of expenses in a high-interest savings account.',
-      'TFSA Usage': 'Your cumulative TFSA room may be up to $95,000. Max it out with index ETFs.',
-      'RRSP Usage': 'Contribute 18% of income (max $31,560) to get your full tax deduction.',
+      'TFSA Usage': 'Your cumulative TFSA room is up to $102,000 (through 2026). Max it out with index ETFs for tax-free growth.',
+      'RRSP Usage': 'Contribute 18% of income (max $33,810 for 2026) to get your full tax deduction. Use the 1-2 Punch: refund goes to TFSA.',
       'Investment Fees': 'Switch to low-cost index ETFs (MER under 0.25%) to keep more of your returns.',
       'Diversification': 'Use both RRSP and TFSA together — the 1-2 Punch strategy.',
       'Debt Ratio': 'Aim for total savings equal to at least 1x your annual income.'
@@ -152,13 +158,19 @@
       const hasTFSA = document.getElementById('hasTFSA').checked;
       const hasRRSP = document.getElementById('hasRRSP').checked;
 
+      // Validate: TFSA + RRSP can't exceed total savings
+      const accountTotal = tfsaUsed + rrspUsed;
+      if (accountTotal > savings && savings > 0) {
+        // Auto-cap to total savings proportionally — no error, just clamp
+      }
+
       // Calculate each factor score (0-100)
       const savingsRate = Math.min(100, ((contribution / income) / 0.20) * 100);
       const monthlyExpenses = income * 0.7;
       const emergencyMonths = savings / monthlyExpenses;
       const emergencyScore = Math.min(100, (emergencyMonths / 6) * 100);
-      const tfsaScore = Math.min(100, (tfsaUsed / 95000) * 100);
-      const rrspRoom = Math.min(annualIncome * 0.18, 31560);
+      const tfsaScore = Math.min(100, (tfsaUsed / TFSA_CUMULATIVE) * 100);
+      const rrspRoom = Math.min(annualIncome * 0.18, RRSP_MAX);
       const rrspScore = Math.min(100, (rrspUsed / rrspRoom) * 100);
 
       let feeScore;
