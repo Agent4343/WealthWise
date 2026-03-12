@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Retirement Calculator — WealthWise</title>
-  <meta name="description" content="Free Canadian retirement calculator. See if you're on track with projections using CPP, OAS, RRSP, and TFSA income sources.">
+  <meta name="description" content="Free Canadian retirement calculator with partner support. See if you're on track with projections for individuals or couples.">
   <meta name="theme-color" content="#0A1628">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,62 +33,150 @@
     <div class="app-container">
       <a href="/calculators.html" class="back-link">&larr; All Calculators</a>
       <div class="app-header">
-        <h1>🏖️ <span class="gradient-text">Retirement Calculator</span></h1>
-        <p>Project your portfolio growth and retirement income.</p>
+        <h1><span class="gradient-text">Retirement Calculator</span></h1>
+        <p>Project your portfolio growth and retirement income — solo or as a couple.</p>
       </div>
 
-      <div class="form-row">
-        <div class="form-group">
-          <label for="currentAge">Current Age</label>
-          <input type="number" id="currentAge" class="form-input" value="30" min="18" max="75">
+      <!-- Partner Toggle -->
+      <div class="partner-toggle-wrap" style="margin-bottom:24px">
+        <div class="partner-toggle-bar">
+          <button class="partner-tab active" id="tab-solo" onclick="setMode('solo')">Just Me</button>
+          <button class="partner-tab" id="tab-couple" onclick="setMode('couple')">With Partner</button>
+        </div>
+      </div>
+
+      <!-- Person 1 (You) -->
+      <div class="person-section">
+        <h3 class="person-heading" id="person1-heading">Your Details</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="currentAge">Current Age</label>
+            <input type="number" id="currentAge" class="form-input" value="30" min="18" max="75">
+          </div>
+          <div class="form-group">
+            <label for="retireAge">Retirement Age</label>
+            <input type="number" id="retireAge" class="form-input" value="65" min="30" max="80">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="monthly">Monthly Contribution</label>
+            <input type="number" id="monthly" class="form-input" placeholder="e.g. 500" value="500">
+          </div>
+          <div class="form-group">
+            <label for="savings">Existing Savings</label>
+            <input type="number" id="savings" class="form-input" placeholder="e.g. 25000" value="25000">
+          </div>
         </div>
         <div class="form-group">
-          <label for="retireAge">Retirement Age</label>
-          <input type="number" id="retireAge" class="form-input" value="65" min="45" max="80">
+          <div class="label-row">
+            <label for="returnRate">Expected Annual Return</label>
+            <span class="label-value" id="returnDisplay">7%</span>
+          </div>
+          <input type="range" id="returnRate" class="range-slider" min="2" max="12" step="0.5" value="7">
         </div>
       </div>
 
-      <div class="form-group">
-        <label for="monthly">Monthly Contribution</label>
-        <input type="number" id="monthly" class="form-input" placeholder="e.g. 500" value="500">
-      </div>
-
-      <div class="form-group">
-        <label for="savings">Existing Savings</label>
-        <input type="number" id="savings" class="form-input" placeholder="e.g. 25000" value="25000">
-      </div>
-
-      <div class="form-group">
-        <div class="label-row">
-          <label for="returnRate">Expected Annual Return</label>
-          <span class="label-value" id="returnDisplay">7%</span>
+      <!-- Person 2 (Partner) — hidden by default -->
+      <div class="person-section" id="partner-section" style="display:none;margin-top:24px">
+        <h3 class="person-heading">Partner's Details</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="p2Age">Current Age</label>
+            <input type="number" id="p2Age" class="form-input" value="30" min="18" max="75">
+          </div>
+          <div class="form-group">
+            <label for="p2RetireAge">Retirement Age</label>
+            <input type="number" id="p2RetireAge" class="form-input" value="65" min="30" max="80">
+          </div>
         </div>
-        <input type="range" id="returnRate" class="range-slider" min="2" max="12" step="0.5" value="7">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="p2Monthly">Monthly Contribution</label>
+            <input type="number" id="p2Monthly" class="form-input" placeholder="e.g. 300" value="300">
+          </div>
+          <div class="form-group">
+            <label for="p2Savings">Existing Savings</label>
+            <input type="number" id="p2Savings" class="form-input" placeholder="e.g. 10000" value="10000">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label for="p2ReturnRate">Expected Annual Return</label>
+            <span class="label-value" id="p2ReturnDisplay">7%</span>
+          </div>
+          <input type="range" id="p2ReturnRate" class="range-slider" min="2" max="12" step="0.5" value="7">
+        </div>
       </div>
 
+      <!-- Retirement Spending -->
+      <div class="form-group" style="margin-top:24px">
+        <label for="desiredIncome">Desired Monthly Income in Retirement</label>
+        <input type="number" id="desiredIncome" class="form-input" placeholder="e.g. 4000" value="4000">
+        <div style="color:var(--text-dim);font-size:0.8rem;margin-top:4px">How much per month do you want to live on? We'll tell you if you're on track.</div>
+      </div>
+
+      <!-- Results -->
       <div class="results-section">
         <h3>Retirement Projection</h3>
-        <div class="result-card result-hero">
-          <div class="result-value" id="res-portfolio">$0</div>
-          <div class="result-label">Portfolio Value at Retirement</div>
+
+        <!-- Solo result -->
+        <div id="solo-results">
+          <div class="result-card result-hero">
+            <div class="result-value" id="res-portfolio">$0</div>
+            <div class="result-label">Portfolio Value at Retirement</div>
+          </div>
+          <div class="result-grid">
+            <div class="result-item positive">
+              <span class="result-value" id="res-income">$0/mo</span>
+              <span class="result-label">Monthly Income (4% Rule)</span>
+            </div>
+            <div class="result-item">
+              <span class="result-value" id="res-contributed">$0</span>
+              <span class="result-label">Total Contributed</span>
+            </div>
+            <div class="result-item highlight">
+              <span class="result-value" id="res-interest">$0</span>
+              <span class="result-label">Interest Earned</span>
+            </div>
+            <div class="result-item accent">
+              <span class="result-value" id="res-years">0 yrs</span>
+              <span class="result-label">Time to Retirement</span>
+            </div>
+          </div>
         </div>
-        <div class="result-grid">
-          <div class="result-item positive">
-            <span class="result-value" id="res-income">$0/mo</span>
-            <span class="result-label">Monthly Income (4% Rule)</span>
+
+        <!-- Couple result -->
+        <div id="couple-results" style="display:none">
+          <div class="result-card result-hero">
+            <div class="result-value" id="res-combined">$0</div>
+            <div class="result-label">Combined Portfolio at Retirement</div>
           </div>
-          <div class="result-item">
-            <span class="result-value" id="res-contributed">$0</span>
-            <span class="result-label">Total Contributed</span>
+          <div class="result-grid">
+            <div class="result-item positive">
+              <span class="result-value" id="res-combined-income">$0/mo</span>
+              <span class="result-label">Combined Monthly Income (4%)</span>
+            </div>
+            <div class="result-item highlight">
+              <span class="result-value" id="res-p1-portfolio">$0</span>
+              <span class="result-label">Your Portfolio</span>
+            </div>
+            <div class="result-item accent">
+              <span class="result-value" id="res-p2-portfolio">$0</span>
+              <span class="result-label">Partner's Portfolio</span>
+            </div>
+            <div class="result-item">
+              <span class="result-value" id="res-combined-contributed">$0</span>
+              <span class="result-label">Total Contributed</span>
+            </div>
           </div>
-          <div class="result-item highlight">
-            <span class="result-value" id="res-interest">$0</span>
-            <span class="result-label">Interest Earned</span>
-          </div>
-          <div class="result-item accent">
-            <span class="result-value" id="res-years">0 yrs</span>
-            <span class="result-label">Time to Retirement</span>
-          </div>
+        </div>
+
+        <!-- Adequacy Check -->
+        <div class="result-card" id="adequacy-card" style="margin-top:16px;text-align:center">
+          <div id="adequacy-icon" style="font-size:2.5rem;margin-bottom:8px"></div>
+          <div id="adequacy-title" style="font-size:1.2rem;font-weight:700;margin-bottom:4px"></div>
+          <div id="adequacy-text" style="color:var(--text-muted);font-size:0.9rem;line-height:1.5"></div>
         </div>
       </div>
 
@@ -115,8 +203,10 @@
 
   <script>
     const STORAGE_KEY = 'ws_retirement_calc';
+    let mode = 'solo';
+
     function saveInputs() {
-      const data = {};
+      const data = { mode };
       document.querySelectorAll('.form-input, input[type=range]').forEach(el => {
         if (!el.id) return;
         data[el.id] = el.value;
@@ -127,7 +217,9 @@
       try {
         const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
         if (!data) return;
+        if (data.mode) setMode(data.mode, true);
         Object.entries(data).forEach(([id, val]) => {
+          if (id === 'mode') return;
           const el = document.getElementById(id);
           if (!el) return;
           el.value = val;
@@ -135,15 +227,18 @@
       } catch(e) {}
     }
 
-    function calculate() {
-      const currentAge = parseInt(document.getElementById('currentAge').value) || 30;
-      const retireAge = parseInt(document.getElementById('retireAge').value) || 65;
-      const monthly = parseFloat(document.getElementById('monthly').value) || 0;
-      const savings = parseFloat(document.getElementById('savings').value) || 0;
-      const rate = parseFloat(document.getElementById('returnRate').value) / 100;
+    function setMode(m, skipCalc) {
+      mode = m;
+      document.getElementById('tab-solo').classList.toggle('active', m === 'solo');
+      document.getElementById('tab-couple').classList.toggle('active', m === 'couple');
+      document.getElementById('partner-section').style.display = m === 'couple' ? 'block' : 'none';
+      document.getElementById('solo-results').style.display = m === 'solo' ? 'block' : 'none';
+      document.getElementById('couple-results').style.display = m === 'couple' ? 'block' : 'none';
+      document.getElementById('person1-heading').textContent = m === 'couple' ? 'Your Details' : 'Your Details';
+      if (!skipCalc) { calculate(); saveInputs(); }
+    }
 
-      document.getElementById('returnDisplay').textContent = (rate * 100).toFixed(1) + '%';
-
+    function projectGrowth(currentAge, retireAge, monthly, savings, rate) {
       const years = Math.max(0, retireAge - currentAge);
       const monthlyRate = rate / 12;
       let balance = savings;
@@ -155,19 +250,98 @@
       }
 
       const totalContributed = savings + (monthly * 12 * years);
-      const interest = balance - totalContributed;
-      const monthlyIncome = (balance * 0.04) / 12;
-
-      document.getElementById('res-portfolio').textContent = '$' + Math.round(balance).toLocaleString();
-      document.getElementById('res-income').textContent = '$' + Math.round(monthlyIncome).toLocaleString() + '/mo';
-      document.getElementById('res-contributed').textContent = '$' + Math.round(totalContributed).toLocaleString();
-      document.getElementById('res-interest').textContent = '$' + Math.round(interest).toLocaleString();
-      document.getElementById('res-years').textContent = years + ' yrs';
-
-      drawChart(dataPoints, currentAge);
+      return { balance, totalContributed, interest: balance - totalContributed, years, dataPoints };
     }
 
-    function drawChart(data, startAge) {
+    function calculate() {
+      const currentAge = parseInt(document.getElementById('currentAge').value) || 30;
+      const retireAge = parseInt(document.getElementById('retireAge').value) || 65;
+      const monthly = parseFloat(document.getElementById('monthly').value) || 0;
+      const savings = parseFloat(document.getElementById('savings').value) || 0;
+      const rate = parseFloat(document.getElementById('returnRate').value) / 100;
+      const desiredIncome = parseFloat(document.getElementById('desiredIncome').value) || 0;
+
+      document.getElementById('returnDisplay').textContent = (rate * 100).toFixed(1) + '%';
+
+      const p1 = projectGrowth(currentAge, retireAge, monthly, savings, rate);
+
+      if (mode === 'solo') {
+        const monthlyIncome = (p1.balance * 0.04) / 12;
+        document.getElementById('res-portfolio').textContent = '$' + Math.round(p1.balance).toLocaleString();
+        document.getElementById('res-income').textContent = '$' + Math.round(monthlyIncome).toLocaleString() + '/mo';
+        document.getElementById('res-contributed').textContent = '$' + Math.round(p1.totalContributed).toLocaleString();
+        document.getElementById('res-interest').textContent = '$' + Math.round(p1.interest).toLocaleString();
+        document.getElementById('res-years').textContent = p1.years + ' yrs';
+
+        showAdequacy(monthlyIncome, desiredIncome);
+        drawChart(p1.dataPoints, null, currentAge);
+      } else {
+        const p2Age = parseInt(document.getElementById('p2Age').value) || 30;
+        const p2RetireAge = parseInt(document.getElementById('p2RetireAge').value) || 65;
+        const p2Monthly = parseFloat(document.getElementById('p2Monthly').value) || 0;
+        const p2Savings = parseFloat(document.getElementById('p2Savings').value) || 0;
+        const p2Rate = parseFloat(document.getElementById('p2ReturnRate').value) / 100;
+
+        document.getElementById('p2ReturnDisplay').textContent = (p2Rate * 100).toFixed(1) + '%';
+
+        const p2 = projectGrowth(p2Age, p2RetireAge, p2Monthly, p2Savings, p2Rate);
+
+        const combined = p1.balance + p2.balance;
+        const combinedIncome = (combined * 0.04) / 12;
+        const combinedContributed = p1.totalContributed + p2.totalContributed;
+
+        document.getElementById('res-combined').textContent = '$' + Math.round(combined).toLocaleString();
+        document.getElementById('res-combined-income').textContent = '$' + Math.round(combinedIncome).toLocaleString() + '/mo';
+        document.getElementById('res-p1-portfolio').textContent = '$' + Math.round(p1.balance).toLocaleString();
+        document.getElementById('res-p2-portfolio').textContent = '$' + Math.round(p2.balance).toLocaleString();
+        document.getElementById('res-combined-contributed').textContent = '$' + Math.round(combinedContributed).toLocaleString();
+
+        showAdequacy(combinedIncome, desiredIncome);
+        drawChart(p1.dataPoints, p2.dataPoints, Math.min(currentAge, p2Age));
+      }
+    }
+
+    function showAdequacy(projectedMonthly, desiredMonthly) {
+      const card = document.getElementById('adequacy-card');
+      const icon = document.getElementById('adequacy-icon');
+      const title = document.getElementById('adequacy-title');
+      const text = document.getElementById('adequacy-text');
+
+      if (desiredMonthly <= 0) {
+        card.style.display = 'none';
+        return;
+      }
+      card.style.display = 'block';
+
+      const pct = (projectedMonthly / desiredMonthly) * 100;
+      const surplus = projectedMonthly - desiredMonthly;
+
+      if (pct >= 120) {
+        icon.textContent = '🎉';
+        title.textContent = 'Well Above Target';
+        title.style.color = '#34d399';
+        text.innerHTML = 'You\'re projected to have <strong style="color:#34d399">$' + Math.round(projectedMonthly).toLocaleString() + '/mo</strong> — that\'s <strong style="color:#34d399">' + Math.round(pct) + '%</strong> of your $' + Math.round(desiredMonthly).toLocaleString() + '/mo target. You\'ll have an extra $' + Math.round(surplus).toLocaleString() + '/mo for travel, gifts, or legacy.';
+      } else if (pct >= 100) {
+        icon.textContent = '✅';
+        title.textContent = 'On Track';
+        title.style.color = '#34d399';
+        text.innerHTML = 'You\'re projected to have <strong style="color:#34d399">$' + Math.round(projectedMonthly).toLocaleString() + '/mo</strong> — that covers your $' + Math.round(desiredMonthly).toLocaleString() + '/mo target with $' + Math.round(surplus).toLocaleString() + '/mo to spare.';
+      } else if (pct >= 75) {
+        icon.textContent = '⚠️';
+        title.textContent = 'Close But Short';
+        title.style.color = '#fbbf24';
+        const gap = Math.round(Math.abs(surplus));
+        text.innerHTML = 'You\'re projected to have <strong style="color:#fbbf24">$' + Math.round(projectedMonthly).toLocaleString() + '/mo</strong> — that\'s <strong style="color:#fbbf24">' + Math.round(pct) + '%</strong> of your target. You\'re short by $' + gap.toLocaleString() + '/mo. Consider increasing contributions or delaying retirement slightly.';
+      } else {
+        icon.textContent = '🚨';
+        title.textContent = 'Significant Gap';
+        title.style.color = '#f87171';
+        const gap = Math.round(Math.abs(surplus));
+        text.innerHTML = 'You\'re projected to have <strong style="color:#f87171">$' + Math.round(projectedMonthly).toLocaleString() + '/mo</strong> — only <strong style="color:#f87171">' + Math.round(pct) + '%</strong> of your $' + Math.round(desiredMonthly).toLocaleString() + '/mo target. You need to close a $' + gap.toLocaleString() + '/mo gap. Increase contributions, reduce target spending, or plan to retire later.';
+      }
+    }
+
+    function drawChart(data1, data2, startAge) {
       const canvas = document.getElementById('growthChart');
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
@@ -186,10 +360,12 @@
 
       ctx.clearRect(0, 0, w, h);
 
-      if (data.length < 2) return;
+      const allPoints = data2 ? [...data1, ...data2] : data1;
+      if (allPoints.length < 2) return;
 
-      const maxVal = Math.max(...data);
-      const xStep = cw / (data.length - 1);
+      const maxLen = data2 ? Math.max(data1.length, data2.length) : data1.length;
+      const maxVal = Math.max(...allPoints);
+      const xStep = cw / (maxLen - 1);
 
       // Grid lines
       ctx.strokeStyle = '#243352';
@@ -210,48 +386,106 @@
 
       // X labels
       ctx.textAlign = 'center';
-      const labelStep = Math.max(1, Math.floor(data.length / 6));
-      for (let i = 0; i < data.length; i += labelStep) {
+      const labelStep = Math.max(1, Math.floor(maxLen / 6));
+      for (let i = 0; i < maxLen; i += labelStep) {
         const x = pad.left + i * xStep;
         ctx.fillText(startAge + i, x, h - pad.bottom + 20);
       }
 
-      // Area fill
-      const gradient = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
-      gradient.addColorStop(0, 'rgba(52, 211, 153, 0.2)');
-      gradient.addColorStop(1, 'rgba(52, 211, 153, 0)');
-      ctx.beginPath();
-      ctx.moveTo(pad.left, pad.top + ch);
-      for (let i = 0; i < data.length; i++) {
-        const x = pad.left + i * xStep;
-        const y = pad.top + ch - (data[i] / maxVal * ch);
-        ctx.lineTo(x, y);
-      }
-      ctx.lineTo(pad.left + (data.length - 1) * xStep, pad.top + ch);
-      ctx.closePath();
-      ctx.fillStyle = gradient;
-      ctx.fill();
+      function drawLine(data, color, fill) {
+        // Area fill
+        if (fill) {
+          const gradient = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+          gradient.addColorStop(0, fill);
+          gradient.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.beginPath();
+          ctx.moveTo(pad.left, pad.top + ch);
+          for (let i = 0; i < data.length; i++) {
+            const x = pad.left + i * xStep;
+            const y = pad.top + ch - (data[i] / maxVal * ch);
+            ctx.lineTo(x, y);
+          }
+          ctx.lineTo(pad.left + (data.length - 1) * xStep, pad.top + ch);
+          ctx.closePath();
+          ctx.fillStyle = gradient;
+          ctx.fill();
+        }
 
-      // Line
-      ctx.beginPath();
-      for (let i = 0; i < data.length; i++) {
-        const x = pad.left + i * xStep;
-        const y = pad.top + ch - (data[i] / maxVal * ch);
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
+        // Line
+        ctx.beginPath();
+        for (let i = 0; i < data.length; i++) {
+          const x = pad.left + i * xStep;
+          const y = pad.top + ch - (data[i] / maxVal * ch);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
       }
-      ctx.strokeStyle = '#34d399';
-      ctx.lineWidth = 2.5;
-      ctx.stroke();
+
+      drawLine(data1, '#34d399', 'rgba(52, 211, 153, 0.15)');
+      if (data2) {
+        drawLine(data2, '#818cf8', 'rgba(129, 140, 248, 0.1)');
+        // Legend
+        ctx.fillStyle = '#34d399'; ctx.fillRect(pad.left + 10, pad.top + 10, 12, 3);
+        ctx.fillStyle = '#94a3b8'; ctx.textAlign = 'left'; ctx.fillText('You', pad.left + 28, pad.top + 14);
+        ctx.fillStyle = '#818cf8'; ctx.fillRect(pad.left + 60, pad.top + 10, 12, 3);
+        ctx.fillStyle = '#94a3b8'; ctx.fillText('Partner', pad.left + 78, pad.top + 14);
+      }
     }
 
-    document.querySelectorAll('#currentAge, #retireAge, #monthly, #savings, #returnRate').forEach(el => {
+    // Bind all inputs
+    document.querySelectorAll('#currentAge, #retireAge, #monthly, #savings, #returnRate, #p2Age, #p2RetireAge, #p2Monthly, #p2Savings, #p2ReturnRate, #desiredIncome').forEach(el => {
       el.addEventListener('input', () => { calculate(); saveInputs(); });
     });
     restoreInputs();
     calculate();
     window.addEventListener('resize', calculate);
   </script>
+
+  <style>
+    .partner-toggle-bar {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 4px;
+      gap: 4px;
+    }
+    .partner-tab {
+      flex: 1;
+      padding: 10px 16px;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .partner-tab.active {
+      background: var(--primary);
+      color: var(--bg);
+    }
+    .partner-tab:hover:not(.active) { color: var(--text); }
+    .person-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .person-heading {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-weight: 600;
+    }
+  </style>
   <script src="/js/main.js"></script>
 
   <footer class="footer">

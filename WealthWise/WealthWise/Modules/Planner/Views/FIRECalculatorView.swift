@@ -6,9 +6,16 @@ struct FIRECalculatorView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
+                // Mode Toggle
+                Picker("Mode", selection: $viewModel.fireMode) {
+                    Text("Just Me").tag(PlannerViewModel.PlanMode.solo)
+                    Text("With Partner").tag(PlannerViewModel.PlanMode.couple)
+                }
+                .pickerStyle(.segmented)
+
                 VStack(spacing: 12) {
                     HStack {
-                        Text("Monthly Expenses")
+                        Text(viewModel.fireMode == .couple ? "Combined Monthly Expenses" : "Monthly Expenses")
                         Spacer()
                         TextField("$4,000", text: $viewModel.fireMonthlyExpenses)
                             .keyboardType(.numberPad)
@@ -30,6 +37,83 @@ struct FIRECalculatorView: View {
                 .background(.regularMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
 
+                // Your savings for time-to-FIRE
+                VStack(spacing: 12) {
+                    Text(viewModel.fireMode == .couple ? "YOUR SAVINGS" : "YOUR SAVINGS")
+                        .font(.caption)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    HStack {
+                        Text("Current Savings")
+                        Spacer()
+                        TextField("$50,000", text: $viewModel.fireCurrentSavings)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 120)
+                    }
+
+                    HStack {
+                        Text("Monthly Contribution")
+                        Spacer()
+                        TextField("$1,500", text: $viewModel.fireMonthlyContrib)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.trailing)
+                            .frame(width: 120)
+                    }
+
+                    Stepper("Current Age: \(viewModel.fireCurrentAge)",
+                            value: $viewModel.fireCurrentAge, in: 18...70)
+
+                    VStack(alignment: .leading) {
+                        Text("Expected Return: \(CurrencyFormatter.formatPercent(viewModel.fireReturnRate))")
+                            .font(.subheadline)
+                        Slider(value: $viewModel.fireReturnRate, in: 0.03...0.12, step: 0.005)
+                    }
+                }
+                .padding()
+                .background(.regularMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+
+                // Partner savings
+                if viewModel.fireMode == .couple {
+                    VStack(spacing: 12) {
+                        Text("PARTNER'S SAVINGS")
+                            .font(.caption)
+                            .fontWeight(.semibold)
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                        HStack {
+                            Text("Current Savings")
+                            Spacer()
+                            TextField("$30,000", text: $viewModel.firePartnerSavings)
+                                .keyboardType(.numberPad)
+                                .multilineTextAlignment(.trailing)
+                                .frame(width: 120)
+                        }
+
+                        HStack {
+                            Text("Monthly Contribution")
+                            Spacer()
+                            TextField("$1,000", text: $viewModel.firePartnerContrib)
+                                .keyboardType(.numberPad)
+                                .multilineTextAlignment(.trailing)
+                                .frame(width: 120)
+                        }
+
+                        VStack(alignment: .leading) {
+                            Text("Expected Return: \(CurrencyFormatter.formatPercent(viewModel.firePartnerReturn))")
+                                .font(.subheadline)
+                            Slider(value: $viewModel.firePartnerReturn, in: 0.03...0.12, step: 0.005)
+                        }
+                    }
+                    .padding()
+                    .background(.regularMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                }
+
                 Button {
                     viewModel.calculateFIRE()
                 } label: {
@@ -47,7 +131,7 @@ struct FIRECalculatorView: View {
                             .foregroundStyle(.orange)
 
                         VStack(spacing: 4) {
-                            Text("Your FIRE Number")
+                            Text(viewModel.fireMode == .couple ? "Combined FIRE Number" : "Your FIRE Number")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                             Text(CurrencyFormatter.format(fireNumber, compact: true))
@@ -55,7 +139,9 @@ struct FIRECalculatorView: View {
                                 .foregroundStyle(.orange)
                         }
 
-                        Text("When your investment portfolio reaches this amount, you can potentially live off the returns without working.")
+                        Text(viewModel.fireMode == .couple
+                             ? "When your combined portfolio reaches this amount, you can both potentially live off the returns."
+                             : "When your investment portfolio reaches this amount, you can potentially live off the returns without working.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                             .multilineTextAlignment(.center)
@@ -89,6 +175,39 @@ struct FIRECalculatorView: View {
                     .padding()
                     .background(.regularMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
+
+                    // Years to FIRE
+                    if let yearsToFire = viewModel.fireYearsToTarget {
+                        VStack(spacing: 8) {
+                            Text("🔥")
+                                .font(.system(size: 40))
+
+                            if yearsToFire <= 0 {
+                                Text("You've Already Reached FIRE!")
+                                    .font(.title3.bold())
+                                    .foregroundStyle(.green)
+                                Text("Your savings already exceed your FIRE number.")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                            } else {
+                                let fireAge = viewModel.fireCurrentAge + Int(ceil(yearsToFire))
+                                Text(viewModel.fireMode == .couple
+                                     ? "\(Int(ceil(yearsToFire))) Years to FIRE Together"
+                                     : "\(Int(ceil(yearsToFire))) Years to FIRE")
+                                    .font(.title3.bold())
+                                    .foregroundStyle(yearsToFire <= 15 ? .green : yearsToFire <= 25 ? .yellow : .red)
+                                Text(viewModel.fireMode == .couple
+                                     ? "At your combined savings rate, you'll reach FIRE around age \(fireAge)."
+                                     : "At your current savings rate, you'll reach FIRE at age \(fireAge).")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
+                                    .multilineTextAlignment(.center)
+                            }
+                        }
+                        .padding()
+                        .background(.regularMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
 
                     Text("FIRE calculations are based on the Trinity Study and historical market data. Actual results depend on market conditions, inflation, and personal circumstances. This is not financial advice.")
                         .font(.caption2)

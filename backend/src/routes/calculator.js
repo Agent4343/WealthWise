@@ -183,7 +183,7 @@ function calculateRetirementProjection(profile) {
 
   for (let year = 1; year <= yearsToRetirement; year++) {
     for (let m = 0; m < 12; m++) {
-      balance = balance * (1 + monthlyRate) + (profile.monthly_contribution || 0);
+      balance = (balance + (profile.monthly_contribution || 0)) * (1 + monthlyRate);
     }
     yearlyData.push({
       year,
